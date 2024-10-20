@@ -45,7 +45,12 @@ public class Grafo {
     }
 
     public void removeAresta(String rotuloAresta1, String rotuloAresta2){
-        arestas.removeIf((aresta) -> aresta.getRotuloAresta1().equals(rotuloAresta1) && aresta.getRotuloAresta2().equals(rotuloAresta2));
+        var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloAresta1().equals(rotuloAresta1) && aresta.getRotuloAresta2().equals(rotuloAresta2));
+        if(isAnyRemoved){
+            System.out.println("Aresta removida com sucesso");
+        }else{
+            System.out.println("Aresta solicitada para remocao nao encontrada");
+        }
     }
 
     public Boolean contemAresta(String rotuloAresta1, String rotuloAresta2){
