@@ -25,7 +25,7 @@ public class Grafo {
     public ArrayList<Vertice> getVerticies() {
         return verticies;
     }
-
+    //Temo que fazer alguma coisa para verificar se existe os rotulos da aresta pra criar ela 
     public void createAresta(String rotuloAresta1, String rotuloAresta2){
         if(contemAresta(rotuloAresta1, rotuloAresta2)){
             System.out.println("Aresta já existe");

@@ -70,10 +70,73 @@ public class Execute {
     }
 
     private static void operacoesRepresentacao(Integer comando, Scanner scanner){
+        switch (comando) {
+            case 1 -> {
 
+            }
+            case 2 -> {
+
+            }
+            case 3 -> {
+
+            }
+            default -> System.out.println("Error opRepresentacao");
+        }
     }
 
     private static void operacoesManipulacao(Integer comando, Scanner scanner){
-
+        switch (comando){
+            case 1 -> {
+                System.out.print("Digite o rotulo 1 da aresta: ");
+                String Rot1 = scanner. next();
+                System.out.print("Digite o rotulo 2 da aresta: ");
+                String Rot2 = scanner. next();
+                grafo.createAresta(Rot1, Rot2);
+            }
+            case 2 -> {
+                
+            }
+            case 3 -> {
+                System.out.print("Digite o rotulo 1 da aresta: ");
+                String Rot1 = scanner. next();
+                System.out.print("Digite o rotulo 2 da aresta: ");
+                String Rot2 = scanner. next();
+                grafo.removeAresta(Rot1, Rot2);
+            }
+            case 4 -> {
+            }
+            case 5 -> {
+                System.out.print("Digite o rotulo 1 da aresta: ");
+                String Rot1 = scanner. next();
+                System.out.print("Digite o rotulo 2 da aresta: ");
+                String Rot2 = scanner. next();
+                System.out.println("Digite o peso da aresta: ");
+                Float peso = scanner. nextFloat();
+                grafo.createAresta(Rot1, Rot2, peso);
+            }
+            case 6 -> {
+            }
+            case 7 -> {
+            }
+            case 8 -> {
+            }
+            case 9 -> {
+            }
+            case 10 -> {
+            }
+            case 11 -> {
+            }
+            case 12 -> {
+            }
+            case 13 -> {
+            }
+            case 14 -> {
+            }
+            case 15 -> {
+            }
+            case 16 -> {
+            }
+            default -> System.out.println("Error opManipulacao");
+        }
     }
 }
