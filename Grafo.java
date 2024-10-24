@@ -56,6 +56,84 @@ public class Grafo {
     public Boolean contemAresta(String rotuloAresta1, String rotuloAresta2){
         return arestas.stream().anyMatch(aresta -> aresta.getRotuloAresta1().equals(rotuloAresta1) && aresta.getRotuloAresta2().equals(rotuloAresta2));
     }
+
+    public void createVertice(String rotuloVertice) {
+        if (contemVertice(rotuloVertice)) {
+            System.out.println("Vértice já existe");
+        } else {
+            verticies.add(new Vertice(rotuloVertice));
+            System.out.println("Vértice criado com sucesso");
+        }
+    }
+
+    public void createVertice(String rotuloVertice, Float peso) {
+        if (contemVertice(rotuloVertice)) {
+            System.out.println("Vértice já existe");
+        } else {
+            verticies.add(new Vertice(rotuloVertice, peso));
+            System.out.println("Vértice com peso criado com sucesso");
+        }
+    }
+
+    public Boolean contemVertice(String rotuloVertice) {
+        return verticies.stream().anyMatch(vertice -> vertice.getRotulo().equals(rotuloVertice));
+    }
+
+    public void rotularVertice(String rotuloAtual, String novoRotulo) {
+        Vertice vertice = encontrarVertice(rotuloAtual);
+        if (vertice != null) {
+            vertice.setRotulo(novoRotulo);
+            System.out.println("Vértice rotulado");
+        } else {
+            System.out.println("Vértice não encontrado");
+        }
+    }
+
+    public void ponderarVertice(String rotuloVertice, Float novoPeso) {
+        Vertice vertice = encontrarVertice(rotuloVertice);
+        if (vertice != null) {
+            vertice.setPeso(novoPeso);
+            System.out.println("Peso do vértice alterado");
+        } else {
+            System.out.println("Vértice não encontrado");
+        }
+    }
+
+    private Vertice encontrarVertice(String rotuloVertice) {
+        return verticies.stream()
+                       .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
+                       .findFirst()
+                       .orElse(null);
+    }
+
+    public void rotularAresta(String rotuloAresta1, String rotuloAresta2, String novoRotulo1, String novoRotulo2) {
+        Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
+        if (aresta != null) {
+            aresta.setRotuloAresta1(novoRotulo1);
+            aresta.setRotuloAresta2(novoRotulo2);
+            System.out.println("Aresta rotulada com sucesso");
+        } else {
+            System.out.println("Aresta não encontrada");
+        }
+    }
+
+    public void ponderarAresta(String rotuloAresta1, String rotuloAresta2, Float novoPeso) {
+        Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
+        if (aresta != null) {
+            aresta.setPeso(novoPeso);
+            System.out.println("Peso da aresta alterado com sucesso");
+        } else {
+            System.out.println("Aresta não encontrada");
+        }
+    }
+
+    private Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
+        return arestas.stream()
+                      .filter(aresta -> 
+                    aresta.getRotuloAresta1().equals(rotuloAresta1) && aresta.getRotuloAresta2().equals(rotuloAresta2))
+                      .findFirst()
+                      .orElse(null);
+    }
 }
 
 
@@ -120,6 +198,14 @@ class Aresta{
 
     public void setRotuloAresta(String rotuloAresta) {
         this.rotuloAresta = rotuloAresta;
+    }
+
+    public void setRotuloAresta1(String rotuloAresta1) {
+        this.rotuloAresta1 = rotuloAresta1;
+    }
+
+    public void setRotuloAresta2(String rotuloAresta2) {
+        this.rotuloAresta2 = rotuloAresta2;
     }
 
     public Float getPeso() {
