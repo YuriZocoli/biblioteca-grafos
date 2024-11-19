@@ -150,7 +150,7 @@ public class Execute {
                 String Vert = scanner.next();
                 System.out.print("Digite o novo rotulo do vertice: ");
                 String newVert = scanner.next();
-                grafo.rotularVertice(newVert, newVert);
+                grafo.rotularVertice(Vert, newVert);
             }
             case 7 -> {
                 System.out.print("Digite o rotulo do vertice: ");
@@ -160,7 +160,6 @@ public class Execute {
                 grafo.ponderarVertice(Vert, newPeso);
             }
             case 8 -> {
-
             }
             case 9 -> {
             }
