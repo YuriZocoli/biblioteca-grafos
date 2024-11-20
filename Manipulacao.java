@@ -30,7 +30,6 @@ public class Manipulacao {
                     System.out.println("opcao invalida");
                     break;
             }
-        }while (op != 1 || op != 2);
         }while (!(op == 1 || op == 2));
     }
 
@@ -64,15 +63,8 @@ public class Manipulacao {
 
     public void rotularAresta(Grafo grafo) {
         System.out.print("Digite o rotulo 1 da aresta: ");
-        String rot1 = scanner.next();
-        System.out.print("Digite o rotulo 2 da aresta: ");
-        String rot2 = scanner.next();
-        System.out.print("Digite o novo rotulo 1 da aresta: ");
-        String newRot1 = scanner.next();
         String rot = scanner.next();
         System.out.print("Digite o novo rotulo 2 da aresta: ");
-        String newRot2 = scanner.next();
-        grafo.rotularAresta(rot1, rot2, newRot1, newRot2);
         String newRot = scanner.next();
         grafo.rotularAresta(rot, newRot);
     }

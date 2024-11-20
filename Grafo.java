@@ -111,13 +111,9 @@ public class Grafo {
                        .orElse(null);
     }
 
-    public void rotularAresta(String rotuloAresta1, String rotuloAresta2, String novoRotulo1, String novoRotulo2) {
-        Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
     public void rotularAresta(String rotuloAresta, String novoRotulo) {
         Aresta aresta = encontrarArestaPorRotulo(rotuloAresta);
         if (aresta != null) {
-            aresta.setRotuloVertice1(novoRotulo1);
-            aresta.setRotuloVertice2(novoRotulo2);
             aresta.setRotuloAresta(novoRotulo);
             System.out.println("Aresta rotulada com sucesso");
         } else {
@@ -250,7 +246,6 @@ public class Grafo {
             System.out.println();  // Pula linha para o próximo vértice
         }
     }
-    
 
     public Boolean conectividadeNaoDirecionado() {
         Random random = new Random(); 
