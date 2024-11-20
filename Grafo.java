@@ -1,5 +1,9 @@
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
+import java.util.Random;
 
 public class Grafo {
 
@@ -27,28 +31,29 @@ public class Grafo {
     public ArrayList<Vertice> getVerticies() {
         return verticies;
     }
+    
+    public void createAresta(String rotuloVertice1, String rotuloVertice2){
+        if(contemAresta(rotuloVertice1, rotuloVertice2)){
+            System.out.println("Aresta ja existe");
+        }else{
+            arestas.add(new Aresta(rotuloVertice1, rotuloVertice2));
+            System.out.println("Aresta criada com sucesso");
+        }
+        System.out.println("");
+    }
 
-    public void createAresta(String rotuloAresta1, String rotuloAresta2) {
-        if (contemAresta(rotuloAresta1, rotuloAresta2)) {
+    public void createAresta(String rotuloVertice1, String rotuloVertice2, Float peso){
+        if(contemAresta(rotuloVertice1, rotuloVertice2)){
             System.out.println("Aresta já existe");
-        } else {
-            arestas.add(new Aresta(rotuloAresta1, rotuloAresta2));
+        }else{
+            arestas.add(new Aresta(rotuloVertice1, rotuloVertice2, peso));
             System.out.println("Aresta criada com sucesso");
         }
     }
 
-    public void createAresta(String rotuloAresta1, String rotuloAresta2, Float peso) {
-        if (contemAresta(rotuloAresta1, rotuloAresta2)) {
-            System.out.println("Aresta já existe");
-        } else {
-            arestas.add(new Aresta(rotuloAresta1, rotuloAresta2, peso));
-            System.out.println("Aresta criada com sucesso");
-        }
-    }
-
-    public void removeAresta(String rotuloAresta1, String rotuloAresta2) {
-        var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2));
-        if (isAnyRemoved) {
+    public void removeAresta(String rotuloVertice1, String rotuloVertice2){
+        var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
+        if(isAnyRemoved){
             System.out.println("Aresta removida com sucesso");
         } else {
             System.out.println("Aresta solicitada para remocao nao encontrada");
@@ -108,8 +113,8 @@ public class Grafo {
                 .orElse(null);
     }
 
-    public void rotularAresta(String rotuloAresta1, String rotuloAresta2, String novoRotulo) {
-        Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
+    public void rotularAresta(String rotuloAresta, String novoRotulo) {
+        Aresta aresta = encontrarArestaPorRotulo(rotuloAresta);
         if (aresta != null) {
             aresta.setRotuloAresta(novoRotulo);
             System.out.println("Aresta rotulada com sucesso");
@@ -130,9 +135,10 @@ public class Grafo {
 
     private Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
         return arestas.stream()
-                .filter(aresta -> aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
-                .findFirst()
-                .orElse(null);
+                      .filter(aresta -> 
+                    aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
+                      .findFirst()
+                      .orElse(null);
     }
 
     public Aresta encontrarArestaPorRotulo(String rotulo) {
@@ -243,6 +249,110 @@ public class Grafo {
         }
     }
 
+    public static Grafo gerarGrafoAleatorio(int quantidadeVertices) {
+        // Criar vértices
+        Grafo grafo = new Grafo();
+        for (int i = 1; i <= quantidadeVertices; i++) {
+            grafo.createVertice(String.valueOf(i));
+        }
+
+        Random random = new Random();
+        int maximoArestas = (quantidadeVertices * (quantidadeVertices - 1)) / 2; // Máximo de arestas possíveis
+        int quantidadeArestas = random.nextInt(maximoArestas + 1); // Número aleatório de arestas
+
+        // Criar arestas aleatórias
+        while (grafo.getArestas().size() < quantidadeArestas) {
+            int v1 = random.nextInt(quantidadeVertices); // Índice do vértice 1
+            int v2 = random.nextInt(quantidadeVertices); // Índice do vértice 2
+
+            // Garantir que os vértices são diferentes (evitar laços)
+            if (v1 != v2) {
+                String rotulo1 = grafo.getVerticies().get(v1).getRotulo();
+                String rotulo2 = grafo.getVerticies().get(v2).getRotulo();
+
+                // Garantir que a aresta não existe ainda
+                if (!grafo.contemAresta(rotulo1, rotulo2)) {
+                    grafo.createAresta(rotulo1, rotulo2);
+                }
+            }
+        }
+
+        return grafo;
+    }
+
+    public static Grafo gerarGrafoAleatorio(int quantidadeVertices, Integer quantidadeArestas) {
+        int maximoArestas = (quantidadeVertices * (quantidadeVertices - 1)) / 2; // Máximo de arestas possíveis
+        if(quantidadeArestas>maximoArestas){
+            System.out.println("quantidade de arestas maior que o limite permitido, Limite: "+maximoArestas+", quantidadeArestas: "+quantidadeArestas);
+            return null;
+        }
+
+        Grafo grafo = new Grafo();
+        // Criar vértices
+        for (int i = 1; i <= quantidadeVertices; i++) {
+            grafo.createVertice(String.valueOf(i));
+        }
+
+        Random random = new Random();
+
+        // Criar arestas aleatórias
+        while (grafo.getArestas().size() < quantidadeArestas) {
+            int v1 = random.nextInt(quantidadeVertices); // Índice do vértice 1
+            int v2 = random.nextInt(quantidadeVertices); // Índice do vértice 2
+
+            // Garantir que os vértices são diferentes (evitar laços)
+            if (v1 != v2) {
+                String rotulo1 = grafo.getVerticies().get(v1).getRotulo();
+                String rotulo2 = grafo.getVerticies().get(v2).getRotulo();
+
+                // Garantir que a aresta não existe ainda
+                if (!grafo.contemAresta(rotulo1, rotulo2)) {
+                    grafo.createAresta(rotulo1, rotulo2);
+                }
+            }
+        }
+
+        return grafo;
+    }
+
+
+    public Boolean conectividadeNaoDirecionado() {
+        Random random = new Random(); 
+        int n = random.nextInt(0, verticies.size()-1);
+        
+        Vertice inicial = verticies.get(n);
+        
+        Set<Vertice> visitados = new HashSet<>(); // Conjunto para evitar visitas repetidas
+        Stack<Vertice> stack = new Stack<>();    // Pilha para rastrear os vértices durante a DFS
+
+        stack.push(inicial); // Adiciona o vértice inicial à pilha
+
+        while (!stack.isEmpty()) {
+            Vertice atual = stack.pop(); // Remove o vértice do topo da pilha
+
+            if (!visitados.contains(atual)) {
+                visitados.add(atual); // Marca o vértice como visitado
+
+                // Adiciona os vértices adjacentes à pilha
+                for (Aresta aresta : arestas) {
+                    if (aresta.getRotuloVertice1().equals(atual.getRotulo())) {
+                        Vertice adjacente = encontrarVertice(aresta.getRotuloVertice2());
+                        if (adjacente != null && !visitados.contains(adjacente)) {
+                            stack.push(adjacente);
+                        }
+                    } else if (aresta.getRotuloVertice2().equals(atual.getRotulo())) {
+                        Vertice adjacente = encontrarVertice(aresta.getRotuloVertice1());
+                        if (adjacente != null && !visitados.contains(adjacente)) {
+                            stack.push(adjacente);
+                        }
+                    }
+                }
+            }
+        }
+
+        return visitados.size() < verticies.size();
+    }
+
 }
 
 class Vertice {
@@ -295,17 +405,17 @@ class Aresta {
 
     private static int contadorID = 0;
 
-    Aresta(String rotuloAresta1, String rotuloAresta2, Float peso) {
-        this.rotuloVertice1 = rotuloAresta1;
-        this.rotuloVertice2 = rotuloAresta2;
+    Aresta(String rotuloVertice1, String rotuloVertice2, Float peso){
+        this.rotuloVertice1 = rotuloVertice1;
+        this.rotuloVertice2 = rotuloVertice2;
         this.peso = peso;
         this.id = contadorID++;
         this.rotuloAresta = ("e" + contadorID);
     }
 
-    Aresta(String rotuloAresta1, String rotuloAresta2) {
-        this.rotuloVertice1 = rotuloAresta1;
-        this.rotuloVertice2 = rotuloAresta2;
+    Aresta(String rotuloVertice1, String rotuloVertice2){
+        this.rotuloVertice1 = rotuloVertice1;
+        this.rotuloVertice2 = rotuloVertice2;
         this.id = contadorID++;
         this.rotuloAresta = ("e" + contadorID);
     }
@@ -330,12 +440,12 @@ class Aresta {
         this.rotuloAresta = rotuloAresta;
     }
 
-    public void setRotuloVertice1(String rotuloAresta1) {
-        this.rotuloVertice1 = rotuloAresta1;
+    public void setRotuloVertice1(String rotuloVertice1) {
+        this.rotuloVertice1 = rotuloVertice1;
     }
 
-    public void setRotuloVertice2(String rotuloAresta2) {
-        this.rotuloVertice2 = rotuloAresta2;
+    public void setRotuloVertice2(String rotuloVertice2) {
+        this.rotuloVertice2 = rotuloVertice2;
     }
 
     public Float getPeso() {

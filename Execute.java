@@ -11,11 +11,12 @@ public class Execute {
         manipulacao = new Manipulacao(scanner);
         Integer comando;
         do {
-            System.out.println("Insira um comando de acordo com as seguintes opcoes:");
+            System.out.println("\nInsira um comando de acordo com as seguintes opcoes:");
 
             if (grafo != null) {
                 System.out.println("1 - Mostrar opcoes de representacao de grafo");
                 System.out.println("2 - Mostrar opcoes de manipulacao de grafos");
+                System.out.println("0 - Fechar programa");
                 comando = scanner.nextInt();
                 if (comando == 1) {
                     System.out.println("Insira um comando de acordo com a representacao desejada:");
@@ -42,12 +43,14 @@ public class Execute {
                     System.out.println("14 - Checagem de conectividade");
                     System.out.println("15 - Checagem de quantidade de componentes fortemente conexos");
                     System.out.println("16 - Checagem de ponte e articulacao");
+                    System.out.println("0 - Voltar");
                     comando = scanner.nextInt();
                     operacoesManipulacao(comando, scanner);
                 }
             } else {
                 System.out.println("1 - Criar Grafo vazio");
                 System.out.println("2 - Criar Grafo com N verticies");
+                System.out.println("3 - Criar Grafo simples aleatorio");
                 comando = scanner.nextInt();
                 operacoesGrafoVazio(comando, scanner);
             }
@@ -56,18 +59,23 @@ public class Execute {
         scanner.close();
     }
 
-    private static void operacoesGrafoVazio(Integer comando, Scanner scanner) {
-        if (comando == 0) {
-            return;
-        } else if (comando == 1) {
-            grafo = new Grafo();
-        } else if (comando == 2) {
-            System.out.println("Insira a quantidade de verticies desejada:");
-            Integer quantidadeVerticies;
-            quantidadeVerticies = scanner.nextInt();
-            grafo = new Grafo(quantidadeVerticies);
-        } else {
-            System.out.println("Comando invalido!");
+    private static void operacoesGrafoVazio(Integer comando, Scanner scanner){
+        switch (comando) {
+            case 1:
+                grafo = new Grafo();
+                break;
+            case 2:
+                System.out.println("Insira a quantidade de verticies desejada:");
+                Integer quantidadeVerticies;
+                quantidadeVerticies = scanner.nextInt();
+                grafo = new Grafo(quantidadeVerticies);
+                break;
+            case 3:
+                manipulacao.criarGrafoAleatorio(grafo);
+                break;
+            default:
+                System.out.println("Comando invalido!");
+                break;
         }
     }
 
@@ -88,8 +96,10 @@ public class Execute {
         }
     }
 
-    private static void operacoesManipulacao(Integer comando, Scanner scanner) {
-        switch (comando) {
+    private static void operacoesManipulacao(Integer comando, Scanner scanner){
+        switch (comando){
+            case 0:
+                break;
             case 1:
                 manipulacao.criarAresta(grafo);
                 break;
@@ -112,20 +122,25 @@ public class Execute {
                 manipulacao.ponderarVertice(grafo);
                 break;
             case 8:
+                manipulacao.checagemAdjacenciaVertice(grafo);
                 break;
             case 9:
-                manipulacao.arestaAdjacente(grafo);
+                manipulacao.checagemAdjacenciaAresta(grafo);
                 break;
             case 10:
-                manipulacao.existenciaAresta(grafo);
+                manipulacao.existeAresta(grafo);
                 break;
             case 11:
+                manipulacao.quantideV_E(grafo);
                 break;
             case 12:
+                manipulacao.grafoVazio(grafo);
                 break;
             case 13:
-                break;
+                manipulacao.grafoCompleto(grafo);
+                break; 
             case 14:
+                manipulacao.conectividade(grafo);
                 break;
             case 15:
                 break;
