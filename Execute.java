@@ -35,6 +35,7 @@ public class Execute {
                     System.out.println("8 - Checar adjacencia entre Verticies");
                     System.out.println("9 - Checar adjacencia entre Arestas");
                     System.out.println("10 - Checagem de existemcia de Aresta");
+                    System.out.println("10 - Checagem de existencia de Aresta");
                     System.out.println("11 - Checagem da quantidade de Verticies e Arestas");
                     System.out.println("12 - Checagem de grafo vazio");
                     System.out.println("13 - Checagem de grafo completo");
