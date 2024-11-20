@@ -25,7 +25,7 @@ public class Grafo {
     public ArrayList<Vertice> getVerticies() {
         return verticies;
     }
-    //Temo que fazer alguma coisa para verificar se existe os rotulos da aresta pra criar ela 
+    
     public void createAresta(String rotuloAresta1, String rotuloAresta2){
         if(contemAresta(rotuloAresta1, rotuloAresta2)){
             System.out.println("Aresta já existe");
@@ -45,7 +45,7 @@ public class Grafo {
     }
 
     public void removeAresta(String rotuloAresta1, String rotuloAresta2){
-        var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloAresta1().equals(rotuloAresta1) && aresta.getRotuloAresta2().equals(rotuloAresta2));
+        var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2));
         if(isAnyRemoved){
             System.out.println("Aresta removida com sucesso");
         }else{
@@ -53,8 +53,8 @@ public class Grafo {
         }
     }
 
-    public Boolean contemAresta(String rotuloAresta1, String rotuloAresta2){
-        return arestas.stream().anyMatch(aresta -> aresta.getRotuloAresta1().equals(rotuloAresta1) && aresta.getRotuloAresta2().equals(rotuloAresta2));
+    public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2){
+        return arestas.stream().anyMatch(aresta -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
     }
 
     public void createVertice(String rotuloVertice) {
@@ -109,8 +109,8 @@ public class Grafo {
     public void rotularAresta(String rotuloAresta1, String rotuloAresta2, String novoRotulo1, String novoRotulo2) {
         Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
         if (aresta != null) {
-            aresta.setRotuloAresta1(novoRotulo1);
-            aresta.setRotuloAresta2(novoRotulo2);
+            aresta.setRotuloVertice1(novoRotulo1);
+            aresta.setRotuloVertice2(novoRotulo2);
             System.out.println("Aresta rotulada com sucesso");
         } else {
             System.out.println("Aresta não encontrada");
@@ -130,7 +130,7 @@ public class Grafo {
     private Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
         return arestas.stream()
                       .filter(aresta -> 
-                    aresta.getRotuloAresta1().equals(rotuloAresta1) && aresta.getRotuloAresta2().equals(rotuloAresta2))
+                    aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
                       .findFirst()
                       .orElse(null);
     }
@@ -140,8 +140,8 @@ public class Grafo {
         int[][] matrizAdjacencia = new int[n][n]; // Cria uma matriz de zeros
     
         for (Aresta aresta : arestas) {
-            String rotulo1 = aresta.getRotuloAresta1();
-            String rotulo2 = aresta.getRotuloAresta2();
+            String rotulo1 = aresta.getRotuloVertice1();
+            String rotulo2 = aresta.getRotuloVertice2();
             Vertice i = encontrarVertice(rotulo1);
             Vertice j = encontrarVertice(rotulo2);
             matrizAdjacencia[i.getId()][j.getId()] = 1;
@@ -172,8 +172,8 @@ public class Grafo {
         // Preenche a matriz de incidência
         for (int k = 0; k < arestas.size(); k++) {
             Aresta aresta = arestas.get(k);
-            String rotulo1 = aresta.getRotuloAresta1();
-            String rotulo2 = aresta.getRotuloAresta2();
+            String rotulo1 = aresta.getRotuloVertice1();
+            String rotulo2 = aresta.getRotuloVertice2();
             Vertice vertice1 = encontrarVertice(rotulo1);
             Vertice vertice2 = encontrarVertice(rotulo2);
     
@@ -212,8 +212,8 @@ public class Grafo {
             // Encontrar todos os vértices adjacentes
             boolean primeiro = true;
             for (Aresta aresta : arestas) {
-                String rotulo1 = aresta.getRotuloAresta1();
-                String rotulo2 = aresta.getRotuloAresta2();
+                String rotulo1 = aresta.getRotuloVertice1();
+                String rotulo2 = aresta.getRotuloVertice2();
     
                 if (rotulo1.equals(vertice.getRotulo())) {
                     Vertice adjacente = encontrarVertice(rotulo2);
@@ -234,7 +234,7 @@ public class Grafo {
             }
             System.out.println();  // Pula linha para o próximo vértice
         }
-    }    
+    }
     
 }
 
@@ -280,23 +280,23 @@ class Vertice {
 
 class Aresta{
     private String rotuloAresta;
-    private String rotuloAresta1;
-    private String rotuloAresta2;
+    private String rotuloVertice1;
+    private String rotuloVertice2;
     private Float peso;
     private int id; 
 
     private static int contadorID = 0;
 
     Aresta(String rotuloAresta1, String rotuloAresta2, Float peso){
-        this.rotuloAresta1 = rotuloAresta1;
-        this.rotuloAresta2 = rotuloAresta2;
+        this.rotuloVertice1 = rotuloAresta1;
+        this.rotuloVertice2 = rotuloAresta2;
         this.peso = peso;
         this.id = contadorID++;
     }
 
     Aresta(String rotuloAresta1, String rotuloAresta2){
-        this.rotuloAresta1 = rotuloAresta1;
-        this.rotuloAresta2 = rotuloAresta2;
+        this.rotuloVertice1 = rotuloAresta1;
+        this.rotuloVertice2 = rotuloAresta2;
         this.id = contadorID++;
     }
 
@@ -308,24 +308,24 @@ class Aresta{
         return rotuloAresta;
     }
 
-    public String getRotuloAresta1() {
-        return rotuloAresta1;
+    public String getRotuloVertice1() {
+        return rotuloVertice1;
     }
 
-    public String getRotuloAresta2() {
-        return rotuloAresta2;
+    public String getRotuloVertice2() {
+        return rotuloVertice2;
     }
 
     public void setRotuloAresta(String rotuloAresta) {
         this.rotuloAresta = rotuloAresta;
     }
 
-    public void setRotuloAresta1(String rotuloAresta1) {
-        this.rotuloAresta1 = rotuloAresta1;
+    public void setRotuloVertice1(String rotuloAresta1) {
+        this.rotuloVertice1 = rotuloAresta1;
     }
 
-    public void setRotuloAresta2(String rotuloAresta2) {
-        this.rotuloAresta2 = rotuloAresta2;
+    public void setRotuloVertice2(String rotuloAresta2) {
+        this.rotuloVertice2 = rotuloAresta2;
     }
 
     public Float getPeso() {

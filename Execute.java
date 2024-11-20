@@ -3,9 +3,11 @@ import java.util.Scanner;
 public class Execute {
 
     private static Grafo grafo;
+    private static Manipulacao manipulacao;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        manipulacao = new Manipulacao(scanner);
         Integer comando;
         do {
             System.out.println("Insira um comando de acordo com as seguintes opcoes:");
@@ -71,113 +73,65 @@ public class Execute {
 
     private static void operacoesRepresentacao(Integer comando, Scanner scanner){
         switch (comando) {
-            case 1 -> {
+            case 1:
                 grafo.mostrarMatrizAdjacencia();
-            }
-            case 2 -> {
+                break;
+            case 2:
                 grafo.mostrarMatrizIncidencia();
-            }
-            case 3 -> {
+                break;
+            case 3:
                 grafo.mostrarListaAdjacencia();
-            }
-            default -> System.out.println("Error op Representacao");
+                break;
+            default:
+                System.out.println("Error op Representacao");
+                break;
         }
     }
 
     private static void operacoesManipulacao(Integer comando, Scanner scanner){
         switch (comando){
-            case 1 -> {
-                System.out.print("Digite o rotulo 1 da aresta: ");
-                String Rot1 = scanner.next();
-                System.out.print("Digite o rotulo 2 da aresta: ");
-                String Rot2 = scanner.next();
-                System.out.println("Deseja por peso? 1=sim | 2=nao");
-                int op = scanner.nextInt();
-                switch (op) {
-                    case 2 -> grafo.createAresta(Rot1, Rot2);
-                    case 1 -> {
-                        System.out.println("Digite o peso da aresta: ");
-                        Float peso = scanner.nextFloat();
-                        grafo.createAresta(Rot1, Rot2, peso);
-                    }
-                    default -> System.out.println("Error case1");
-                }
-            }
-            case 2 -> {
-                System.out.print("Digite o rotulo do vertice: ");
-                String Vert = scanner.next();
-                System.out.println("Deseja por peso? 1=sim | 2=nao");
-                int op = scanner.nextInt();
-                switch (op) {
-                    case 2 -> grafo.createVertice(Vert);
-                    case 1 -> {
-                    System.out.print("Digite o peso do vertice: ");
-                    Float peso = scanner.nextFloat();
-                    grafo.createVertice(Vert, peso);
-                    }
-                    default -> System.out.println("Error case2");
-                }
-            }
-            case 3 -> {
-                System.out.print("Digite o rotulo 1 da aresta: ");
-                String Rot1 = scanner.next();
-                System.out.print("Digite o rotulo 2 da aresta: ");
-                String Rot2 = scanner.next();
-                grafo.removeAresta(Rot1, Rot2);
-            }
-            case 4 -> {
-                System.out.print("Digite o rotulo 1 da aresta: ");
-                String Rot1 = scanner.next();
-                System.out.print("Digite o rotulo 2 da aresta: ");
-                String Rot2 = scanner.next();
-                System.out.print("Digite o novo rotulo 1 da aresta: ");
-                String newRot1 = scanner.next();
-                System.out.print("Digite o novo rotulo 2 da aresta: ");
-                String newRot2 = scanner.next();
-                grafo.rotularAresta(Rot1, Rot2, newRot1, newRot2);
-            }
-            case 5 -> {
-                System.out.print("Digite o rotulo 1 da aresta: ");
-                String Rot1 = scanner.next();
-                System.out.print("Digite o rotulo 2 da aresta: ");
-                String Rot2 = scanner.next();
-                System.out.println("Digite o novo peso da aresta: ");
-                Float peso = scanner.nextFloat();
-                grafo.ponderarAresta(Rot1, Rot2, peso);
-            }
-            case 6 -> {
-                System.out.print("Digite o rotulo do vertice: ");
-                String Vert = scanner.next();
-                System.out.print("Digite o novo rotulo do vertice: ");
-                String newVert = scanner.next();
-                grafo.rotularVertice(Vert, newVert);
-            }
-            case 7 -> {
-                System.out.print("Digite o rotulo do vertice: ");
-                String Vert = scanner.next();
-                System.out.print("Digite o novo peso do vertice: ");
-                Float newPeso = scanner.nextFloat();
-                grafo.ponderarVertice(Vert, newPeso);
-            }
-            case 8 -> {
-            }
-            case 9 -> {
-            }
-            case 10 -> {
-            }
-            case 11 -> {
-            }
-            case 12 -> {
-            }
-            case 13 -> {
-            }
-            case 14 -> {
-            }
-            case 15 -> {
-            }
-            case 16 -> {
-            }
-            default -> System.out.println("Error opManipulacao");
+            case 1:
+                manipulacao.criarAresta(grafo);
+                break;
+            case 2:
+                manipulacao.criarVerticie(grafo);
+                break;
+            case 3:
+                manipulacao.removerAresta(grafo);
+                break;
+            case 4:
+                manipulacao.rotularAresta(grafo);
+                break;
+            case 5:
+                manipulacao.ponderarAresta(grafo);
+                break;
+            case 6:
+                manipulacao.rotularVertice(grafo);
+                break;
+            case 7:
+                manipulacao.ponderarVertice(grafo);
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
+            case 13:
+                break; 
+            case 14:
+                break;
+            case 15:
+                break;
+            case 16:
+                break;
+            default:
+                System.out.println("Error opManipulacao");
+                break;
         }
     }
 }
