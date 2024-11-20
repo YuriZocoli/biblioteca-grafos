@@ -122,10 +122,8 @@ public class Execute {
             case 11:
                 break;
             case 12:
-                manipulacao.grafoVazio(grafo);
                 break;
             case 13:
-                manipulacao.grafoCompleto(grafo);
                 break;
             case 14:
                 break;

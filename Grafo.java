@@ -243,17 +243,6 @@ public class Grafo {
         }
     }
 
-    public boolean grafoVazio() {
-        //verifica se o grafo está vazio, retorna true se lista de vertice e aresta estiver vazio
-        return verticies.isEmpty() && arestas.isEmpty();
-    }
-
-    public boolean grafoCompleto() {
-        //verifica a quantidade de vertice no grafo,calcula as arestas maximas, retorna true se lista de vertice e aresta estiver completa
-        int n = verticies.size(); 
-        int maxArestas = n * (n - 1) / 2; 
-        return arestas.size() == maxArestas;
-    }
 }
 
 class Vertice {

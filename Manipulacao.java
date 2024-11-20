@@ -169,19 +169,4 @@ public class Manipulacao {
         }
     }
 
-    public void grafoVazio(Grafo grafo) {
-        if (grafo.grafoVazio()) {
-            System.out.println("O grafo está vazio.");
-        } else {
-            System.out.println("O grafo NÃO está vazio.");
-        }
-    }
-
-    public void grafoCompleto(Grafo grafo) {
-        if (grafo.grafoCompleto()) {
-            System.out.println("O grafo é completo.");
-        } else {
-            System.out.println("O grafo NÃO é completo.");
-        }
-    }
 }
