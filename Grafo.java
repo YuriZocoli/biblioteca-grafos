@@ -148,8 +148,6 @@ public class Grafo {
         int[][] matrizAdjacencia = new int[n][n]; // Cria uma matriz de zeros
     
         for (Aresta aresta : arestas) {
-            String rotulo1 = aresta.getRotuloVertice1();
-            String rotulo2 = aresta.getRotuloVertice2();
             Vertice i = encontrarVertice(rotulo1);
             Vertice j = encontrarVertice(rotulo2);
             matrizAdjacencia[i.getId()][j.getId()] = 1;
@@ -180,8 +178,6 @@ public class Grafo {
         // Preenche a matriz de incidência
         for (int k = 0; k < arestas.size(); k++) {
             Aresta aresta = arestas.get(k);
-            String rotulo1 = aresta.getRotuloVertice1();
-            String rotulo2 = aresta.getRotuloVertice2();
             Vertice vertice1 = encontrarVertice(rotulo1);
             Vertice vertice2 = encontrarVertice(rotulo2);
     
@@ -220,8 +216,6 @@ public class Grafo {
             // Encontrar todos os vértices adjacentes
             boolean primeiro = true;
             for (Aresta aresta : arestas) {
-                String rotulo1 = aresta.getRotuloVertice1();
-                String rotulo2 = aresta.getRotuloVertice2();
     
                 if (rotulo1.equals(vertice.getRotulo())) {
                     Vertice adjacente = encontrarVertice(rotulo2);
