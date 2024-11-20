@@ -186,11 +186,10 @@ public class Grafo {
             // matrizIncidencia[vertice2.getId()][k] = -1;  // destino
         }
     
-        System.out.println("Matriz de Incidência:");
-        System.out.print("  ");
+        System.out.println("Matriz de Incidencia:");
+        System.out.print("   ");
         for (int i = 0; i < arestas.size(); i++) {
-            System.out.print( arestas.get(i).getRotuloAresta1() + "," + arestas.get(i).getRotuloAresta2() + " "); 
-            // System.out.print( arestas.get(i).getId() + " ");  Decidir qual forma usar
+            System.out.print( "e" + arestas.get(i).getId() + "  ");
         }
         System.out.println();
     
@@ -205,7 +204,7 @@ public class Grafo {
     }    
 
     public void mostrarListaAdjacencia() {
-        System.out.println("Lista de Adjacência:");
+        System.out.println("Lista de Adjacencia:");
     
         for (Vertice vertice : verticies) {
             System.out.print(vertice.getRotulo() + ": ");  // Imprime o rótulo do vértice
