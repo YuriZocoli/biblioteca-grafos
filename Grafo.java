@@ -1,23 +1,25 @@
+
 import java.util.ArrayList;
 
 public class Grafo {
+
     private ArrayList<Vertice> verticies;
     private ArrayList<Aresta> arestas;
 
-    Grafo(){
+    Grafo() {
         verticies = new ArrayList<Vertice>();
         arestas = new ArrayList<Aresta>();
     }
 
-    Grafo(Integer quantidadeVerticies){
+    Grafo(Integer quantidadeVerticies) {
         verticies = new ArrayList<Vertice>();
         arestas = new ArrayList<Aresta>();
 
-        for(Integer i = 1; i <= quantidadeVerticies; i++){
+        for (Integer i = 1; i <= quantidadeVerticies; i++) {
             verticies.add(new Vertice(i.toString()));
         }
     }
-    
+
     public ArrayList<Aresta> getArestas() {
         return arestas;
     }
@@ -25,35 +27,35 @@ public class Grafo {
     public ArrayList<Vertice> getVerticies() {
         return verticies;
     }
-    
-    public void createAresta(String rotuloAresta1, String rotuloAresta2){
-        if(contemAresta(rotuloAresta1, rotuloAresta2)){
+
+    public void createAresta(String rotuloAresta1, String rotuloAresta2) {
+        if (contemAresta(rotuloAresta1, rotuloAresta2)) {
             System.out.println("Aresta já existe");
-        }else{
+        } else {
             arestas.add(new Aresta(rotuloAresta1, rotuloAresta2));
             System.out.println("Aresta criada com sucesso");
         }
     }
 
-    public void createAresta(String rotuloAresta1, String rotuloAresta2, Float peso){
-        if(contemAresta(rotuloAresta1, rotuloAresta2)){
+    public void createAresta(String rotuloAresta1, String rotuloAresta2, Float peso) {
+        if (contemAresta(rotuloAresta1, rotuloAresta2)) {
             System.out.println("Aresta já existe");
-        }else{
+        } else {
             arestas.add(new Aresta(rotuloAresta1, rotuloAresta2, peso));
             System.out.println("Aresta criada com sucesso");
         }
     }
 
-    public void removeAresta(String rotuloAresta1, String rotuloAresta2){
+    public void removeAresta(String rotuloAresta1, String rotuloAresta2) {
         var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2));
-        if(isAnyRemoved){
+        if (isAnyRemoved) {
             System.out.println("Aresta removida com sucesso");
-        }else{
+        } else {
             System.out.println("Aresta solicitada para remocao nao encontrada");
         }
     }
 
-    public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2){
+    public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2) {
         return arestas.stream().anyMatch(aresta -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
     }
 
@@ -101,16 +103,15 @@ public class Grafo {
 
     private Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
-                       .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
-                       .findFirst()
-                       .orElse(null);
+                .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
+                .findFirst()
+                .orElse(null);
     }
 
-    public void rotularAresta(String rotuloAresta1, String rotuloAresta2, String novoRotulo1, String novoRotulo2) {
+    public void rotularAresta(String rotuloAresta1, String rotuloAresta2, String novoRotulo) {
         Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
         if (aresta != null) {
-            aresta.setRotuloVertice1(novoRotulo1);
-            aresta.setRotuloVertice2(novoRotulo2);
+            aresta.setRotuloAresta(novoRotulo);
             System.out.println("Aresta rotulada com sucesso");
         } else {
             System.out.println("Aresta não encontrada");
@@ -129,16 +130,22 @@ public class Grafo {
 
     private Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
         return arestas.stream()
-                      .filter(aresta -> 
-                    aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
-                      .findFirst()
-                      .orElse(null);
+                .filter(aresta -> aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Aresta encontrarArestaPorRotulo(String rotulo) {
+        return arestas.stream()
+                .filter(aresta -> aresta.getRotuloAresta().equals(rotulo))
+                .findFirst()
+                .orElse(null);
     }
 
     public void mostrarMatrizAdjacencia() {
         int n = verticies.size();
         int[][] matrizAdjacencia = new int[n][n]; // Cria uma matriz de zeros
-    
+
         for (Aresta aresta : arestas) {
             String rotulo1 = aresta.getRotuloVertice1();
             String rotulo2 = aresta.getRotuloVertice2();
@@ -147,28 +154,28 @@ public class Grafo {
             matrizAdjacencia[i.getId()][j.getId()] = 1;
             matrizAdjacencia[j.getId()][i.getId()] = 1; // Para grafos não direcionados
         }
-    
+
         System.out.println("Matriz de Adjacência:");
-        System.out.print("  "); 
+        System.out.print("  ");
         for (int i = 0; i < verticies.size(); i++) {
             System.out.print(verticies.get(i).getRotulo() + " ");
         }
-        System.out.println(); 
-    
+        System.out.println();
+
         for (int i = 0; i < matrizAdjacencia.length; i++) {
-            System.out.print(verticies.get(i).getRotulo() + " ");  
+            System.out.print(verticies.get(i).getRotulo() + " ");
             for (int j = 0; j < matrizAdjacencia[i].length; j++) {
-                System.out.print(matrizAdjacencia[i][j] + " "); 
+                System.out.print(matrizAdjacencia[i][j] + " ");
             }
-            System.out.println(); 
+            System.out.println();
         }
     }
-    
+
     public void mostrarMatrizIncidencia() {
         int n = verticies.size();
         int m = arestas.size();
         int[][] matrizIncidencia = new int[n][m];  // Matriz n x m (n vértices, m arestas)
-    
+
         // Preenche a matriz de incidência
         for (int k = 0; k < arestas.size(); k++) {
             Aresta aresta = arestas.get(k);
@@ -176,23 +183,23 @@ public class Grafo {
             String rotulo2 = aresta.getRotuloVertice2();
             Vertice vertice1 = encontrarVertice(rotulo1);
             Vertice vertice2 = encontrarVertice(rotulo2);
-    
+
             // Para grafos não direcionados
             matrizIncidencia[vertice1.getId()][k] = 1;
             matrizIncidencia[vertice2.getId()][k] = 1;
-    
+
             // Se for grafo direcionado, pode ser algo como:
             // matrizIncidencia[vertice1.getId()][k] = 1;   // origem
             // matrizIncidencia[vertice2.getId()][k] = -1;  // destino
         }
-    
+
         System.out.println("Matriz de Incidencia:");
         System.out.print("   ");
         for (int i = 0; i < arestas.size(); i++) {
-            System.out.print( "e" + arestas.get(i).getId() + "  ");
+            System.out.print("e" + arestas.get(i).getId() + "  ");
         }
         System.out.println();
-    
+
         // Imprime os vértices na primeira coluna
         for (int i = 0; i < n; i++) {
             System.out.print(verticies.get(i).getRotulo() + "| ");
@@ -201,20 +208,20 @@ public class Grafo {
             }
             System.out.println();
         }
-    }    
+    }
 
     public void mostrarListaAdjacencia() {
         System.out.println("Lista de Adjacencia:");
-    
+
         for (Vertice vertice : verticies) {
             System.out.print(vertice.getRotulo() + ": ");  // Imprime o rótulo do vértice
-    
+
             // Encontrar todos os vértices adjacentes
             boolean primeiro = true;
             for (Aresta aresta : arestas) {
                 String rotulo1 = aresta.getRotuloVertice1();
                 String rotulo2 = aresta.getRotuloVertice2();
-    
+
                 if (rotulo1.equals(vertice.getRotulo())) {
                     Vertice adjacente = encontrarVertice(rotulo2);
                     if (!primeiro) {
@@ -235,13 +242,14 @@ public class Grafo {
             System.out.println();  // Pula linha para o próximo vértice
         }
     }
-    
+
 }
 
 class Vertice {
+
     private String rotulo;
     private Float peso;
-    private int id; 
+    private int id;
 
     private static int contadorID = 0;
 
@@ -277,27 +285,29 @@ class Vertice {
     }
 }
 
+class Aresta {
 
-class Aresta{
     private String rotuloAresta;
     private String rotuloVertice1;
     private String rotuloVertice2;
     private Float peso;
-    private int id; 
+    private int id;
 
     private static int contadorID = 0;
 
-    Aresta(String rotuloAresta1, String rotuloAresta2, Float peso){
+    Aresta(String rotuloAresta1, String rotuloAresta2, Float peso) {
         this.rotuloVertice1 = rotuloAresta1;
         this.rotuloVertice2 = rotuloAresta2;
         this.peso = peso;
         this.id = contadorID++;
+        this.rotuloAresta = ("e" + contadorID);
     }
 
-    Aresta(String rotuloAresta1, String rotuloAresta2){
+    Aresta(String rotuloAresta1, String rotuloAresta2) {
         this.rotuloVertice1 = rotuloAresta1;
         this.rotuloVertice2 = rotuloAresta2;
         this.id = contadorID++;
+        this.rotuloAresta = ("e" + contadorID);
     }
 
     public int getId() {

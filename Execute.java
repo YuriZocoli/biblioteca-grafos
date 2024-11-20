@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Execute {
@@ -12,18 +13,18 @@ public class Execute {
         do {
             System.out.println("Insira um comando de acordo com as seguintes opcoes:");
 
-            if(grafo != null){
+            if (grafo != null) {
                 System.out.println("1 - Mostrar opcoes de representacao de grafo");
                 System.out.println("2 - Mostrar opcoes de manipulacao de grafos");
                 comando = scanner.nextInt();
-                if(comando == 1){
+                if (comando == 1) {
                     System.out.println("Insira um comando de acordo com a representacao desejada:");
                     System.out.println("1 - Matriz de Adjacencia");
                     System.out.println("2 - Matriz de Incidencia");
                     System.out.println("3 - Lista de Adjacencia");
                     comando = scanner.nextInt();
                     operacoesRepresentacao(comando, scanner);
-                }else if(comando == 2){
+                } else if (comando == 2) {
                     System.out.println("Insira um comando de acordo com a manipulacao desejada:");
                     System.out.println("1 - Criar Aresta");
                     System.out.println("2 - Criar Vertice");
@@ -34,7 +35,7 @@ public class Execute {
                     System.out.println("7 - Ponderar Vertice");
                     System.out.println("8 - Checar adjacencia entre Verticies");
                     System.out.println("9 - Checar adjacencia entre Arestas");
-                    System.out.println("10 - Checagem de existemcia de Aresta");
+                    System.out.println("10 - Checagem de existencia de Aresta");
                     System.out.println("11 - Checagem da quantidade de Verticies e Arestas");
                     System.out.println("12 - Checagem de grafo vazio");
                     System.out.println("13 - Checagem de grafo completo");
@@ -44,34 +45,33 @@ public class Execute {
                     comando = scanner.nextInt();
                     operacoesManipulacao(comando, scanner);
                 }
-            }else{
+            } else {
                 System.out.println("1 - Criar Grafo vazio");
                 System.out.println("2 - Criar Grafo com N verticies");
                 comando = scanner.nextInt();
                 operacoesGrafoVazio(comando, scanner);
             }
-            
+
         } while (comando != 0);
         scanner.close();
     }
 
-    private static void operacoesGrafoVazio(Integer comando, Scanner scanner){
-        if(comando == 0){
+    private static void operacoesGrafoVazio(Integer comando, Scanner scanner) {
+        if (comando == 0) {
             return;
-        }
-        else if(comando == 1){
+        } else if (comando == 1) {
             grafo = new Grafo();
-        }else if(comando == 2){
+        } else if (comando == 2) {
             System.out.println("Insira a quantidade de verticies desejada:");
             Integer quantidadeVerticies;
             quantidadeVerticies = scanner.nextInt();
             grafo = new Grafo(quantidadeVerticies);
-        }else{
+        } else {
             System.out.println("Comando invalido!");
         }
     }
 
-    private static void operacoesRepresentacao(Integer comando, Scanner scanner){
+    private static void operacoesRepresentacao(Integer comando, Scanner scanner) {
         switch (comando) {
             case 1:
                 grafo.mostrarMatrizAdjacencia();
@@ -88,8 +88,8 @@ public class Execute {
         }
     }
 
-    private static void operacoesManipulacao(Integer comando, Scanner scanner){
-        switch (comando){
+    private static void operacoesManipulacao(Integer comando, Scanner scanner) {
+        switch (comando) {
             case 1:
                 manipulacao.criarAresta(grafo);
                 break;
@@ -114,15 +114,17 @@ public class Execute {
             case 8:
                 break;
             case 9:
+                manipulacao.arestaAdjacente(grafo);
                 break;
             case 10:
+                manipulacao.existenciaAresta(grafo);
                 break;
             case 11:
                 break;
             case 12:
                 break;
             case 13:
-                break; 
+                break;
             case 14:
                 break;
             case 15:
