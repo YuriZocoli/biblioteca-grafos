@@ -28,7 +28,6 @@ public class Grafo {
     
     public void createAresta(String rotuloAresta1, String rotuloAresta2){
         if(contemAresta(rotuloAresta1, rotuloAresta2)){
-            System.out.println("Aresta já existe");
             System.out.println("Aresta ja existe");
         }else{
             arestas.add(new Aresta(rotuloAresta1, rotuloAresta2));
