@@ -72,15 +72,15 @@ public class Execute {
     private static void operacoesRepresentacao(Integer comando, Scanner scanner){
         switch (comando) {
             case 1 -> {
-
+                grafo.mostrarMatrizAdjacencia();
             }
             case 2 -> {
-
+                grafo.mostrarMatrizIncidencia();
             }
             case 3 -> {
-
+                grafo.mostrarListaAdjacencia();
             }
-            default -> System.out.println("Error opRepresentacao");
+            default -> System.out.println("Error op Representacao");
         }
     }
 
