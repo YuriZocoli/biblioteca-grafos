@@ -11,6 +11,7 @@ public class Execute {
         Integer comando;
         do {
             System.out.println("Insira um comando de acordo com as seguintes opcoes:");
+            System.out.println("\nInsira um comando de acordo com as seguintes opcoes:");
 
             if(grafo != null){
                 System.out.println("1 - Mostrar opcoes de representacao de grafo");
@@ -91,6 +92,8 @@ public class Execute {
     private static void operacoesManipulacao(Integer comando, Scanner scanner){
         switch (comando){
 <<<<<<< Updated upstream
+            case 0:
+                break;
             case 1:
                 manipulacao.criarAresta(grafo);
                 break;
@@ -113,18 +116,25 @@ public class Execute {
                 manipulacao.ponderarVertice(grafo);
                 break;
             case 8:
+                manipulacao.checagemAdjacenciaVertice(grafo);
                 break;
             case 9:
+                manipulacao.checagemAdjacenciaAresta(grafo);
                 break;
             case 10:
+                manipulacao.existeAresta(grafo);
                 break;
             case 11:
+                manipulacao.quantideV_E(grafo);
                 break;
             case 12:
+                manipulacao.grafoVazio(grafo);
                 break;
             case 13:
+                manipulacao.grafoCompleto(grafo);
                 break; 
             case 14:
+                manipulacao.conectividade(grafo);
                 break;
             case 15:
                 break;

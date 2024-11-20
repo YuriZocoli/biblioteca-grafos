@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
+import java.util.Random;
 
 public class Grafo {
     private ArrayList<Vertice> verticies;
@@ -109,9 +113,12 @@ public class Grafo {
 
     public void rotularAresta(String rotuloAresta1, String rotuloAresta2, String novoRotulo1, String novoRotulo2) {
         Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
+    public void rotularAresta(String rotuloAresta, String novoRotulo) {
+        Aresta aresta = encontrarArestaPorRotulo(rotuloAresta);
         if (aresta != null) {
             aresta.setRotuloVertice1(novoRotulo1);
             aresta.setRotuloVertice2(novoRotulo2);
+            aresta.setRotuloAresta(novoRotulo);
             System.out.println("Aresta rotulada com sucesso");
         } else {
             System.out.println("Aresta não encontrada");
@@ -134,6 +141,13 @@ public class Grafo {
                     aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
                       .findFirst()
                       .orElse(null);
+    }
+
+    public Aresta encontrarArestaPorRotulo(String rotulo) {
+        return arestas.stream()
+                .filter(aresta -> aresta.getRotuloAresta().equals(rotulo))
+                .findFirst()
+                .orElse(null);
     }
 
     public void mostrarMatrizAdjacencia() {
@@ -237,6 +251,44 @@ public class Grafo {
         }
     }
     
+
+    public Boolean conectividadeNaoDirecionado() {
+        Random random = new Random(); 
+        int n = random.nextInt(0, verticies.size()-1);
+        
+        Vertice inicial = verticies.get(n);
+        
+        Set<Vertice> visitados = new HashSet<>(); // Conjunto para evitar visitas repetidas
+        Stack<Vertice> stack = new Stack<>();    // Pilha para rastrear os vértices durante a DFS
+
+        stack.push(inicial); // Adiciona o vértice inicial à pilha
+
+        while (!stack.isEmpty()) {
+            Vertice atual = stack.pop(); // Remove o vértice do topo da pilha
+
+            if (!visitados.contains(atual)) {
+                visitados.add(atual); // Marca o vértice como visitado
+
+                // Adiciona os vértices adjacentes à pilha
+                for (Aresta aresta : arestas) {
+                    if (aresta.getRotuloVertice1().equals(atual.getRotulo())) {
+                        Vertice adjacente = encontrarVertice(aresta.getRotuloVertice2());
+                        if (adjacente != null && !visitados.contains(adjacente)) {
+                            stack.push(adjacente);
+                        }
+                    } else if (aresta.getRotuloVertice2().equals(atual.getRotulo())) {
+                        Vertice adjacente = encontrarVertice(aresta.getRotuloVertice1());
+                        if (adjacente != null && !visitados.contains(adjacente)) {
+                            stack.push(adjacente);
+                        }
+                    }
+                }
+            }
+        }
+
+        return visitados.size() < verticies.size();
+    }
+
 }
 
 class Vertice {
@@ -293,12 +345,14 @@ class Aresta{
         this.rotuloVertice2 = rotuloAresta2;
         this.peso = peso;
         this.id = contadorID++;
+        this.rotuloAresta = ("e" + contadorID);
     }
 
     Aresta(String rotuloAresta1, String rotuloAresta2){
         this.rotuloVertice1 = rotuloAresta1;
         this.rotuloVertice2 = rotuloAresta2;
         this.id = contadorID++;
+        this.rotuloAresta = ("e" + contadorID);
     }
 
     public int getId() {
