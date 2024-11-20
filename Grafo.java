@@ -50,7 +50,6 @@ public class Grafo {
     }
 
     public void removeAresta(String rotuloAresta1, String rotuloAresta2){
-        var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2));
         if(isAnyRemoved){
             System.out.println("Aresta removida com sucesso");
         }else{
@@ -58,8 +57,6 @@ public class Grafo {
         }
     }
 
-    public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2){
-        return arestas.stream().anyMatch(aresta -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
     }
 
     public void createVertice(String rotuloVertice) {
