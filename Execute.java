@@ -70,10 +70,114 @@ public class Execute {
     }
 
     private static void operacoesRepresentacao(Integer comando, Scanner scanner){
-
+        switch (comando) {
+            case 1 -> {
+                grafo.mostrarMatrizAdjacencia();
+            }
+            case 2 -> {
+                grafo.mostrarMatrizIncidencia();
+            }
+            case 3 -> {
+                grafo.mostrarListaAdjacencia();
+            }
+            default -> System.out.println("Error op Representacao");
+        }
     }
 
     private static void operacoesManipulacao(Integer comando, Scanner scanner){
-
+        switch (comando){
+            case 1 -> {
+                System.out.print("Digite o rotulo 1 da aresta: ");
+                String Rot1 = scanner.next();
+                System.out.print("Digite o rotulo 2 da aresta: ");
+                String Rot2 = scanner.next();
+                System.out.println("Deseja por peso? 1=sim | 2=nao");
+                int op = scanner.nextInt();
+                switch (op) {
+                    case 2 -> grafo.createAresta(Rot1, Rot2);
+                    case 1 -> {
+                        System.out.println("Digite o peso da aresta: ");
+                        Float peso = scanner.nextFloat();
+                        grafo.createAresta(Rot1, Rot2, peso);
+                    }
+                    default -> System.out.println("Error case1");
+                }
+            }
+            case 2 -> {
+                System.out.print("Digite o rotulo do vertice: ");
+                String Vert = scanner.next();
+                System.out.println("Deseja por peso? 1=sim | 2=nao");
+                int op = scanner.nextInt();
+                switch (op) {
+                    case 2 -> grafo.createVertice(Vert);
+                    case 1 -> {
+                    System.out.print("Digite o peso do vertice: ");
+                    Float peso = scanner.nextFloat();
+                    grafo.createVertice(Vert, peso);
+                    }
+                    default -> System.out.println("Error case2");
+                }
+            }
+            case 3 -> {
+                System.out.print("Digite o rotulo 1 da aresta: ");
+                String Rot1 = scanner.next();
+                System.out.print("Digite o rotulo 2 da aresta: ");
+                String Rot2 = scanner.next();
+                grafo.removeAresta(Rot1, Rot2);
+            }
+            case 4 -> {
+                System.out.print("Digite o rotulo 1 da aresta: ");
+                String Rot1 = scanner.next();
+                System.out.print("Digite o rotulo 2 da aresta: ");
+                String Rot2 = scanner.next();
+                System.out.print("Digite o novo rotulo 1 da aresta: ");
+                String newRot1 = scanner.next();
+                System.out.print("Digite o novo rotulo 2 da aresta: ");
+                String newRot2 = scanner.next();
+                grafo.rotularAresta(Rot1, Rot2, newRot1, newRot2);
+            }
+            case 5 -> {
+                System.out.print("Digite o rotulo 1 da aresta: ");
+                String Rot1 = scanner.next();
+                System.out.print("Digite o rotulo 2 da aresta: ");
+                String Rot2 = scanner.next();
+                System.out.println("Digite o novo peso da aresta: ");
+                Float peso = scanner.nextFloat();
+                grafo.ponderarAresta(Rot1, Rot2, peso);
+            }
+            case 6 -> {
+                System.out.print("Digite o rotulo do vertice: ");
+                String Vert = scanner.next();
+                System.out.print("Digite o novo rotulo do vertice: ");
+                String newVert = scanner.next();
+                grafo.rotularVertice(Vert, newVert);
+            }
+            case 7 -> {
+                System.out.print("Digite o rotulo do vertice: ");
+                String Vert = scanner.next();
+                System.out.print("Digite o novo peso do vertice: ");
+                Float newPeso = scanner.nextFloat();
+                grafo.ponderarVertice(Vert, newPeso);
+            }
+            case 8 -> {
+            }
+            case 9 -> {
+            }
+            case 10 -> {
+            }
+            case 11 -> {
+            }
+            case 12 -> {
+            }
+            case 13 -> {
+            }
+            case 14 -> {
+            }
+            case 15 -> {
+            }
+            case 16 -> {
+            }
+            default -> System.out.println("Error opManipulacao");
+        }
     }
 }
