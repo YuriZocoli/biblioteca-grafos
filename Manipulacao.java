@@ -98,4 +98,28 @@ public class Manipulacao {
         Float newPeso = scanner.nextFloat();
         grafo.ponderarVertice(vert, newPeso);
     }
+
+    public void criarGrafoAleatorio(Grafo grafo) {
+        System.out.println("1 - Inserir quantidade de vertices");
+        System.out.println("2 - inserir quantidade de vertices e arestas");
+        Integer comando = scanner.nextInt();
+        Integer quantidadeVertices;
+        switch (comando) {
+            case 1:
+                System.out.println("Insira a quantidade de vertices:");
+                quantidadeVertices = scanner.nextInt();
+                grafo = Grafo.gerarGrafoAleatorio(quantidadeVertices);
+                break;
+            case 2:
+                System.out.println("Insira a quantidade de vertices:");
+                quantidadeVertices = scanner.nextInt();
+                System.out.println("Insira a quantidade de arestas:");
+                Integer quantidadeArestas = scanner.nextInt();
+                grafo = Grafo.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                break;
+            default:
+                System.out.println("comando invalido");
+                break;
+        }
+    }
 }
