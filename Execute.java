@@ -15,6 +15,7 @@ public class Execute {
             if(grafo != null){
                 System.out.println("1 - Mostrar opcoes de representacao de grafo");
                 System.out.println("2 - Mostrar opcoes de manipulacao de grafos");
+                System.out.println("0 - Fechar programa");
                 comando = scanner.nextInt();
                 if(comando == 1){
                     System.out.println("Insira um comando de acordo com a representacao desejada:");
@@ -41,12 +42,14 @@ public class Execute {
                     System.out.println("14 - Checagem de conectividade");
                     System.out.println("15 - Checagem de quantidade de componentes fortemente conexos");
                     System.out.println("16 - Checagem de ponte e articulacao");
+                    System.out.println("0 - Voltar");
                     comando = scanner.nextInt();
                     operacoesManipulacao(comando, scanner);
                 }
             }else{
                 System.out.println("1 - Criar Grafo vazio");
                 System.out.println("2 - Criar Grafo com N verticies");
+                System.out.println("3 - Criar Grafo simples aleatorio");
                 comando = scanner.nextInt();
                 operacoesGrafoVazio(comando, scanner);
             }
@@ -56,18 +59,22 @@ public class Execute {
     }
 
     private static void operacoesGrafoVazio(Integer comando, Scanner scanner){
-        if(comando == 0){
-            return;
-        }
-        else if(comando == 1){
-            grafo = new Grafo();
-        }else if(comando == 2){
-            System.out.println("Insira a quantidade de verticies desejada:");
-            Integer quantidadeVerticies;
-            quantidadeVerticies = scanner.nextInt();
-            grafo = new Grafo(quantidadeVerticies);
-        }else{
-            System.out.println("Comando invalido!");
+        switch (comando) {
+            case 1:
+                grafo = new Grafo();
+                break;
+            case 2:
+                System.out.println("Insira a quantidade de verticies desejada:");
+                Integer quantidadeVerticies;
+                quantidadeVerticies = scanner.nextInt();
+                grafo = new Grafo(quantidadeVerticies);
+                break;
+            case 3:
+                manipulacao.criarGrafoAleatorio(grafo);
+                break;
+            default:
+                System.out.println("Comando invalido!");
+                break;
         }
     }
 
