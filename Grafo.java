@@ -5,8 +5,8 @@ import java.util.Stack;
 import java.util.Random;
 
 public class Grafo {
-    private ArrayList<Vertice> verticies;
-    private ArrayList<Aresta> arestas;
+    protected ArrayList<Vertice> verticies;
+    protected ArrayList<Aresta> arestas;
 
     Grafo(){
         verticies = new ArrayList<Vertice>();
@@ -104,7 +104,7 @@ public class Grafo {
         }
     }
 
-    private Vertice encontrarVertice(String rotuloVertice) {
+    protected Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
                        .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
                        .findFirst()
@@ -131,7 +131,7 @@ public class Grafo {
         }
     }
 
-    private Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
+    protected Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
         return arestas.stream()
                       .filter(aresta -> 
                     aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))

@@ -59,16 +59,33 @@ public class Execute {
     }
 
     private static void operacoesGrafoVazio(Integer comando, Scanner scanner){
+        int op;
         switch (comando) {
             case 1:
-                grafo = new Grafo();
+                System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
+                op = scanner.nextInt();
+                if (op == 1) {
+                    System.out.println("Insira a quantidade de verticies desejada:");
+                    Integer quantidadeVerticies;
+                    quantidadeVerticies = scanner.nextInt();
+                    grafo = new GrafoDirecionado(quantidadeVerticies);
+                } else {
+                    System.out.println("Insira a quantidade de verticies desejada:");
+                    Integer quantidadeVerticies;
+                    quantidadeVerticies = scanner.nextInt();
+                    grafo = new Grafo(quantidadeVerticies);
+                }
                 break;
             case 2:
-                System.out.println("Insira a quantidade de verticies desejada:");
-                Integer quantidadeVerticies;
-                quantidadeVerticies = scanner.nextInt();
-                grafo = new Grafo(quantidadeVerticies);
+                System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
+                op = scanner.nextInt();
+                if (op == 1) {
+                    grafo = new GrafoDirecionado();
+                } else {
+                    grafo = new Grafo();
+                }
                 break;
+
             case 3:
                 manipulacao.criarGrafoAleatorio(grafo);
                 break;
