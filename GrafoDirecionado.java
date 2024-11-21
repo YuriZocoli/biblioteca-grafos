@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 
-public class GrafoDirecionado extends Grafo {
+public class GrafoDirecionado extends GrafoNaoDirecionado {
     public GrafoDirecionado() {
         super(); 
     }
@@ -251,34 +251,34 @@ public class GrafoDirecionado extends Grafo {
     }
 
     private void buscaProfundidadeDirecionado(Vertice inicial, Set<Vertice> visitados, boolean direcao) {
-    Stack<Vertice> stack = new Stack<>();
-    stack.push(inicial);
+        Stack<Vertice> stack = new Stack<>();
+        stack.push(inicial);
 
-    while (!stack.isEmpty()) {
-        Vertice atual = stack.pop();
-        if (!visitados.contains(atual)) {
-            visitados.add(atual);
+        while (!stack.isEmpty()) {
+            Vertice atual = stack.pop();
+            if (!visitados.contains(atual)) {
+                visitados.add(atual);
 
-            // Explora as arestas, considerando a direção
-            for (Aresta aresta : getArestas()) {
-                Vertice adjacente = null;
-                if (direcao && aresta.getRotuloVertice1().equals(atual.getRotulo())) {
-                    adjacente = encontrarVertice(aresta.getRotuloVertice2());
-                } else if (!direcao && aresta.getRotuloVertice2().equals(atual.getRotulo())) {
-                    adjacente = encontrarVertice(aresta.getRotuloVertice1());
-                }
+                // Explora as arestas, considerando a direção
+                for (Aresta aresta : getArestas()) {
+                    Vertice adjacente = null;
+                    if (direcao && aresta.getRotuloVertice1().equals(atual.getRotulo())) {
+                        adjacente = encontrarVertice(aresta.getRotuloVertice2());
+                    } else if (!direcao && aresta.getRotuloVertice2().equals(atual.getRotulo())) {
+                        adjacente = encontrarVertice(aresta.getRotuloVertice1());
+                    }
 
-                if (adjacente != null && !visitados.contains(adjacente)) {
-                    stack.push(adjacente);
+                    if (adjacente != null && !visitados.contains(adjacente)) {
+                        stack.push(adjacente);
+                    }
                 }
             }
         }
     }
-}
 
     public static Grafo gerarGrafoAleatorio(int quantidadeVertices) {
         // Criar vértices
-        Grafo grafo = new Grafo();
+        Grafo grafo = new GrafoDirecionado();
         for (int i = 1; i <= quantidadeVertices; i++) {
             grafo.createVertice(String.valueOf(i));
         }
@@ -314,7 +314,7 @@ public class GrafoDirecionado extends Grafo {
             return null;
         }
 
-        Grafo grafo = new Grafo();
+        Grafo grafo = new GrafoDirecionado();
         // Criar vértices
         for (int i = 1; i <= quantidadeVertices; i++) {
             grafo.createVertice(String.valueOf(i));

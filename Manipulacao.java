@@ -205,27 +205,7 @@ public class Manipulacao {
     }
 
     public void conectividade(Grafo grafo)  {
-        if(grafo.direcionado)   //Ta com erro mas e so uma ideia
-        {
-            if (grafo.fortementeConexo) {
-               System.out.println("Grafo e fortemente conexo"); 
-            } 
-            else if (grafo.semifortementeConexo) {
-                System.out.println("Grafo e semifortemente conexo"); 
-            }
-            else if(grafo.simplesmenteConexo){
-                System.out.println("Grafo e simplesmente conexo");
-            } 
-            else {
-                System.out.println("Grafo e desconexo");
-            }
-        } else {
-            if(grafo.conectividadeNaoDirecionado()){
-                System.out.println("Grafo e conexo");
-            } else {
-                System.out.println("Grafo e desconexo");
-            }
-        }
+        System.out.println(grafo.mostrarConectividade());
     }
 
 
@@ -239,14 +219,14 @@ public class Manipulacao {
             case 1:
                 System.out.println("Insira a quantidade de vertices:");
                 quantidadeVertices = scanner.nextInt();
-                grafo = Grafo.gerarGrafoAleatorio(quantidadeVertices);
+                grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
                 break;
             case 2:
                 System.out.println("Insira a quantidade de vertices:");
                 quantidadeVertices = scanner.nextInt();
                 System.out.println("Insira a quantidade de arestas:");
                 Integer quantidadeArestas = scanner.nextInt();
-                grafo = Grafo.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
                 break;
             default:
                 System.out.println("comando invalido");

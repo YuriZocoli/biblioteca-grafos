@@ -73,7 +73,7 @@ public class Execute {
                     System.out.println("Insira a quantidade de verticies desejada:");
                     Integer quantidadeVerticies;
                     quantidadeVerticies = scanner.nextInt();
-                    grafo = new Grafo(quantidadeVerticies);
+                    grafo = new GrafoNaoDirecionado(quantidadeVerticies);
                 }
                 break;
             case 2:
@@ -82,7 +82,7 @@ public class Execute {
                 if (op == 1) {
                     grafo = new GrafoDirecionado();
                 } else {
-                    grafo = new Grafo();
+                    grafo = new GrafoNaoDirecionado();
                 }
                 break;
 
