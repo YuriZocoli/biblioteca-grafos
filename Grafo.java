@@ -8,8 +8,8 @@ public interface Grafo {
     public Boolean createAresta(String rotuloVertice1, String rotuloVertice2, Float peso);
     public void removeAresta(String rotuloVertice1, String rotuloVertice2);
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2);
-    public void createVertice(String rotuloVertice);
-    public void createVertice(String rotuloVertice, Float peso);
+    public Boolean createVertice(String rotuloVertice);
+    public Boolean createVertice(String rotuloVertice, Float peso);
     public Boolean contemVertice(String rotuloVertice);
     public void rotularVertice(String rotuloAtual, String novoRotulo);
     public void ponderarVertice(String rotuloVertice, Float novoPeso);

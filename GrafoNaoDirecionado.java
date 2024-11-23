@@ -61,21 +61,21 @@ public class GrafoNaoDirecionado implements Grafo {
         return arestas.stream().anyMatch(aresta -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
     }
 
-    public void createVertice(String rotuloVertice) {
+    public Boolean createVertice(String rotuloVertice) {
         if (contemVertice(rotuloVertice)) {
-            System.out.println("Vértice já existe");
+            return false;
         } else {
             verticies.add(new Vertice(rotuloVertice));
-            System.out.println("Vertice criado com sucesso");
+            return true;
         }
     }
 
-    public void createVertice(String rotuloVertice, Float peso) {
+    public Boolean createVertice(String rotuloVertice, Float peso) {
         if (contemVertice(rotuloVertice)) {
-            System.out.println("Vértice já existe");
+            return false;
         } else {
             verticies.add(new Vertice(rotuloVertice, peso));
-            System.out.println("Vertice com peso criado com sucesso");
+            return true;
         }
     }
 

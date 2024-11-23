@@ -54,15 +54,23 @@ public class Manipulacao {
         int op = scanner.nextInt();
         switch (op) {
             case 2:
-                grafo.createVertice(Vert);
+                if(grafo.createVertice(Vert)){
+                    System.out.println("Vertice criado com sucesso");
+                }else{
+                    System.out.println("Vertice ja existe");
+                }
                 break;
             case 1:
                 System.out.print("Digite o peso do vertice: ");
                 Float peso = scanner.nextFloat();
-                grafo.createVertice(Vert, peso);
+                if(grafo.createVertice(Vert, peso)){
+                    System.out.println("Vertice com peso criado com sucesso");
+                }else{
+                    System.out.println("Vertice ja existe");
+                }
                 break;
             default:
-                System.out.println("Error case2");
+                System.out.println("Comando invalido");
                 break;
         }
     }
