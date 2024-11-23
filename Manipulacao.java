@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Manipulacao {
@@ -231,6 +232,23 @@ public class Manipulacao {
             default:
                 System.out.println("comando invalido");
                 break;
+        }
+    }
+
+    public void checagemPonteArticulacao(Grafo grafo) {
+        System.out.println("1 - Encontrar pontes");
+        System.out.println("2 - Encontrar Articulacoes");
+        Integer comando = scanner.nextInt();
+        if(comando == 1){
+            ArrayList<Aresta> pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
+            if (pontesTarjan.isEmpty()) {
+                System.out.println("Não há arestas pontes no grafo.");
+            } else {
+                System.out.println("Arestas pontes:");
+                for (Aresta ponte : pontesTarjan) {
+                    System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
+                }
+            }
         }
     }
 }
