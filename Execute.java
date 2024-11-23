@@ -63,7 +63,7 @@ public class Execute {
         int op;
         switch (comando) {
             case 1:
-                System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
+                System.out.println("Deseja criar grafo direcionado? \n1 - sim \n2 - nao");
                 op = scanner.nextInt();
                 if (op == 1) {
                     grafo = new GrafoDirecionado();
@@ -72,7 +72,7 @@ public class Execute {
                 }
                 break;
             case 2:
-                System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
+                System.out.println("Deseja criar grafo direcionado? \n1 - sim \n2 - nao");
                 op = scanner.nextInt();
                 if (op == 1) {
                     System.out.println("Insira a quantidade de verticies desejada:");

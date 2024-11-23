@@ -74,7 +74,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     public void mostrarMatrizIncidencia() {
         int n = verticies.size();
         int m = arestas.size();
-        int[][] matrizIncidencia = new int[n][m];  // Matriz n x m (n vértices, m arestas)
+        int[][] matrizIncidencia = new int[n][m];  // Matriz n x m (n vertices, m arestas)
     
         // Preenche a matriz de incidência
         for (int k = 0; k < arestas.size(); k++) {
@@ -84,7 +84,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             Vertice vertice1 = encontrarVertice(rotulo1);
             Vertice vertice2 = encontrarVertice(rotulo2);
     
-            // Para grafos não direcionados
+            // Para grafos Nao direcionados
             matrizIncidencia[vertice1.getId()][k] = 1;
             matrizIncidencia[vertice2.getId()][k] = 1;
     
@@ -100,7 +100,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         }
         System.out.println();
     
-        // Imprime os vértices na primeira coluna
+        // Imprime os vertices na primeira coluna
         for (int i = 0; i < n; i++) {
             System.out.print(verticies.get(i).getRotulo() + "| ");
             for (int j = 0; j < m; j++) {
@@ -113,7 +113,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     public void mostrarListaAdjacenciaSucessores() {
         System.out.println("Lista de Adjacência de Sucessores:");
     
-    // Para cada vértice, encontrar os sucessores
+    // Para cada vertice, encontrar os sucessores
         for (Vertice vertice : verticies) {
             System.out.print(vertice.getRotulo() + "-> "); 
             
@@ -130,16 +130,16 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
                     }
                 }
             }
-            System.out.println();  // Avança para o próximo vértice
+            System.out.println();  // Avança para o próximo vertice
         }
     }
 
     public void mostrarListaAdjacenciaAntecessores() {
         System.out.println("Lista de Adjacência de Antecessores:");
         
-        // Para cada vértice, encontrar os antecessores
+        // Para cada vertice, encontrar os antecessores
         for (Vertice vertice : verticies) {
-            System.out.print(vertice.getRotulo() + "-> ");  // Exibe o rótulo do vértice atual
+            System.out.print(vertice.getRotulo() + "-> ");  // Exibe o rótulo do vertice atual
             
             boolean primeiro = true;
             for (Aresta aresta : arestas) {
@@ -154,7 +154,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
                     }
                 }
             }
-            System.out.println();  // Avança para o próximo vértice
+            System.out.println();  // Avança para o próximo vertice
         }
     }
 
@@ -183,17 +183,17 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         Vertice inicial = verticies.get(n);
         
         Set<Vertice> visitados = new HashSet<>(); // Conjunto para evitar visitas repetidas
-        Stack<Vertice> stack = new Stack<>();    // Pilha para rastrear os vértices durante a DFS
+        Stack<Vertice> stack = new Stack<>();    // Pilha para rastrear os vertices durante a DFS
 
-        stack.push(inicial); // Adiciona o vértice inicial à pilha
+        stack.push(inicial); // Adiciona o vertice inicial à pilha
 
         while (!stack.isEmpty()) {
-            Vertice atual = stack.pop(); // Remove o vértice do topo da pilha
+            Vertice atual = stack.pop(); // Remove o vertice do topo da pilha
 
             if (!visitados.contains(atual)) {
-                visitados.add(atual); // Marca o vértice como visitado
+                visitados.add(atual); // Marca o vertice como visitado
 
-                // Adiciona os vértices adjacentes à pilha
+                // Adiciona os vertices adjacentes à pilha
                 for (Aresta aresta : arestas) {
                     if (aresta.getRotuloVertice1().equals(atual.getRotulo())) {
                         Vertice adjacente = encontrarVertice(aresta.getRotuloVertice2());
@@ -214,16 +214,16 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
     private boolean alcançavelDeOuParaTodos(Vertice vertice) {
         // Conjuntos para rastrear acessibilidade
-        Set<Vertice> visitadosDe = new HashSet<>(); // Vértices alcançáveis a partir de "vertice"
-        Set<Vertice> visitadosPara = new HashSet<>(); // Vértices que alcançam "vertice"
+        Set<Vertice> visitadosDe = new HashSet<>(); // vertices alcançáveis a partir de "vertice"
+        Set<Vertice> visitadosPara = new HashSet<>(); // vertices que alcançam "vertice"
 
-        // DFS para encontrar todos os vértices alcançáveis a partir de "vertice"
+        // DFS para encontrar todos os vertices alcançáveis a partir de "vertice"
         buscaProfundidadeDirecionado(vertice, visitadosDe, true);
 
-        // buscaProfundidadeDirecionado para encontrar todos os vértices que podem alcançar "vertice"
+        // buscaProfundidadeDirecionado para encontrar todos os vertices que podem alcançar "vertice"
         buscaProfundidadeDirecionado(vertice, visitadosPara, false);
 
-        // Se a união de ambos os conjuntos cobre todos os vértices, é válido
+        // Se a união de ambos os conjuntos cobre todos os vertices, é válido
         return visitadosDe.size() + visitadosPara.size() - 1 == getVerticies().size();
     }
 
@@ -277,7 +277,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     }
 
     public static Grafo gerarGrafoAleatorio(int quantidadeVertices) {
-        // Criar vértices
+        // Criar vertices
         Grafo grafo = new GrafoDirecionado();
         for (int i = 1; i <= quantidadeVertices; i++) {
             grafo.createVertice(String.valueOf(i));
@@ -289,15 +289,15 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
         // Criar arestas aleatórias
         while (grafo.getArestas().size() < quantidadeArestas) {
-            int v1 = random.nextInt(quantidadeVertices); // Índice do vértice 1
-            int v2 = random.nextInt(quantidadeVertices); // Índice do vértice 2
+            int v1 = random.nextInt(quantidadeVertices); // Índice do vertice 1
+            int v2 = random.nextInt(quantidadeVertices); // Índice do vertice 2
 
-            // Garantir que os vértices são diferentes (evitar laços)
+            // Garantir que os vertices são diferentes (evitar laços)
             if (v1 != v2) {
                 String rotulo1 = grafo.getVerticies().get(v1).getRotulo();
                 String rotulo2 = grafo.getVerticies().get(v2).getRotulo();
 
-                // Garantir que a aresta não existe ainda
+                // Garantir que a aresta Nao existe ainda
                 if (!grafo.contemAresta(rotulo1, rotulo2)) {
                     grafo.createAresta(rotulo1, rotulo2);
                 }
@@ -315,7 +315,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         }
 
         Grafo grafo = new GrafoDirecionado();
-        // Criar vértices
+        // Criar vertices
         for (int i = 1; i <= quantidadeVertices; i++) {
             grafo.createVertice(String.valueOf(i));
         }
@@ -324,15 +324,15 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
         // Criar arestas aleatórias
         while (grafo.getArestas().size() < quantidadeArestas) {
-            int v1 = random.nextInt(quantidadeVertices); // Índice do vértice 1
-            int v2 = random.nextInt(quantidadeVertices); // Índice do vértice 2
+            int v1 = random.nextInt(quantidadeVertices); // Índice do vertice 1
+            int v2 = random.nextInt(quantidadeVertices); // Índice do vertice 2
 
-            // Garantir que os vértices são diferentes (evitar laços)
+            // Garantir que os vertices são diferentes (evitar laços)
             if (v1 != v2) {
                 String rotulo1 = grafo.getVerticies().get(v1).getRotulo();
                 String rotulo2 = grafo.getVerticies().get(v2).getRotulo();
 
-                // Garantir que a aresta não existe ainda
+                // Garantir que a aresta Nao existe ainda
                 if (!grafo.contemAresta(rotulo1, rotulo2)) {
                     grafo.createAresta(rotulo1, rotulo2);
                 }

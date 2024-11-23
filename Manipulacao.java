@@ -242,7 +242,7 @@ public class Manipulacao {
         if(comando == 1){
             ArrayList<Aresta> pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
             if (pontesTarjan.isEmpty()) {
-                System.out.println("Não há arestas pontes no grafo.");
+                System.out.println("Nao ha arestas pontes no grafo.");
             } else {
                 System.out.println("Arestas pontes:");
                 for (Aresta ponte : pontesTarjan) {
