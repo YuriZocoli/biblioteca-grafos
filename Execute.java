@@ -18,32 +18,36 @@ public class Execute {
                 System.out.println("0 - Fechar programa");
                 comando = scanner.nextInt();
                 if(comando == 1){
-                    System.out.println("Insira um comando de acordo com a representacao desejada:");
-                    System.out.println("1 - Matriz de Adjacencia");
-                    System.out.println("2 - Matriz de Incidencia");
-                    System.out.println("3 - Lista de Adjacencia");
-                    comando = scanner.nextInt();
+                    do{
+                        System.out.println("Insira um comando de acordo com a representacao desejada:");
+                        System.out.println("1 - Matriz de Adjacencia");
+                        System.out.println("2 - Matriz de Incidencia");
+                        System.out.println("3 - Lista de Adjacencia");
+                        comando = scanner.nextInt();
+                    } while (comando < 1 || comando > 3);
                     operacoesRepresentacao(comando, scanner);
                 }else if(comando == 2){
-                    System.out.println("Insira um comando de acordo com a manipulacao desejada:");
-                    System.out.println("1 - Criar Aresta");
-                    System.out.println("2 - Criar Vertice");
-                    System.out.println("3 - Remover Aresta");
-                    System.out.println("4 - Rotular Aresta");
-                    System.out.println("5 - Ponderar Aresta");
-                    System.out.println("6 - Rotular Vertice");
-                    System.out.println("7 - Ponderar Vertice");
-                    System.out.println("8 - Checar adjacencia entre Verticies");
-                    System.out.println("9 - Checar adjacencia entre Arestas");
-                    System.out.println("10 - Checagem de existencia de Aresta");
-                    System.out.println("11 - Checagem da quantidade de Verticies e Arestas");
-                    System.out.println("12 - Checagem de grafo vazio");
-                    System.out.println("13 - Checagem de grafo completo");
-                    System.out.println("14 - Checagem de conectividade");
-                    System.out.println("15 - Checagem de quantidade de componentes fortemente conexos");
-                    System.out.println("16 - Checagem de ponte e articulacao");
-                    System.out.println("0 - Voltar");
-                    comando = scanner.nextInt();
+                    do{
+                        System.out.println("Insira um comando de acordo com a manipulacao desejada:");
+                        System.out.println("1 - Criar Aresta");
+                        System.out.println("2 - Criar Vertice");
+                        System.out.println("3 - Remover Aresta");
+                        System.out.println("4 - Rotular Aresta");
+                        System.out.println("5 - Ponderar Aresta");
+                        System.out.println("6 - Rotular Vertice");
+                        System.out.println("7 - Ponderar Vertice");
+                        System.out.println("8 - Checar adjacencia entre Verticies");
+                        System.out.println("9 - Checar adjacencia entre Arestas");
+                        System.out.println("10 - Checagem de existencia de Aresta");
+                        System.out.println("11 - Checagem da quantidade de Verticies e Arestas");
+                        System.out.println("12 - Checagem de grafo vazio");
+                        System.out.println("13 - Checagem de grafo completo");
+                        System.out.println("14 - Checagem de conectividade");
+                        System.out.println("15 - Checagem de quantidade de componentes fortemente conexos");
+                        System.out.println("16 - Checagem de ponte e articulacao");
+                        System.out.println("0 - Voltar");
+                        comando = scanner.nextInt();
+                    } while (comando < 0 || comando > 16);
                     operacoesManipulacao(comando, scanner);
                 }
             }else{
@@ -71,8 +75,11 @@ public class Execute {
                 }
                 break;
             case 2:
-                System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
-                op = scanner.nextInt();
+                do {
+                    System.out.println("Deseja criar grafo direcionado? 1 = sim | 2 = nao");
+                    op = scanner.nextInt();
+                } while (op != 1 && op != 2);
+
                 if (op == 1) {
                     System.out.println("Insira a quantidade de verticies desejada:");
                     Integer quantidadeVerticies;

@@ -31,13 +31,13 @@ public class GrafoNaoDirecionado implements Grafo {
     }
     
     public void createAresta(String rotuloVertice1, String rotuloVertice2){
-        if(contemAresta(rotuloVertice1, rotuloVertice2)){
-            System.out.println("Aresta ja existe");
-        }else{
-            arestas.add(new Aresta(rotuloVertice1, rotuloVertice2));
-            System.out.println("Aresta criada com sucesso");
-        }
-        System.out.println("");
+            if(contemAresta(rotuloVertice1, rotuloVertice2)){
+                System.out.println("Aresta ja existe");
+            }else{
+                arestas.add(new Aresta(rotuloVertice1, rotuloVertice2));
+                System.out.println("Aresta criada com sucesso");
+            }
+            System.out.println("");
     }
 
     public void createAresta(String rotuloVertice1, String rotuloVertice2, Float peso){
@@ -67,7 +67,7 @@ public class GrafoNaoDirecionado implements Grafo {
             System.out.println("Vértice já existe");
         } else {
             verticies.add(new Vertice(rotuloVertice));
-            System.out.println("Vértice criado com sucesso");
+            System.out.println("Vertice criado com sucesso");
         }
     }
 
@@ -76,7 +76,7 @@ public class GrafoNaoDirecionado implements Grafo {
             System.out.println("Vértice já existe");
         } else {
             verticies.add(new Vertice(rotuloVertice, peso));
-            System.out.println("Vértice com peso criado com sucesso");
+            System.out.println("Vertice com peso criado com sucesso");
         }
     }
 

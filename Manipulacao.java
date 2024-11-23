@@ -14,6 +14,11 @@ public class Manipulacao {
         String rot1 = scanner.next();
         System.out.print("Digite o rotulo 2 da aresta: ");
         String rot2 = scanner.next();
+
+        if(!(grafo.contemVertice(rot1) && grafo.contemVertice(rot2))){
+            System.out.println("Um dos vértices não existem");
+        }
+
         Integer op;
         do{
             System.out.println("Deseja por peso? 1=sim | 2=nao");
@@ -63,9 +68,9 @@ public class Manipulacao {
     }
 
     public void rotularAresta(Grafo grafo) {
-        System.out.print("Digite o rotulo 1 da aresta: ");
+        System.out.print("Digite o rotulo da aresta: ");
         String rot = scanner.next();
-        System.out.print("Digite o novo rotulo 2 da aresta: ");
+        System.out.print("Digite o novo rotulo da aresta: ");
         String newRot = scanner.next();
         grafo.rotularAresta(rot, newRot);
     }

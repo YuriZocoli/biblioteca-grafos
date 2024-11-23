@@ -10,8 +10,6 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     public GrafoDirecionado(int quantidadeVerticies) {
         super(quantidadeVerticies); 
     }
-
-    
     @Override
     public void createAresta(String rotuloAresta1, String rotuloAresta2) {
         if (contemAresta(rotuloAresta1, rotuloAresta2)) {
@@ -54,7 +52,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             }
         }
 
-        System.out.println("Matriz de Adjacência (Direcionado):");
+        System.out.println("Matriz de Adjacência:");
         System.out.print("  "); 
         for (int i = 0; i < verticies.size(); i++) {
             System.out.print(verticies.get(i).getRotulo() + " ");
@@ -82,15 +80,10 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             String rotulo1 = aresta.getRotuloVertice1();
             String rotulo2 = aresta.getRotuloVertice2();
             Vertice vertice1 = encontrarVertice(rotulo1);
-            Vertice vertice2 = encontrarVertice(rotulo2);
-    
-            // Para grafos não direcionados
-            matrizIncidencia[vertice1.getId()][k] = 1;
-            matrizIncidencia[vertice2.getId()][k] = 1;
-    
+            Vertice vertice2 = encontrarVertice(rotulo2);    
             
-            // matrizIncidencia[vertice1.getId()][k] = 1;   // origem
-            // matrizIncidencia[vertice2.getId()][k] = -1;  // destino
+            matrizIncidencia[vertice1.getId()][k] = 1;   // origem
+            matrizIncidencia[vertice2.getId()][k] = -1;  // destino
         }
     
         System.out.println("Matriz de Incidencia:");
@@ -157,8 +150,24 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             System.out.println();  // Avança para o próximo vértice
         }
     }
+    
+    @Override
+    public String mostrarConectividade() {
+        if (fortementeConexo()) {
+            return "Grafo e fortemente conexo"; 
+        } 
+        else if (semifortementeConexo()) {
+            return "Grafo e semifortemente conexo"; 
+        }
+        else if(simplesmenteConexo()){
+            return "Grafo e simplesmente conexo";
+        } 
+        else {
+            return "Grafo e desconexo";
+        }
+    }
 
-    public boolean fortementeConexo() {
+    public Boolean fortementeConexo() {
         for (Vertice vertice : getVerticies()) {
             if (!alcançavelAPartirDeTodos(vertice)) {
                 return false;
@@ -167,7 +176,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         return true;
     }
 
-    public boolean semifortementeConexo() {
+    public Boolean semifortementeConexo() {
     for (Vertice vertice : getVerticies()) {
         if (!alcançavelDeOuParaTodos(vertice)) {
             return false;
@@ -341,5 +350,4 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
         return grafo;
     }
-
 }
