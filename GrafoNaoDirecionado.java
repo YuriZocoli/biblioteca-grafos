@@ -335,6 +335,66 @@ public class GrafoNaoDirecionado implements Grafo {
         return grafo;
     }
 
+    public ArrayList<Aresta> encontrarArestasPontesTarjan() {
+        ArrayList<Aresta> pontes = new ArrayList<>();
+        int[] discovery = new int[verticies.size()];
+        int[] low = new int[verticies.size()];
+        boolean[] visited = new boolean[verticies.size()];
+        int time = 0;
+
+        // Inicializar arrays
+        for (int i = 0; i < verticies.size(); i++) {
+            discovery[i] = -1;
+            low[i] = -1;
+        }
+
+        // Executar Tarjan para cada componente conectado
+        for (Vertice vertice : verticies) {
+            if (!visited[vertice.getId()]) {
+                tarjanDFS(vertice, null, discovery, low, visited, pontes, time);
+            }
+        }
+
+        return pontes;
+    }
+
+    private void tarjanDFS(Vertice u, Vertice parent, int[] discovery, int[] low, boolean[] visited, ArrayList<Aresta> pontes, int time) {
+        visited[u.getId()] = true;
+        discovery[u.getId()] = low[u.getId()] = time++;
+
+        for (Aresta aresta : arestas) {
+            Vertice v = null;
+
+            // Encontrar o vértice adjacente
+            if (aresta.getRotuloVertice1().equals(u.getRotulo())) {
+                v = encontrarVertice(aresta.getRotuloVertice2());
+            } else if (aresta.getRotuloVertice2().equals(u.getRotulo())) {
+                v = encontrarVertice(aresta.getRotuloVertice1());
+            }
+
+            if (v == null || v.equals(parent)) {
+                continue; // Ignorar a aresta de retorno para o pai
+            }
+
+            if (!visited[v.getId()]) {
+                // Recursão para o vértice adjacente
+                tarjanDFS(v, u, discovery, low, visited, pontes, time);
+
+                // Atualizar o valor de "low" do vértice atual
+                low[u.getId()] = Math.min(low[u.getId()], low[v.getId()]);
+
+                // Verificar se a aresta é uma ponte
+                if (low[v.getId()] > discovery[u.getId()]) {
+                    pontes.add(aresta);
+                }
+            } else {
+                // Atualizar "low" com a descoberta anterior
+                low[u.getId()] = Math.min(low[u.getId()], discovery[v.getId()]);
+            }
+        }
+    }
+
+
     protected Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
                        .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
@@ -342,7 +402,7 @@ public class GrafoNaoDirecionado implements Grafo {
                        .orElse(null);
     }
     
-    private Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
+    protected Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
         return arestas.stream()
                       .filter(aresta -> 
                         (aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))

@@ -66,6 +66,15 @@ public class Execute {
                 System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
                 op = scanner.nextInt();
                 if (op == 1) {
+                    grafo = new GrafoDirecionado();
+                } else {
+                    grafo = new GrafoNaoDirecionado();
+                }
+                break;
+            case 2:
+                System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
+                op = scanner.nextInt();
+                if (op == 1) {
                     System.out.println("Insira a quantidade de verticies desejada:");
                     Integer quantidadeVerticies;
                     quantidadeVerticies = scanner.nextInt();
@@ -75,15 +84,6 @@ public class Execute {
                     Integer quantidadeVerticies;
                     quantidadeVerticies = scanner.nextInt();
                     grafo = new GrafoNaoDirecionado(quantidadeVerticies);
-                }
-                break;
-            case 2:
-                System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
-                op = scanner.nextInt();
-                if (op == 1) {
-                    grafo = new GrafoDirecionado();
-                } else {
-                    grafo = new GrafoNaoDirecionado();
                 }
                 break;
 
@@ -162,6 +162,7 @@ public class Execute {
             case 15:
                 break;
             case 16:
+                manipulacao.checagemPonteArticulacao(grafo);
                 break;
             default:
                 System.out.println("Error opManipulacao");
