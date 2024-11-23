@@ -236,18 +236,22 @@ public class Manipulacao {
     }
 
     public void checagemPonteArticulacao(Grafo grafo) {
-        System.out.println("1 - Encontrar pontes");
-        System.out.println("2 - Encontrar Articulacoes");
-        Integer comando = scanner.nextInt();
-        if(comando == 1){
-            ArrayList<Aresta> pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
-            if (pontesTarjan.isEmpty()) {
-                System.out.println("Não há arestas pontes no grafo.");
-            } else {
-                System.out.println("Arestas pontes:");
-                for (Aresta ponte : pontesTarjan) {
-                    System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
-                }
+        ArrayList<Aresta> pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
+        if (pontesTarjan.isEmpty()) {
+            System.out.println("Não há arestas pontes no grafo.");
+        } else {
+            System.out.println("Arestas pontes:");
+            for (Aresta ponte : pontesTarjan) {
+                System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
+            }
+        }
+        ArrayList<Vertice> articulacoes = ((GrafoNaoDirecionado) grafo).encontrarVerticesArticulacao();
+        if (articulacoes.isEmpty()) {
+            System.out.println("Não há vértices de articulação no grafo.");
+        } else {
+            System.out.println("Vértices de articulação:");
+            for (Vertice vertice : articulacoes) {
+                System.out.println(vertice.getRotulo());
             }
         }
     }

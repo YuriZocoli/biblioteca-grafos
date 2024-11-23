@@ -358,6 +358,37 @@ public class GrafoNaoDirecionado implements Grafo {
         return pontes;
     }
 
+    public ArrayList<Vertice> encontrarVerticesArticulacao() {
+        ArrayList<Vertice> articulacoes = new ArrayList<>();
+        int[] discovery = new int[verticies.size()];
+        int[] low = new int[verticies.size()];
+        boolean[] visited = new boolean[verticies.size()];
+        boolean[] isArticulation = new boolean[verticies.size()];
+        int time = 0;
+
+        // Inicializar arrays
+        for (int i = 0; i < verticies.size(); i++) {
+            discovery[i] = -1;
+            low[i] = -1;
+        }
+
+        // Executar Tarjan para cada componente conectado
+        for (Vertice vertice : verticies) {
+            if (!visited[vertice.getId()]) {
+                tarjanDFSArticulacao(vertice, null, discovery, low, visited, isArticulation, time);
+            }
+        }
+
+        // Adicionar vértices identificados como articulação à lista
+        for (Vertice vertice : verticies) {
+            if (isArticulation[vertice.getId()]) {
+                articulacoes.add(vertice);
+            }
+        }
+
+        return articulacoes;
+    }
+
     private void tarjanDFS(Vertice u, Vertice parent, int[] discovery, int[] low, boolean[] visited, ArrayList<Aresta> pontes, int time) {
         visited[u.getId()] = true;
         discovery[u.getId()] = low[u.getId()] = time++;
@@ -394,6 +425,47 @@ public class GrafoNaoDirecionado implements Grafo {
         }
     }
 
+    private void tarjanDFSArticulacao(Vertice u, Vertice parent, int[] discovery, int[] low, boolean[] visited, boolean[] isArticulation, int time) {
+        visited[u.getId()] = true;
+        discovery[u.getId()] = low[u.getId()] = time++;
+        int children = 0;
+
+        for (Aresta aresta : arestas) {
+            Vertice v = null;
+
+            // Encontrar o vértice adjacente
+            if (aresta.getRotuloVertice1().equals(u.getRotulo())) {
+                v = encontrarVertice(aresta.getRotuloVertice2());
+            } else if (aresta.getRotuloVertice2().equals(u.getRotulo())) {
+                v = encontrarVertice(aresta.getRotuloVertice1());
+            }
+
+            if (v == null || v.equals(parent)) {
+                continue; // Ignorar a aresta de retorno para o pai
+            }
+
+            if (!visited[v.getId()]) {
+                children++;
+                tarjanDFSArticulacao(v, u, discovery, low, visited, isArticulation, time);
+
+                // Atualizar o valor de "low" do vértice atual
+                low[u.getId()] = Math.min(low[u.getId()], low[v.getId()]);
+
+                // Caso 1: O vértice raiz da DFS é de articulação se tiver mais de 1 filho
+                if (parent == null && children > 1) {
+                    isArticulation[u.getId()] = true;
+                }
+
+                // Caso 2: Vértice não raiz é de articulação se "low[v] >= discovery[u]"
+                if (parent != null && low[v.getId()] >= discovery[u.getId()]) {
+                    isArticulation[u.getId()] = true;
+                }
+            } else {
+                // Atualizar "low" para arestas de retorno
+                low[u.getId()] = Math.min(low[u.getId()], discovery[v.getId()]);
+            }
+        }
+    }
 
     protected Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
