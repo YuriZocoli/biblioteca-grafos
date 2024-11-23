@@ -5,14 +5,14 @@ public class Manipulacao {
 
     private Scanner scanner;
 
-    Manipulacao(Scanner scanner_){
+    Manipulacao(Scanner scanner_) {
         scanner = scanner_;
     }
 
-    public void criarAresta(Grafo grafo){
-        System.out.print("Digite o rotulo 1 da aresta: ");
+    public void criarAresta(Grafo grafo) {
+        System.out.print("Digite o vertice 1 da aresta: ");
         String rot1 = scanner.next();
-        System.out.print("Digite o rotulo 2 da aresta: ");
+        System.out.print("Digite o vertice 2 da aresta: ");
         String rot2 = scanner.next();
 
         if(!(grafo.contemVertice(rot1) && grafo.contemVertice(rot2))){
@@ -20,8 +20,8 @@ public class Manipulacao {
         }
 
         Integer op;
-        do{
-            System.out.println("Deseja por peso? 1=sim | 2=nao");
+        do {
+            System.out.println("Deseja por peso?  \n 1 - Sim \n 2 - Nao");
             op = scanner.nextInt();
             switch (op) {
                 case 1:
@@ -39,10 +39,10 @@ public class Manipulacao {
         }while (!(op == 1 || op == 2));
     }
 
-    public void criarVerticie(Grafo grafo){
+    public void criarVerticie(Grafo grafo) {
         System.out.print("Digite o rotulo do vertice: ");
         String Vert = scanner.next();
-        System.out.println("Deseja por peso? 1=sim | 2=nao");
+        System.out.println("Deseja por peso?  \n1 - Sim \n2 - Nao");
         int op = scanner.nextInt();
         switch (op) {
             case 2:

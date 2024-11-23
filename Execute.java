@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class Execute {
@@ -12,7 +13,7 @@ public class Execute {
         do {
             System.out.println("\nInsira um comando de acordo com as seguintes opcoes:");
 
-            if(grafo != null){
+            if (grafo != null) {
                 System.out.println("1 - Mostrar opcoes de representacao de grafo");
                 System.out.println("2 - Mostrar opcoes de manipulacao de grafos");
                 System.out.println("0 - Fechar programa");
@@ -50,14 +51,14 @@ public class Execute {
                     } while (comando < 0 || comando > 16);
                     operacoesManipulacao(comando, scanner);
                 }
-            }else{
+            } else {
                 System.out.println("1 - Criar Grafo vazio");
                 System.out.println("2 - Criar Grafo com N verticies");
                 System.out.println("3 - Criar Grafo simples aleatorio");
                 comando = scanner.nextInt();
                 operacoesGrafoVazio(comando, scanner);
             }
-            
+
         } while (comando != 0);
         scanner.close();
     }
@@ -102,7 +103,7 @@ public class Execute {
         }
     }
 
-    private static void operacoesRepresentacao(Integer comando, Scanner scanner){
+    private static void operacoesRepresentacao(Integer comando, Scanner scanner) {
         switch (comando) {
             case 1:
                 grafo.mostrarMatrizAdjacencia();
