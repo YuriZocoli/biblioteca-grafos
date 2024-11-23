@@ -101,9 +101,17 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             }
             System.out.println();
         }
-    }    
+    }
 
-    public void mostrarListaAdjacenciaSucessores() {
+    public void mostrarListaAdjacencia(Boolean aux){
+        if(aux){
+            mostrarListaAdjacenciaSucessores();
+        }else{
+            mostrarListaAdjacenciaAntecessores();
+        }
+    }
+
+    private void mostrarListaAdjacenciaSucessores() {
         System.out.println("Lista de Adjacência de Sucessores:");
     
     // Para cada vértice, encontrar os sucessores
@@ -127,7 +135,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         }
     }
 
-    public void mostrarListaAdjacenciaAntecessores() {
+    private void mostrarListaAdjacenciaAntecessores() {
         System.out.println("Lista de Adjacência de Antecessores:");
         
         // Para cada vértice, encontrar os antecessores

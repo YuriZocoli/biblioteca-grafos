@@ -111,7 +111,7 @@ public class Execute {
                 grafo.mostrarMatrizIncidencia();
                 break;
             case 3:
-                grafo.mostrarListaAdjacencia();
+                manipulacao.mostrarListaAdjacencia(grafo);
                 break;
             default:
                 System.out.println("Error op Representacao");

@@ -17,6 +17,6 @@ public interface Grafo {
     public Aresta encontrarArestaPorRotulo(String rotulo);
     public void mostrarMatrizAdjacencia();
     public void mostrarMatrizIncidencia();
-    public void mostrarListaAdjacencia();
+    public void mostrarListaAdjacencia(Boolean aux);
     public String mostrarConectividade();
 }

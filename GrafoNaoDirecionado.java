@@ -199,7 +199,7 @@ public class GrafoNaoDirecionado implements Grafo {
         }
     }    
 
-    public void mostrarListaAdjacencia() {
+    public void mostrarListaAdjacencia(Boolean aux) {
         System.out.println("Lista de Adjacencia:");
     
         for (Vertice vertice : verticies) {

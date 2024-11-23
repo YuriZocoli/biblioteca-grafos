@@ -260,4 +260,15 @@ public class Manipulacao {
             }
         }
     }
+
+    public void mostrarListaAdjacencia(Grafo grafo) {
+        if (grafo instanceof GrafoDirecionado){
+            System.out.println("1 - Lista por Sucessor");
+            System.out.println("2 - Lista por Antecessor");
+            Integer comando = scanner.nextInt();
+            grafo.mostrarListaAdjacencia(comando == 1 ? true : false);
+        }else {
+            grafo.mostrarListaAdjacencia(null);
+        }
+    }
 }
