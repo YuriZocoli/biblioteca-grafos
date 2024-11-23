@@ -95,7 +95,7 @@ public class Execute {
                 break;
 
             case 3:
-                manipulacao.criarGrafoAleatorio(grafo);
+                grafo = manipulacao.criarGrafoAleatorio();
                 break;
             default:
                 System.out.println("Comando invalido!");

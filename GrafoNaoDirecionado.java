@@ -30,22 +30,21 @@ public class GrafoNaoDirecionado implements Grafo {
         return verticies;
     }
     
-    public void createAresta(String rotuloVertice1, String rotuloVertice2){
+    public Boolean createAresta(String rotuloVertice1, String rotuloVertice2){
             if(contemAresta(rotuloVertice1, rotuloVertice2)){
-                System.out.println("Aresta ja existe");
+                return false;
             }else{
                 arestas.add(new Aresta(rotuloVertice1, rotuloVertice2));
-                System.out.println("Aresta criada com sucesso");
+                return true;
             }
-            System.out.println("");
     }
 
-    public void createAresta(String rotuloVertice1, String rotuloVertice2, Float peso){
+    public Boolean createAresta(String rotuloVertice1, String rotuloVertice2, Float peso){
         if(contemAresta(rotuloVertice1, rotuloVertice2)){
-            System.out.println("Aresta já existe");
+            return false;
         }else{
             arestas.add(new Aresta(rotuloVertice1, rotuloVertice2, peso));
-            System.out.println("Aresta criada com sucesso");
+            return true;
         }
     }
 

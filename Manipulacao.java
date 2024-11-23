@@ -27,10 +27,18 @@ public class Manipulacao {
                 case 1:
                     System.out.println("Digite o peso da aresta: ");
                     Float peso = scanner.nextFloat();
-                    grafo.createAresta(rot1, rot2, peso);
+                    if(grafo.createAresta(rot1, rot2, peso)){
+                        System.out.println("Aresta criada com sucesso");
+                    }else{
+                        System.out.println("Aresta já existe");
+                    }
                     break;
                 case 2:
-                    grafo.createAresta(rot1, rot2);
+                    if(grafo.createAresta(rot1, rot2)){
+                        System.out.println("Aresta criada com sucesso");
+                    }else{
+                        System.out.println("Aresta já existe");
+                    }
                     break;
                 default:
                     System.out.println("opcao invalida");
@@ -216,28 +224,48 @@ public class Manipulacao {
 
 
 
-    public void criarGrafoAleatorio(Grafo grafo) {
+    public Grafo criarGrafoAleatorio() {
         System.out.println("1 - Inserir quantidade de vertices");
         System.out.println("2 - inserir quantidade de vertices e arestas");
         Integer comando = scanner.nextInt();
-        Integer quantidadeVertices;
-        switch (comando) {
-            case 1:
-                System.out.println("Insira a quantidade de vertices:");
-                quantidadeVertices = scanner.nextInt();
-                grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
-                break;
-            case 2:
-                System.out.println("Insira a quantidade de vertices:");
-                quantidadeVertices = scanner.nextInt();
-                System.out.println("Insira a quantidade de arestas:");
-                Integer quantidadeArestas = scanner.nextInt();
-                grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
-                break;
-            default:
-                System.out.println("comando invalido");
-                break;
-        }
+        Integer quantidadeVertices, tipoGrafo;
+        Grafo grafo = null;
+        do {
+            switch (comando) {
+                case 1:
+                    System.out.println("Insira a quantidade de vertices:");
+                    quantidadeVertices = scanner.nextInt();
+                    System.out.println("Deseja criar um grafo direcionado?");
+                    System.out.println("1 - Sim (criar grafo direcionado)");
+                    System.out.println("2 - Nao (criar grafo nao direcionado)");
+                    tipoGrafo = scanner.nextInt();
+                    if(tipoGrafo == 1){
+                        grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                    }else if(tipoGrafo == 2){
+                        grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                    }
+                    break;
+                case 2:
+                    System.out.println("Insira a quantidade de vertices:");
+                    quantidadeVertices = scanner.nextInt();
+                    System.out.println("Insira a quantidade de arestas:");
+                    Integer quantidadeArestas = scanner.nextInt();
+                    System.out.println("Deseja criar um grafo direcionado?");
+                    System.out.println("1 - Sim (criar grafo direcionado)");
+                    System.out.println("2 - Nao (criar grafo nao direcionado)");
+                    tipoGrafo = scanner.nextInt();
+                    if(tipoGrafo == 1){
+                        grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                    }else if(tipoGrafo == 2){
+                        grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                    }
+                    break;
+                default:
+                    System.out.println("comando invalido");
+                    break;
+            }
+        } while (grafo == null);
+        return grafo;
     }
 
     public void checagemPonteArticulacao(Grafo grafo) {

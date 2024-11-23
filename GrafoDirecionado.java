@@ -10,25 +10,6 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     public GrafoDirecionado(int quantidadeVerticies) {
         super(quantidadeVerticies); 
     }
-    @Override
-    public void createAresta(String rotuloAresta1, String rotuloAresta2) {
-        if (contemAresta(rotuloAresta1, rotuloAresta2)) {
-            System.out.println("Aresta já existe");
-        } else {
-            getArestas().add(new Aresta(rotuloAresta1, rotuloAresta2));
-            System.out.println("Aresta direcionada criada com sucesso");
-        }
-    }
-
-    @Override
-    public void createAresta(String rotuloAresta1, String rotuloAresta2, Float peso) {
-        if (contemAresta(rotuloAresta1, rotuloAresta2)) {
-            System.out.println("Aresta já existe");
-        } else {
-            getArestas().add(new Aresta(rotuloAresta1, rotuloAresta2, peso));
-            System.out.println("Aresta direcionada com peso criada com sucesso");
-        }
-    }
 
     @Override
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2) {
