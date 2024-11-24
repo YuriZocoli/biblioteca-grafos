@@ -50,6 +50,7 @@ public class Execute {
                         comando = scanner.nextInt();
                     } while (comando < 0 || comando > 16);
                     operacoesManipulacao(comando, scanner);
+                    if(comando==0)comando=-1;
                 }
             } else {
                 System.out.println("1 - Criar Grafo vazio");
@@ -67,8 +68,12 @@ public class Execute {
         int op;
         switch (comando) {
             case 1:
+                do{
                 System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
                 op = scanner.nextInt();
+                if(op != 1 && op != 2)System.out.println("Opcao invalida");
+                } while (op != 1 && op != 2);
+
                 if (op == 1) {
                     grafo = new GrafoDirecionado();
                 } else {
@@ -79,6 +84,7 @@ public class Execute {
                 do {
                     System.out.println("Deseja criar grafo direcionado? 1 = sim | 2 = nao");
                     op = scanner.nextInt();
+                    if(op != 1 && op != 2)System.out.println("Opcao invalida");
                 } while (op != 1 && op != 2);
 
                 if (op == 1) {
@@ -167,6 +173,7 @@ public class Execute {
                 manipulacao.conectividade(grafo);
                 break;
             case 15:
+                manipulacao.kosaraju(grafo);
                 break;
             case 16:
                 manipulacao.checagemPonteArticulacao(grafo);

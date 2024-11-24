@@ -20,4 +20,5 @@ public interface Grafo {
     public void mostrarMatrizIncidencia();
     public void mostrarListaAdjacencia(Boolean aux);
     public String mostrarConectividade();
+    public ArrayList<ArrayList<String>> mostrarKosaraju();
 }

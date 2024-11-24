@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -63,8 +65,8 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             Vertice vertice1 = encontrarVertice(rotulo1);
             Vertice vertice2 = encontrarVertice(rotulo2);    
             
-            matrizIncidencia[vertice1.getId()][k] = 1;   // origem
-            matrizIncidencia[vertice2.getId()][k] = -1;  // destino
+            matrizIncidencia[vertice1.getId()][k] = -1;   // origem
+            matrizIncidencia[vertice2.getId()][k] = 1;  // destino
         }
     
         System.out.println("Matriz de Incidencia:");
@@ -139,7 +141,6 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             System.out.println();  // Avança para o próximo vértice
         }
     }
-    
     @Override
     public String mostrarConectividade() {
         if (fortementeConexo()) {
@@ -338,5 +339,83 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         }
 
         return grafo;
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> mostrarKosaraju() {
+        ArrayList<ArrayList<Integer>> adjList;
+        ArrayList<ArrayList<Integer>> adjListTransposta;
+
+        adjList = new ArrayList<>();
+        adjListTransposta = new ArrayList<>();
+
+        for (Vertice vertice : getVerticies()) {
+            adjList.add(new ArrayList<>());
+            adjListTransposta.add(new ArrayList<>());
+        }
+
+        for(Aresta aresta: getArestas()){
+            adjList.get(Integer.parseInt(aresta.getRotuloVertice1())-1).add(Integer.parseInt(aresta.getRotuloVertice2())-1);
+        }
+
+        return acharCFCs(adjList, adjListTransposta);
+    }
+
+    private void fillOrder(int vertex, boolean[] visited, Stack<Integer> stack,  ArrayList<ArrayList<Integer>> adjList) {
+        visited[vertex] = true;
+        for (int neighbor : adjList.get(vertex)) {
+            if (!visited[neighbor]) {
+                fillOrder(neighbor, visited, stack, adjList);
+            }
+        }
+        stack.push(vertex);
+    }
+
+    private void GrafoTransposto(ArrayList<ArrayList<Integer>> adjList, ArrayList<ArrayList<Integer>> adjListTransposta) {
+        for (int i = 0; i < getVerticies().size(); i++) {
+            for (int neighbor : adjList.get(i)) {
+                adjListTransposta.get(neighbor).add(i);
+            }
+        }
+    }
+
+    private void dfsKosaraju(int vertex, boolean[] visitados, ArrayList<String> componente, ArrayList<ArrayList<Integer>> adjListTransposta) {
+        visitados[vertex] = true;
+        componente.add(encontrarVertice(vertex).getRotulo());
+        for (int neighbor : adjListTransposta.get(vertex)) {
+            if (!visitados[neighbor]) {
+                dfsKosaraju(neighbor, visitados, componente, adjListTransposta);
+            }
+        }
+    }
+
+    public ArrayList<ArrayList<String>> acharCFCs(ArrayList<ArrayList<Integer>> adjList, ArrayList<ArrayList<Integer>> adjListTransposta) {
+        Stack<Integer> stack = new Stack<>();
+        boolean[] visitados = new boolean[getVerticies().size()];
+
+        // Step 1: Fill the stack with vertices in the order of finishing times
+        for (int i = 0; i < getVerticies().size(); i++) {
+            if (!visitados[i]) {
+                fillOrder(i, visitados, stack, adjList);
+            }
+        }
+
+        // Step 2: Transpose the graph
+        GrafoTransposto(adjList, adjListTransposta);
+
+        // Step 3: Process all vertices in the order defined by the stack
+        Arrays.fill(visitados, false);
+        ArrayList<ArrayList<String>> CFCs = new ArrayList<>();
+
+        while (!stack.isEmpty()) {
+            int vertex = stack.pop();
+            if (!visitados[vertex]) {
+                ArrayList<String> componente = new ArrayList<>();
+                dfsKosaraju(vertex, visitados, componente, adjListTransposta);
+                CFCs.add(componente);
+            }
+        }
+
+        return CFCs;
     }
 }

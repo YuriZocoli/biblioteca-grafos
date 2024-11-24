@@ -58,7 +58,8 @@ public class GrafoNaoDirecionado implements Grafo {
     }
 
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2){
-        return arestas.stream().anyMatch(aresta -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
+        return arestas.stream().anyMatch(aresta -> (aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2)) 
+        || (aresta.getRotuloVertice1().equals(rotuloVertice2) && aresta.getRotuloVertice2().equals(rotuloVertice1)));
     }
 
     public Boolean createVertice(String rotuloVertice) {
@@ -472,14 +473,24 @@ public class GrafoNaoDirecionado implements Grafo {
                        .findFirst()
                        .orElse(null);
     }
+
+    protected Vertice encontrarVertice(Integer IDVertice) {
+        return verticies.stream()
+                       .filter(vertice -> vertice.getId() == IDVertice)
+                       .findFirst()
+                       .orElse(null);
+    }
     
-    protected Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
+    protected Aresta encontrarAresta(String rotuloVertice1, String rotuloVertice2) {
         return arestas.stream()
                       .filter(aresta -> 
-                        (aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
-                        || (aresta.getRotuloVertice1().equals(rotuloAresta2) && aresta.getRotuloVertice2().equals(rotuloAresta1)))
+                        (aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2))
+                        || (aresta.getRotuloVertice1().equals(rotuloVertice2) && aresta.getRotuloVertice2().equals(rotuloVertice1)))
                       .findFirst()
                       .orElse(null);
     }
 
+    public ArrayList<ArrayList<String>> mostrarKosaraju(){
+        return null;
+    }
 }

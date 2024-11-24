@@ -145,7 +145,6 @@ public class Manipulacao {
         }
     }
 
-
     public void checagemAdjacenciaAresta(Grafo grafo) {
         System.out.println("Escolha um metodo de busca:  \n 1 - Por rotulo \n 2 - Por Vertices");
         String op = scanner.next();
@@ -305,6 +304,19 @@ public class Manipulacao {
             grafo.mostrarListaAdjacencia(comando == 1 ? true : false);
         }else {
             grafo.mostrarListaAdjacencia(null);
+        }
+    }
+
+    public void kosaraju(Grafo grafo){
+        if(grafo.mostrarKosaraju() == null){
+            System.out.println("Funciona somente para grafos Direcionados");
+        } else {
+            var cfcs = grafo.mostrarKosaraju();
+
+            System.out.println("Componenetes Fortementes Conexos:");
+            for (ArrayList<String> componente : cfcs) {
+                System.out.println(componente);
+            }
         }
     }
 }
