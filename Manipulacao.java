@@ -82,7 +82,11 @@ public class Manipulacao {
         String rot1 = scanner.next();
         System.out.print("Digite o rotulo 2 da aresta: ");
         String rot2 = scanner.next();
-        grafo.removeAresta(rot1, rot2);
+        if(grafo.removeAresta(rot1, rot2)){
+            System.out.println("Aresta removida com sucesso");
+        }else{
+            System.out.println("Aresta solicitada para remocao nao encontrada");
+        }
     }
 
     public void rotularAresta(Grafo grafo) {
@@ -130,7 +134,11 @@ public class Manipulacao {
         String rot = scanner.next();
         System.out.print("Digite o novo rotulo da aresta: ");
         String newRot = scanner.next();
-        grafo.rotularAresta(rot, newRot);
+        if(grafo.rotularAresta(rot, newRot)){
+            System.out.println("Aresta rotulada com sucesso");
+        }else{
+            System.out.println("Aresta não encontrada");
+        }
     }
 
     public void ponderarAresta(Grafo grafo) {
@@ -140,7 +148,11 @@ public class Manipulacao {
         String rot2 = scanner.next();
         System.out.println("Digite o novo peso da aresta: ");
         Float peso = scanner.nextFloat();
-        grafo.ponderarAresta(rot1, rot2, peso);
+        if(grafo.ponderarAresta(rot1, rot2, peso)){
+            System.out.println("Peso da aresta alterado com sucesso");
+        }else{
+            System.out.println("Aresta não encontrada");
+        }
     }
 
     public void rotularVertice(Grafo grafo) {
@@ -148,7 +160,11 @@ public class Manipulacao {
         String vert = scanner.next();
         System.out.print("Digite o novo rotulo do vertice: ");
         String newVert = scanner.next();
-        grafo.rotularVertice(vert, newVert);
+        if(grafo.rotularVertice(vert, newVert)){
+            System.out.println("Vértice rotulado");
+        }else{
+            System.out.println("Vértice não encontrado");
+        }
     }
 
     public void ponderarVertice(Grafo grafo) {
@@ -156,7 +172,11 @@ public class Manipulacao {
         String vert = scanner.next();
         System.out.print("Digite o novo peso do vertice: ");
         Float newPeso = scanner.nextFloat();
-        grafo.ponderarVertice(vert, newPeso);
+        if(grafo.ponderarVertice(vert, newPeso)){
+            System.out.println("Peso do vértice alterado");
+        }else{
+            System.out.println("Vértice não encontrado");
+        }
     }
 
     public void existeAresta(Grafo grafo){
@@ -348,23 +368,55 @@ public class Manipulacao {
     }
 
     public void checagemPonteArticulacao(Grafo grafo) {
-        ArrayList<Aresta> pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
-        if (pontesTarjan.isEmpty()) {
-            System.out.println("Não há arestas pontes no grafo.");
-        } else {
-            System.out.println("Arestas pontes:");
-            for (Aresta ponte : pontesTarjan) {
-                System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
-            }
-        }
-        ArrayList<Vertice> articulacoes = ((GrafoNaoDirecionado) grafo).encontrarVerticesArticulacao();
-        if (articulacoes.isEmpty()) {
-            System.out.println("Não há vértices de articulação no grafo.");
-        } else {
-            System.out.println("Vertices de articulacao:");
-            for (Vertice vertice : articulacoes) {
-                System.out.println(vertice.getRotulo());
-            }
+        System.out.println("1 - Checagem ponte via Tarjan");
+        System.out.println("2 - Checagem ponte via Naive");
+        System.out.println("3 - Checagem Articulacao");
+        Integer comando = scanner.nextInt();
+
+        switch (comando) {
+            case 1:
+                var pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
+                if (pontesTarjan.isEmpty()) {
+                    System.out.println("Não há arestas pontes no grafo.");
+                } else {
+                    System.out.println("Arestas pontes:");
+                    for (Aresta ponte : pontesTarjan) {
+                        System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
+                    }
+                }
+                break;
+            case 2:
+                var arestas = new ArrayList<>(grafo.getArestas());
+                ArrayList<Aresta> pontesNaive = new ArrayList<>();
+                for(Aresta aresta: arestas){
+                    grafo.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+                    if(grafo.mostrarConectividade().equals("Grafo e desconexo")){
+                        pontesNaive.add(aresta);
+                    }
+                    grafo.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2(), aresta.getPeso());
+                }
+                if(pontesNaive.isEmpty()){
+                    System.out.println("Não há arestas pontes no grafo.");
+                }else{
+                    System.out.println("Arestas pontes:");
+                    for (Aresta ponte : pontesNaive) {
+                        System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
+                    }
+                }
+                break;
+            case 3:
+                var articulacoes = grafo.encontrarVerticesArticulacao();
+                if (articulacoes.isEmpty()) {
+                    System.out.println("Não há vértices de articulação no grafo.");
+                } else {
+                    System.out.println("Vértices de articulação:");
+                    for (Vertice vertice : articulacoes) {
+                        System.out.println(vertice.getRotulo());
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 

@@ -48,12 +48,12 @@ public class GrafoNaoDirecionado implements Grafo {
         }
     }
 
-    public void removeAresta(String rotuloVertice1, String rotuloVertice2){
+    public Boolean removeAresta(String rotuloVertice1, String rotuloVertice2){
         var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
         if(isAnyRemoved){
-            System.out.println("Aresta removida com sucesso");
+            return true;
         }else{
-            System.out.println("Aresta solicitada para remocao nao encontrada");
+            return false;
         }
     }
 
@@ -84,43 +84,50 @@ public class GrafoNaoDirecionado implements Grafo {
         return verticies.stream().anyMatch(vertice -> vertice.getRotulo().equals(rotuloVertice));
     }
 
-    public void rotularVertice(String rotuloAtual, String novoRotulo) {
+    public Boolean rotularVertice(String rotuloAtual, String novoRotulo) {
         Vertice vertice = encontrarVertice(rotuloAtual);
         if (vertice != null) {
             vertice.setRotulo(novoRotulo);
-            System.out.println("Vértice rotulado");
+            arestas.forEach(aresta -> {
+                if(aresta.getRotuloVertice1().equals(rotuloAtual)){
+                    aresta.setRotuloVertice1(novoRotulo);
+                }else if(aresta.getRotuloVertice2().equals(rotuloAtual)){
+                    aresta.setRotuloVertice2(novoRotulo);
+                }
+            });
+            return true;
         } else {
-            System.out.println("Vértice não encontrado");
+            return false;
         }
     }
 
-    public void ponderarVertice(String rotuloVertice, Float novoPeso) {
+    public Boolean ponderarVertice(String rotuloVertice, Float novoPeso) {
         Vertice vertice = encontrarVertice(rotuloVertice);
         if (vertice != null) {
             vertice.setPeso(novoPeso);
-            System.out.println("Peso do vértice alterado");
+            return true;
         } else {
-            System.out.println("Vértice não encontrado");
+            return true;
         }
     }
 
-    public void rotularAresta(String rotuloAresta, String novoRotulo) {
+    public Boolean rotularAresta(String rotuloAresta, String novoRotulo) {
         Aresta aresta = encontrarArestaPorRotulo(rotuloAresta);
         if (aresta != null) {
             aresta.setRotuloAresta(novoRotulo);
-            System.out.println("Aresta rotulada com sucesso");
+            return true;
         } else {
-            System.out.println("Aresta não encontrada");
+            return false;
         }
     }
 
-    public void ponderarAresta(String rotuloAresta1, String rotuloAresta2, Float novoPeso) {
+    public Boolean ponderarAresta(String rotuloAresta1, String rotuloAresta2, Float novoPeso) {
         Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
         if (aresta != null) {
             aresta.setPeso(novoPeso);
-            System.out.println("Peso da aresta alterado com sucesso");
+            return true;
         } else {
-            System.out.println("Aresta não encontrada");
+            return true;
         }
     }
   
@@ -266,7 +273,7 @@ public class GrafoNaoDirecionado implements Grafo {
             }
         }
 
-        return visitados.size() < verticies.size() ? "Desconexo" : "Conexo";
+        return visitados.size() < verticies.size() ? "Grafo e desconexo" : "Grafo e conexo";
     }
 
     public static Grafo gerarGrafoAleatorio(int quantidadeVertices) {
