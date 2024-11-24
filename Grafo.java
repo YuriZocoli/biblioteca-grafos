@@ -22,7 +22,6 @@ public interface Grafo {
     public String mostrarConectividade();
     public ArrayList<Aresta> encontrarArestasPontesTarjan();
     public ArrayList<Vertice> encontrarVerticesArticulacao();
-    public ArrayList<ArrayList<String>> mostrarKosaraju();
     public ArrayList<ArrayList<String>> kosaraju();
     public ArrayList<String> fleury();
 }

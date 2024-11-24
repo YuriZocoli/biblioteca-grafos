@@ -137,7 +137,7 @@ public class Manipulacao {
         if(grafo.rotularAresta(rot, newRot)){
             System.out.println("Aresta rotulada com sucesso");
         }else{
-            System.out.println("Aresta não encontrada");
+            System.out.println("Aresta nao encontrada");
         }
     }
 
@@ -212,7 +212,7 @@ public class Manipulacao {
         String op = scanner.next();
 
         if (!op.equals("1") && !op.equals("2")) {
-            System.out.println("Comando inválido! Por favor, escolha 1 ou 2.");
+            System.out.println("Comando invalido! Por favor, escolha 1 ou 2.");
             return;
         }
         if (op.equals("1")) {
@@ -377,7 +377,7 @@ public class Manipulacao {
             case 1:
                 var pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
                 if (pontesTarjan.isEmpty()) {
-                    System.out.println("Não há arestas pontes no grafo.");
+                    System.out.println("Nao ha arestas pontes no grafo.");
                 } else {
                     System.out.println("Arestas pontes:");
                     for (Aresta ponte : pontesTarjan) {
@@ -396,7 +396,7 @@ public class Manipulacao {
                     grafo.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2(), aresta.getPeso());
                 }
                 if(pontesNaive.isEmpty()){
-                    System.out.println("Não há arestas pontes no grafo.");
+                    System.out.println("Nao ha arestas pontes no grafo.");
                 }else{
                     System.out.println("Arestas pontes:");
                     for (Aresta ponte : pontesNaive) {
@@ -407,9 +407,9 @@ public class Manipulacao {
             case 3:
                 var articulacoes = grafo.encontrarVerticesArticulacao();
                 if (articulacoes.isEmpty()) {
-                    System.out.println("Não há vértices de articulação no grafo.");
+                    System.out.println("Nao ha vertices de articulacao no grafo.");
                 } else {
-                    System.out.println("Vértices de articulação:");
+                    System.out.println("Vertices de articulacao:");
                     for (Vertice vertice : articulacoes) {
                         System.out.println(vertice.getRotulo());
                     }
