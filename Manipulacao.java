@@ -235,7 +235,7 @@ public class Manipulacao {
         System.out.println("1 - Inserir quantidade de vertices");
         System.out.println("2 - inserir quantidade de vertices e arestas");
         Integer comando = scanner.nextInt();
-        Integer quantidadeVertices, tipoGrafo;
+        Integer quantidadeVertices, comandoInterno;
         Grafo grafo = null;
         do {
             switch (comando) {
@@ -245,11 +245,27 @@ public class Manipulacao {
                     System.out.println("Deseja criar um grafo direcionado?");
                     System.out.println("1 - Sim (criar grafo direcionado)");
                     System.out.println("2 - Nao (criar grafo nao direcionado)");
-                    tipoGrafo = scanner.nextInt();
-                    if(tipoGrafo == 1){
-                        grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
-                    }else if(tipoGrafo == 2){
-                        grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                    comandoInterno = scanner.nextInt();
+                    if(comandoInterno == 1){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, 0);
+                        }else{
+                            grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                        }
+                    }else if(comandoInterno == 2){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, 0);
+                        }else{
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                        }
                     }
                     break;
                 case 2:
@@ -260,11 +276,27 @@ public class Manipulacao {
                     System.out.println("Deseja criar um grafo direcionado?");
                     System.out.println("1 - Sim (criar grafo direcionado)");
                     System.out.println("2 - Nao (criar grafo nao direcionado)");
-                    tipoGrafo = scanner.nextInt();
-                    if(tipoGrafo == 1){
-                        grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
-                    }else if(tipoGrafo == 2){
-                        grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                    comandoInterno = scanner.nextInt();
+                    if(comandoInterno == 1){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, quantidadeArestas);
+                        }else{
+                            grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                        }
+                    }else if(comandoInterno == 2){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, quantidadeArestas);
+                        }else{
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                        }
                     }
                     break;
                 default:

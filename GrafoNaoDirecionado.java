@@ -467,6 +467,47 @@ public class GrafoNaoDirecionado implements Grafo {
         }
     }
 
+    public static Grafo gerarGrafoAleatorioConexo(Integer quantidadeVertices, Integer quantidadeArestas) {
+        Random random = new Random();
+
+        if (quantidadeArestas <= 0) {
+            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices-1))/2;
+            quantidadeArestas = random.nextInt(maxQuantidadeArestas);
+        }
+
+        if (quantidadeArestas < quantidadeVertices - 1) {
+            throw new IllegalArgumentException("Para garantir conectividade, o número mínimo de arestas deve ser igual a (número de vértices - 1).");
+        }
+
+        Grafo grafo = new GrafoDirecionado();
+
+        // Passo 1: Criar vértices
+        for (int i = 1; i <= quantidadeVertices; i++) {
+            grafo.createVertice(String.valueOf(i));
+        }
+
+        // Passo 2: Garantir conectividade (árvore geradora)
+        for (int i = 2; i <= quantidadeVertices; i++) {
+            int v1 = i - 1; // Vértice anterior
+            int v2 = i;     // Vértice atual
+            grafo.createAresta(String.valueOf(v1), String.valueOf(v2));
+        }
+
+        // Passo 3: Adicionar arestas aleatórias adicionais
+        int arestasCriadas = quantidadeVertices - 1; // Já criamos n-1 arestas
+        while (arestasCriadas < quantidadeArestas) {
+            int v1 = random.nextInt(quantidadeVertices) + 1;
+            int v2 = random.nextInt(quantidadeVertices) + 1;
+
+            if (v1 != v2 && !grafo.contemAresta(String.valueOf(v1), String.valueOf(v2))) {
+                grafo.createAresta(String.valueOf(v1), String.valueOf(v2));
+                arestasCriadas++;
+            }
+        }
+
+        return grafo;
+    }
+
     protected Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
                        .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
