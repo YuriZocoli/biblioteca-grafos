@@ -4,15 +4,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ManipulacaoCSV {
-    private Scanner scanner;
-    ManipulacaoCSV(Scanner scanner_){
-        scanner = scanner_;
-    }
 
-    public String[] listarArquivos(){
+    public static String[] listarArquivos(){
         String folderPath = System.getProperty("user.dir");
 
         // Criando um objeto File para a pasta
@@ -42,14 +37,11 @@ public class ManipulacaoCSV {
         }
     }
 
-    public Grafo buscarGrafo(String caminhoArquivo){
+    public static Grafo buscarGrafo(String caminhoArquivo, Integer tipoGrafo){
         String filePath = caminhoArquivo;
         
         Grafo grafo;
-        System.out.println("1 - Buscar grafo direcionado");
-        System.out.println("2 - Buscar grafo nao-direcionado");
-        Integer comando = scanner.nextInt();
-        if(comando == 1){
+        if(tipoGrafo == 1){
             grafo = new GrafoDirecionado();
         }else {
             grafo = new GrafoNaoDirecionado();

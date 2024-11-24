@@ -497,4 +497,39 @@ public class Manipulacao {
         }
         System.out.println("");
     }
+
+    public Grafo buscarGrafoDeArquivo() {
+        var arquivos = ManipulacaoCSV.listarArquivos();
+        if(arquivos == null){
+            System.out.println("Nenhum arquivo .csv encontrado");
+            return null;
+        }
+
+        Integer counter = 1;
+        Integer comando = null;
+        System.out.println("Selecione um arquivo:");
+        do{
+            counter = 1;
+            for(String arquivo : arquivos){
+                System.out.println(counter +" - "+arquivo);
+                counter++;
+            }
+            comando = scanner.nextInt();
+            if(comando >= counter || comando < 1){
+                System.out.println("Arquivo invalido! Selecione um arquivo valido:");
+            }
+        }while(comando >= counter || comando < 1);
+        
+        Integer tipoGrafo = null;
+        do {
+            System.out.println("1 - Buscar grafo direcionado");
+            System.out.println("2 - Buscar grafo nao-direcionado");
+            tipoGrafo = scanner.nextInt();
+            if(tipoGrafo != 1 && tipoGrafo != 2){
+                System.out.println("Tipo invalido! Selecione um tipo valido:");
+            }
+        } while (tipoGrafo != 1 && tipoGrafo != 2);
+
+        return ManipulacaoCSV.buscarGrafo(arquivos[comando-1], tipoGrafo);
+    }
 }
