@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public interface Grafo {
@@ -30,7 +29,7 @@ public interface Grafo {
     public Boolean ponderarAresta(String rotuloAresta1, String rotuloAresta2, Float novoPeso);
 
     public Aresta encontrarArestaPorRotulo(String rotulo);
-
+    public Aresta encontrarAresta (String rotuloVertice1, String rotuloVertice2);
     public void mostrarMatrizAdjacencia();
 
     public void mostrarMatrizIncidencia();
@@ -42,6 +41,6 @@ public interface Grafo {
     public ArrayList<Aresta> encontrarArestasPontesTarjan();
 
     public ArrayList<Vertice> encontrarVerticesArticulacao();
-
-    public ArrayList<ArrayList<String>> mostrarKosaraju();
+    public ArrayList<ArrayList<String>> kosaraju();
+    public ArrayList<String> fleury();
 }

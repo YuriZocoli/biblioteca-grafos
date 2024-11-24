@@ -152,9 +152,9 @@ public class GrafoNaoDirecionado implements Grafo {
             matrizAdjacencia[i.getId()][j.getId()] = 1;
             matrizAdjacencia[j.getId()][i.getId()] = 1; // Para grafos Nao direcionados
         }
-
+    
         System.out.println("Matriz de Adjacencia:");
-        System.out.print("  ");
+        System.out.print("  "); 
         for (int i = 0; i < verticies.size(); i++) {
             System.out.print(verticies.get(i).getRotulo() + " ");
         }
@@ -517,21 +517,21 @@ public class GrafoNaoDirecionado implements Grafo {
         return grafo;
     }
 
-    protected Vertice encontrarVertice(String rotuloVertice) {
+    public Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
                 .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
                 .findFirst()
                 .orElse(null);
     }
 
-    protected Vertice encontrarVertice(Integer IDVertice) {
+    public Vertice encontrarVertice(Integer IDVertice) {
         return verticies.stream()
                 .filter(vertice -> vertice.getId() == IDVertice)
                 .findFirst()
                 .orElse(null);
     }
-
-    protected Aresta encontrarAresta(String rotuloVertice1, String rotuloVertice2) {
+    
+    public Aresta encontrarAresta(String rotuloVertice1, String rotuloVertice2) {
         return arestas.stream()
                 .filter(aresta
                         -> (aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2))
@@ -540,7 +540,7 @@ public class GrafoNaoDirecionado implements Grafo {
                 .orElse(null);
     }
 
-    public ArrayList<ArrayList<String>> mostrarKosaraju() {
+    public ArrayList<ArrayList<String>> kosaraju(){
         return null;
     }
 }
