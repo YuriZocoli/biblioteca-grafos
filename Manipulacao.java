@@ -181,13 +181,13 @@ public class Manipulacao {
 
     public void existeAresta(Grafo grafo) {
         String rot1, rot2;
-        System.out.print("Digite o 1° rotulo: ");
+        System.out.print("Digite o primeiro rotulo: ");
         rot1 = scanner.next();
-        System.out.print("Digite o 2° rotulo: ");
+        System.out.print("Digite o segundo rotulo: ");
         rot2 = scanner.next();
 
         if (grafo.contemAresta(rot1, rot2)) {
-            System.out.println("Areste existe");
+            System.out.println("Aresta existe");
         } else {
             System.out.println("Aresta nao existe");
         }
@@ -195,9 +195,9 @@ public class Manipulacao {
 
     public void checagemAdjacenciaVertice(Grafo grafo) {
         String v1, v2;
-        System.out.print("Digite o 1° vertice: ");
+        System.out.print("Digite o primeiro vertice: ");
         v1 = scanner.next();
-        System.out.print("Digite o 1° vertice: ");
+        System.out.print("Digite o segundo vertice: ");
         v2 = scanner.next();
 
         if (grafo.contemAresta(v1, v2)) {

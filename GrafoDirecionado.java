@@ -23,12 +23,14 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
                 .findFirst()
                 .orElse(null);
     }
+
     @Override
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2) {
         return getArestas().stream().anyMatch(aresta
                 -> aresta.getRotuloVertice1().equals(rotuloVertice1)
                 && aresta.getRotuloVertice2().equals(rotuloVertice2));
     }
+
     @Override
     public void mostrarMatrizAdjacencia() {
         int n = getVerticies().size();
@@ -45,7 +47,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         }
 
         System.out.println("Matriz de Adjacencia:");
-        System.out.print("  "); 
+        System.out.print("  ");
         for (int i = 0; i < verticies.size(); i++) {
             System.out.print(verticies.get(i).getRotulo() + " ");
         }
@@ -59,6 +61,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             System.out.println();
         }
     }
+
     @Override
     public void mostrarMatrizIncidencia() {
         int n = verticies.size();
@@ -104,8 +107,8 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
     private void mostrarListaAdjacenciaSucessores() {
         System.out.println("Lista de Adjacencia de Sucessores:");
-    
-    // Para cada vértice, encontrar os sucessores
+
+        // Para cada vértice, encontrar os sucessores
         for (Vertice vertice : verticies) {
             System.out.print(vertice.getRotulo() + "-> ");
 
@@ -128,7 +131,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
     private void mostrarListaAdjacenciaAntecessores() {
         System.out.println("Lista de Adjacencia de Antecessores:");
-        
+
         // Para cada vértice, encontrar os antecessores
         for (Vertice vertice : verticies) {
             System.out.print(vertice.getRotulo() + "-> ");  // Exibe o rótulo do vertice atual
@@ -318,7 +321,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             System.out.println("quantidade de arestas maior que o limite permitido, Limite: " + maximoArestas + ", quantidadeArestas: " + quantidadeArestas);
             return null;
         }
-        
+
         Grafo grafo = new GrafoDirecionado();
         // Criar vertices
         for (int i = 1; i <= quantidadeVertices; i++) {
@@ -350,15 +353,14 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     public static Grafo gerarGrafoAleatorioConexo(Integer quantidadeVertices, Integer quantidadeArestas) {
         Random random = new Random();
 
-        if (quantidadeArestas <= 0) {
+        if (quantidadeArestas <= 0 || quantidadeArestas == null) {
             Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices - 1));
-            quantidadeArestas = random.nextInt(maxQuantidadeArestas);
+            quantidadeArestas = random.nextInt((quantidadeVertices - 1), maxQuantidadeArestas);
         }
 
         if (quantidadeArestas < quantidadeVertices - 1) {
-            throw new IllegalArgumentException("Para garantir conectividade, o numero mínimo de arestas deve ser igual a (numero de vertices - 1).");
+            throw new IllegalArgumentException("Para garantir conectividade, o numero minimo de arestas deve ser igual a (numero de vertices - 1).");
         }
-
 
         Grafo grafo = new GrafoDirecionado();
 
