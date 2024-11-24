@@ -285,7 +285,7 @@ public class GrafoNaoDirecionado implements Grafo {
 
         Random random = new Random();
         int maximoArestas = (quantidadeVertices * (quantidadeVertices - 1)) / 2; // Máximo de arestas possíveis
-        int quantidadeArestas = random.nextInt(maximoArestas + 1); // Número aleatório de arestas
+        int quantidadeArestas = random.nextInt(maximoArestas + 1); // Numero aleatório de arestas
 
         // Criar arestas aleatórias
         while (grafo.getArestas().size() < quantidadeArestas) {
@@ -386,7 +386,7 @@ public class GrafoNaoDirecionado implements Grafo {
             }
         }
 
-        // Adicionar vértices identificados como articulação à lista
+        // Adicionar vertices identificados como articulação à lista
         for (Vertice vertice : verticies) {
             if (isArticulation[vertice.getId()]) {
                 articulacoes.add(vertice);
@@ -440,7 +440,7 @@ public class GrafoNaoDirecionado implements Grafo {
         for (Aresta aresta : arestas) {
             Vertice v = null;
 
-            // Encontrar o vértice adjacente
+            // Encontrar o vertice adjacente
             if (aresta.getRotuloVertice1().equals(u.getRotulo())) {
                 v = encontrarVertice(aresta.getRotuloVertice2());
             } else if (aresta.getRotuloVertice2().equals(u.getRotulo())) {
@@ -455,15 +455,15 @@ public class GrafoNaoDirecionado implements Grafo {
                 children++;
                 tarjanDFSArticulacao(v, u, discovery, low, visited, isArticulation, time);
 
-                // Atualizar o valor de "low" do vértice atual
+                // Atualizar o valor de "low" do vertice atual
                 low[u.getId()] = Math.min(low[u.getId()], low[v.getId()]);
 
-                // Caso 1: O vértice raiz da DFS é de articulação se tiver mais de 1 filho
+                // Caso 1: O vertice raiz da DFS é de articulação se tiver mais de 1 filho
                 if (parent == null && children > 1) {
                     isArticulation[u.getId()] = true;
                 }
 
-                // Caso 2: Vértice não raiz é de articulação se "low[v] >= discovery[u]"
+                // Caso 2: vertice nao raiz é de articulação se "low[v] >= discovery[u]"
                 if (parent != null && low[v.getId()] >= discovery[u.getId()]) {
                     isArticulation[u.getId()] = true;
                 }
@@ -483,20 +483,20 @@ public class GrafoNaoDirecionado implements Grafo {
         }
 
         if (quantidadeArestas < quantidadeVertices - 1) {
-            throw new IllegalArgumentException("Para garantir conectividade, o número mínimo de arestas deve ser igual a (número de vértices - 1).");
+            throw new IllegalArgumentException("Para garantir conectividade, o numero mínimo de arestas deve ser igual a (numero de vertices - 1).");
         }
 
         Grafo grafo = new GrafoDirecionado();
 
-        // Passo 1: Criar vértices
+        // Passo 1: Criar vertices
         for (int i = 1; i <= quantidadeVertices; i++) {
             grafo.createVertice(String.valueOf(i));
         }
 
         // Passo 2: Garantir conectividade (árvore geradora)
         for (int i = 2; i <= quantidadeVertices; i++) {
-            int v1 = i - 1; // Vértice anterior
-            int v2 = i;     // Vértice atual
+            int v1 = i - 1; // Vertice anterior
+            int v2 = i;     // Vertice atual
             grafo.createAresta(String.valueOf(v1), String.valueOf(v2));
         }
 

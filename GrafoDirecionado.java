@@ -284,7 +284,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
         Random random = new Random();
         int maximoArestas = (quantidadeVertices * (quantidadeVertices - 1)); // Máximo de arestas possíveis
-        int quantidadeArestas = random.nextInt(maximoArestas + 1); // Número aleatório de arestas
+        int quantidadeArestas = random.nextInt(maximoArestas + 1); // Numero aleatório de arestas
 
         // Criar arestas aleatórias
         while (grafo.getArestas().size() < quantidadeArestas) {
@@ -350,20 +350,20 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         }
 
         if (quantidadeArestas < quantidadeVertices - 1) {
-            throw new IllegalArgumentException("Para garantir conectividade, o número mínimo de arestas deve ser igual a (número de vértices - 1).");
+            throw new IllegalArgumentException("Para garantir conectividade, o numero mínimo de arestas deve ser igual a (numero de vertices - 1).");
         }
 
         Grafo grafo = new GrafoDirecionado();
 
-        // Passo 1: Criar vértices
+        // Passo 1: Criar vertices
         for (int i = 1; i <= quantidadeVertices; i++) {
             grafo.createVertice(String.valueOf(i));
         }
 
         // Passo 2: Garantir conectividade (árvore geradora)
         for (int i = 2; i <= quantidadeVertices; i++) {
-            int v1 = i - 1; // Vértice anterior
-            int v2 = i;     // Vértice atual
+            int v1 = i - 1; // Vertice anterior
+            int v2 = i;     // Vertice atual
             grafo.createAresta(String.valueOf(v1), String.valueOf(v2));
         }
 
