@@ -14,12 +14,18 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     }
 
     @Override
+    public Aresta encontrarAresta(String rotuloVertice1, String rotuloVertice2) {
+        return arestas.stream()
+                .filter(aresta -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2))
+                .findFirst()
+                .orElse(null);
+    }
+    @Override
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2) {
         return getArestas().stream().anyMatch(aresta -> 
             aresta.getRotuloVertice1().equals(rotuloVertice1) &&
             aresta.getRotuloVertice2().equals(rotuloVertice2));
     }
-
     @Override
     public void mostrarMatrizAdjacencia() {
         int n = getVerticies().size();
@@ -35,7 +41,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             }
         }
 
-        System.out.println("Matriz de Adjacência:");
+        System.out.println("Matriz de Adjacencia:");
         System.out.print("  "); 
         for (int i = 0; i < verticies.size(); i++) {
             System.out.print(verticies.get(i).getRotulo() + " ");
@@ -50,7 +56,6 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             System.out.println(); 
         }
     }
-
     @Override
     public void mostrarMatrizIncidencia() {
         int n = verticies.size();
@@ -95,7 +100,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     }
 
     private void mostrarListaAdjacenciaSucessores() {
-        System.out.println("Lista de Adjacência de Sucessores:");
+        System.out.println("Lista de Adjacencia de Sucessores:");
     
     // Para cada vértice, encontrar os sucessores
         for (Vertice vertice : verticies) {
@@ -119,7 +124,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     }
 
     private void mostrarListaAdjacenciaAntecessores() {
-        System.out.println("Lista de Adjacência de Antecessores:");
+        System.out.println("Lista de Adjacencia de Antecessores:");
         
         // Para cada vértice, encontrar os antecessores
         for (Vertice vertice : verticies) {
@@ -383,7 +388,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     }
 
     @Override
-    public ArrayList<ArrayList<String>> mostrarKosaraju() {
+    public ArrayList<ArrayList<String>> kosaraju() {
         ArrayList<ArrayList<Integer>> adjList;
         ArrayList<ArrayList<Integer>> adjListTransposta;
 

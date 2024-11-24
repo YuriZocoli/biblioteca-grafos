@@ -144,7 +144,7 @@ public class GrafoNaoDirecionado implements Grafo {
             matrizAdjacencia[j.getId()][i.getId()] = 1; // Para grafos não direcionados
         }
     
-        System.out.println("Matriz de Adjacência:");
+        System.out.println("Matriz de Adjacencia:");
         System.out.print("  "); 
         for (int i = 0; i < verticies.size(); i++) {
             System.out.print(verticies.get(i).getRotulo() + " ");
@@ -508,21 +508,21 @@ public class GrafoNaoDirecionado implements Grafo {
         return grafo;
     }
 
-    protected Vertice encontrarVertice(String rotuloVertice) {
+    public Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
                        .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
                        .findFirst()
                        .orElse(null);
     }
 
-    protected Vertice encontrarVertice(Integer IDVertice) {
+    public Vertice encontrarVertice(Integer IDVertice) {
         return verticies.stream()
                        .filter(vertice -> vertice.getId() == IDVertice)
                        .findFirst()
                        .orElse(null);
     }
     
-    protected Aresta encontrarAresta(String rotuloVertice1, String rotuloVertice2) {
+    public Aresta encontrarAresta(String rotuloVertice1, String rotuloVertice2) {
         return arestas.stream()
                       .filter(aresta -> 
                         (aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2))
@@ -531,7 +531,91 @@ public class GrafoNaoDirecionado implements Grafo {
                       .orElse(null);
     }
 
-    public ArrayList<ArrayList<String>> mostrarKosaraju(){
+    public ArrayList<ArrayList<String>> kosaraju(){
         return null;
+    }
+
+    public Boolean verticeImpar(Vertice vertice) {
+        int grau = 0;
+        for (Aresta aresta : arestas) {
+            String rotulo1 = aresta.getRotuloVertice1();
+            String rotulo2 = aresta.getRotuloVertice2();
+
+            if (rotulo1.equals(vertice.getRotulo()) || rotulo2.equals(vertice.getRotulo())) {
+                grau++; // Incrementar o grau sempre que o vértice aparecer em uma aresta
+            }
+        }
+        return grau % 2 != 0;
+    }
+
+    public Boolean imparTresVertice() {   
+        int impar = 0;
+        for (Vertice vertice : verticies) {
+            // Encontrar todas as arestas conectadas ao vértice
+            if(verticeImpar(vertice))impar++;
+        }
+
+        return (impar > 3);
+    }
+
+    public ArrayList<String> fleury() {
+        ArrayList<Vertice> verticesImpares = new ArrayList<>();
+        for (Vertice vertice : verticies) {
+            if (verticeImpar(vertice)) {
+                verticesImpares.add(vertice);
+            }
+        }
+
+        if (verticesImpares.size() >= 3) return null;
+
+        Vertice atual;
+        if (!verticesImpares.isEmpty()) {
+            atual = verticesImpares.get(0);
+        } else {
+            atual = verticies.get(0);
+        }
+
+        GrafoNaoDirecionado grafoAux = new GrafoNaoDirecionado();
+        for (Vertice v : verticies) {
+            grafoAux.createVertice(v.getRotulo());
+        }
+        for (Aresta a : arestas) {
+            grafoAux.createAresta(a.getRotuloVertice1(), a.getRotuloVertice2());
+        }
+
+        // Começo do caminho:
+        ArrayList<String> caminho = new ArrayList<>();
+
+        while (!grafoAux.getArestas().isEmpty()) {
+            ArrayList<Aresta> adjacentes = new ArrayList<>();
+            for (Aresta a : grafoAux.getArestas()) {
+                if (a.getRotuloVertice1().equals(atual.getRotulo()) || a.getRotuloVertice2().equals(atual.getRotulo())) {
+                    adjacentes.add(a);
+                }
+            }
+
+            Aresta escolhida = null;
+            for (Aresta aresta : adjacentes) {
+                grafoAux.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+                if (grafoAux.mostrarConectividade().equals("Conexo")) {
+                    escolhida = aresta;
+                    break;
+                }
+                grafoAux.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+            }
+
+            if (escolhida == null) {
+                escolhida = adjacentes.get(0);
+            }
+
+            caminho.add(escolhida.getRotuloVertice1());
+
+            atual = atual.getRotulo().equals(escolhida.getRotuloVertice1())
+                    ? encontrarVertice(escolhida.getRotuloVertice2())
+                    : encontrarVertice(escolhida.getRotuloVertice1());
+
+            grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2());
+        }
+        return caminho;
     }
 }
