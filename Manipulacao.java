@@ -292,12 +292,12 @@ public class Manipulacao {
     }
 
     public Grafo criarGrafoAleatorio() {
-        System.out.println("1 - Inserir quantidade de vertices");
-        System.out.println("2 - inserir quantidade de vertices e arestas");
-        Integer comando = scanner.nextInt();
-        Integer quantidadeVertices, comandoInterno;
         Grafo grafo = null;
         do {
+            System.out.println("1 - Inserir quantidade de vertices");
+            System.out.println("2 - inserir quantidade de vertices e arestas");
+            Integer comando = scanner.nextInt();
+            Integer quantidadeVertices, comandoInterno;
             switch (comando) {
                 case 1:
                     do{
