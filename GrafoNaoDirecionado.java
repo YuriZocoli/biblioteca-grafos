@@ -497,7 +497,8 @@ public class GrafoNaoDirecionado implements Grafo {
         }
 
         if (quantidadeArestas < quantidadeVertices - 1) {
-            throw new IllegalArgumentException("Para garantir conectividade, o numero minimo de arestas deve ser igual a (numero de vertices - 1).");
+            System.out.println("Para garantir conectividade, o numero minimo de arestas deve ser igual a (numero de vertices - 1).");
+            return null;
         }
 
         Grafo grafo = new GrafoDirecionado();
