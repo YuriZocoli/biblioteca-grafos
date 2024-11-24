@@ -42,10 +42,9 @@ public interface Grafo {
     public String mostrarConectividade();
 
     public ArrayList<Aresta> encontrarArestasPontesTarjan();
-
+    public ArrayList<Aresta> encontrarArestasPontesNaive();
     public ArrayList<Vertice> encontrarVerticesArticulacao();
 
     public ArrayList<ArrayList<String>> kosaraju();
-
-    public ArrayList<String> fleury();
+    public ArrayList<String> fleury(Boolean method);
 }

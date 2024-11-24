@@ -1,4 +1,4 @@
-
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -367,6 +367,19 @@ public class GrafoNaoDirecionado implements Grafo {
         return pontes;
     }
 
+    public ArrayList<Aresta> encontrarArestasPontesNaive() {
+        ArrayList<Aresta> pontes = new ArrayList<>();
+
+        for (Aresta aresta : new ArrayList<>(arestas)) {
+            removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+            if (!mostrarConectividade().equals("Grafo e conexo")) {
+                pontes.add(aresta);
+            }   
+            createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2(), aresta.getPeso());
+        }
+        return pontes;
+    }
+
     public ArrayList<Vertice> encontrarVerticesArticulacao() {
         ArrayList<Vertice> articulacoes = new ArrayList<>();
         int[] discovery = new int[verticies.size()];
@@ -480,12 +493,13 @@ public class GrafoNaoDirecionado implements Grafo {
         Random random = new Random();
 
         if (quantidadeArestas <= 0 || quantidadeArestas == null) {
-            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices - 1)) / 2;
+            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices-1))/2;
             quantidadeArestas = random.nextInt((quantidadeVertices - 1), maxQuantidadeArestas);
         }
 
         if (quantidadeArestas < quantidadeVertices - 1) {
-            throw new IllegalArgumentException("Para garantir conectividade, o numero minimo de arestas deve ser igual a (numero de vertices - 1).");
+            System.out.println("Para garantir conectividade, o numero minimo de arestas deve ser igual a (numero de vertices - 1).");
+            return null;
         }
 
         Grafo grafo = new GrafoNaoDirecionado();
@@ -569,7 +583,7 @@ public class GrafoNaoDirecionado implements Grafo {
         return (impar > 3);
     }
 
-    public ArrayList<String> fleury() {
+    public ArrayList<String> fleury(Boolean method) {
         ArrayList<Vertice> verticesImpares = new ArrayList<>();
         for (Vertice vertice : verticies) {
             if (verticeImpar(vertice)) {
@@ -595,40 +609,92 @@ public class GrafoNaoDirecionado implements Grafo {
         for (Aresta a : arestas) {
             grafoAux.createAresta(a.getRotuloVertice1(), a.getRotuloVertice2());
         }
+        
+        if(method){
+            // Começo do caminho:
+            ArrayList<Aresta> pontes = grafoAux.encontrarArestasPontesTarjan();
+            ArrayList<String> caminho = new ArrayList<>();
 
-        // Começo do caminho:
-        ArrayList<String> caminho = new ArrayList<>();
+            long inicio = System.currentTimeMillis(); //medidor tempo
 
-        while (!grafoAux.getArestas().isEmpty()) {
-            ArrayList<Aresta> adjacentes = new ArrayList<>();
-            for (Aresta a : grafoAux.getArestas()) {
-                if (a.getRotuloVertice1().equals(atual.getRotulo()) || a.getRotuloVertice2().equals(atual.getRotulo())) {
-                    adjacentes.add(a);
+            while (!grafoAux.getArestas().isEmpty()) {
+                ArrayList<Aresta> adjacentes = new ArrayList<>();
+                for (Aresta a : grafoAux.getArestas()) {
+                    if (a.getRotuloVertice1().equals(atual.getRotulo()) || a.getRotuloVertice2().equals(atual.getRotulo())) {
+                        adjacentes.add(a);
+                    }
                 }
-            }
 
-            Aresta escolhida = null;
-            for (Aresta aresta : adjacentes) {
-                grafoAux.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
-                if (grafoAux.mostrarConectividade().equals("Conexo")) {
-                    escolhida = aresta;
-                    break;
+                Aresta escolhida = null;
+                for (Aresta aresta : adjacentes) {
+                    // Evitar pontes, a menos que não haja outra escolha
+                    grafoAux.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+                    if (grafoAux.mostrarConectividade().equals("Conexo") || !pontes.contains(aresta)) {
+                        escolhida = aresta;
+                        break;
+                    }
+                    grafoAux.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
                 }
-                grafoAux.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+
+                if (escolhida == null) {
+                    escolhida = adjacentes.get(0);
+                }
+
+                caminho.add(escolhida.getRotuloVertice1());
+
+                atual = atual.getRotulo().equals(escolhida.getRotuloVertice1())
+                        ? encontrarVertice(escolhida.getRotuloVertice2())
+                        : encontrarVertice(escolhida.getRotuloVertice1());
+
+                grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2());
             }
+            long fim = System.currentTimeMillis();
 
-            if (escolhida == null) {
-                escolhida = adjacentes.get(0);
+            long duracao = fim - inicio; // Tempo total em milissegundos
+            System.out.println("Tempo de execução: " + duracao + " ms");
+            return caminho;
+        } else {
+            ArrayList<Aresta> pontes = grafoAux.encontrarArestasPontesNaive();
+            ArrayList<String> caminho = new ArrayList<>();
+
+            long inicio = System.currentTimeMillis(); //medidor tempo
+
+            while (!grafoAux.getArestas().isEmpty()) {
+                ArrayList<Aresta> adjacentes = new ArrayList<>();
+                for (Aresta a : grafoAux.getArestas()) {
+                    if (a.getRotuloVertice1().equals(atual.getRotulo()) || a.getRotuloVertice2().equals(atual.getRotulo())) {
+                        adjacentes.add(a);
+                    }
+                }
+
+                Aresta escolhida = null;
+                for (Aresta aresta : adjacentes) {
+                    // Evitar pontes, a menos que não haja outra escolha
+                    grafoAux.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+                    if (grafoAux.mostrarConectividade().equals("Conexo") || !pontes.contains(aresta)) {
+                        escolhida = aresta;
+                        break;
+                    }
+                    grafoAux.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+                }
+
+                if (escolhida == null) {
+                    escolhida = adjacentes.get(0);
+                }
+
+                caminho.add(escolhida.getRotuloVertice1());
+
+                atual = atual.getRotulo().equals(escolhida.getRotuloVertice1())
+                        ? encontrarVertice(escolhida.getRotuloVertice2())
+                        : encontrarVertice(escolhida.getRotuloVertice1());
+
+                grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2());
             }
+            long fim = System.currentTimeMillis();
 
-            caminho.add(escolhida.getRotuloVertice1());
-
-            atual = atual.getRotulo().equals(escolhida.getRotuloVertice1())
-                    ? encontrarVertice(escolhida.getRotuloVertice2())
-                    : encontrarVertice(escolhida.getRotuloVertice1());
-
-            grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2());
+            long duracao = fim - inicio; // Tempo total em milissegundos
+            System.out.println("Tempo de execução: " + duracao + " ms");
+            return caminho;
         }
-        return caminho;
     }
 }
