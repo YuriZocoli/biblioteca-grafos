@@ -398,15 +398,8 @@ public class Manipulacao {
                 }
                 break;
             case 2:
-                var arestas = new ArrayList<>(grafo.getArestas());
-                ArrayList<Aresta> pontesNaive = new ArrayList<>();
-                for(Aresta aresta: arestas){
-                    grafo.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
-                    if(grafo.mostrarConectividade().equals("Grafo e desconexo")){
-                        pontesNaive.add(aresta);
-                    }
-                    grafo.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2(), aresta.getPeso());
-                }
+                ArrayList<Aresta> pontesNaive = grafo.encontrarArestasPontesNaive();
+
                 if(pontesNaive.isEmpty()){
                     System.out.println("Nao ha arestas pontes no grafo.");
                 }else{
@@ -457,15 +450,29 @@ public class Manipulacao {
     }
 
     public void mostrarFleury(Grafo grafo){
-        if(grafo.fleury() == null){
-            System.out.println("O grafo nao e Euleriano");
-        } else {
-            var caminho = grafo.fleury(); 
+        int op;
+        do{
+            System.out.println("1 - Fleury usando Tarjan:");
+            System.out.println("2 - Fleury usando Naive:");
+            op = scanner.nextInt();
+            if(op!=1||op!=2)System.out.println("Opcao invalida");
+        }while(op!=1||op!=2);
+
+        if (op==1){
+            Boolean method = true;
+            var caminho = grafo.fleury(method); 
             for (int i = 0; i < caminho.size(); i++) {
                 System.out.print(caminho.get(i));
                 System.out.print(" / ");
             }
             System.out.println();
-        }
+        } else {
+            Boolean method = false;
+            var caminho = grafo.fleury(method); 
+            for (int i = 0; i < caminho.size(); i++) {
+                System.out.print(caminho.get(i));
+                System.out.print(" / ");
+            }
+        }System.out.println("");
     }
 }
