@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,18 +7,20 @@ import java.util.Set;
 import java.util.Stack;
 
 public class GrafoDirecionado extends GrafoNaoDirecionado {
+
     public GrafoDirecionado() {
-        super(); 
+        super();
     }
+
     public GrafoDirecionado(int quantidadeVerticies) {
-        super(quantidadeVerticies); 
+        super(quantidadeVerticies);
     }
 
     @Override
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2) {
-        return getArestas().stream().anyMatch(aresta -> 
-            aresta.getRotuloVertice1().equals(rotuloVertice1) &&
-            aresta.getRotuloVertice2().equals(rotuloVertice2));
+        return getArestas().stream().anyMatch(aresta
+                -> aresta.getRotuloVertice1().equals(rotuloVertice1)
+                && aresta.getRotuloVertice2().equals(rotuloVertice2));
     }
 
     @Override
@@ -35,19 +38,19 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             }
         }
 
-        System.out.println("Matriz de Adjacência:");
-        System.out.print("  "); 
+        System.out.println("Matriz de Adjacencia:");
+        System.out.print("  ");
         for (int i = 0; i < verticies.size(); i++) {
             System.out.print(verticies.get(i).getRotulo() + " ");
         }
-        System.out.println(); 
-    
+        System.out.println();
+
         for (int i = 0; i < matrizAdjacencia.length; i++) {
-            System.out.print(verticies.get(i).getRotulo() + " ");  
+            System.out.print(verticies.get(i).getRotulo() + " ");
             for (int j = 0; j < matrizAdjacencia[i].length; j++) {
-                System.out.print(matrizAdjacencia[i][j] + " "); 
+                System.out.print(matrizAdjacencia[i][j] + " ");
             }
-            System.out.println(); 
+            System.out.println();
         }
     }
 
@@ -56,26 +59,26 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         int n = verticies.size();
         int m = arestas.size();
         int[][] matrizIncidencia = new int[n][m];  // Matriz n x m (n vertices, m arestas)
-    
+
         // Preenche a matriz de incidência
         for (int k = 0; k < arestas.size(); k++) {
             Aresta aresta = arestas.get(k);
             String rotulo1 = aresta.getRotuloVertice1();
             String rotulo2 = aresta.getRotuloVertice2();
             Vertice vertice1 = encontrarVertice(rotulo1);
-            Vertice vertice2 = encontrarVertice(rotulo2);    
-            
+            Vertice vertice2 = encontrarVertice(rotulo2);
+
             matrizIncidencia[vertice1.getId()][k] = -1;   // origem
             matrizIncidencia[vertice2.getId()][k] = 1;  // destino
         }
-    
+
         System.out.println("Matriz de Incidencia:");
         System.out.print("   ");
         for (int i = 0; i < arestas.size(); i++) {
-            System.out.print( "e" + arestas.get(i).getId() + "  ");
+            System.out.print("e" + arestas.get(i).getId() + "  ");
         }
         System.out.println();
-    
+
         // Imprime os vertices na primeira coluna
         for (int i = 0; i < n; i++) {
             System.out.print(verticies.get(i).getRotulo() + "| ");
@@ -86,21 +89,21 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         }
     }
 
-    public void mostrarListaAdjacencia(Boolean aux){
-        if(aux){
+    public void mostrarListaAdjacencia(Boolean aux) {
+        if (aux) {
             mostrarListaAdjacenciaSucessores();
-        }else{
+        } else {
             mostrarListaAdjacenciaAntecessores();
         }
     }
 
     private void mostrarListaAdjacenciaSucessores() {
-        System.out.println("Lista de Adjacência de Sucessores:");
-    
-    // Para cada vertice, encontrar os sucessores
+        System.out.println("Lista de Adjacencia de Sucessores:");
+
+        // Para cada vertice, encontrar os sucessores
         for (Vertice vertice : verticies) {
-            System.out.print(vertice.getRotulo() + "-> "); 
-            
+            System.out.print(vertice.getRotulo() + "-> ");
+
             boolean primeiro = true;
             for (Aresta aresta : arestas) {
                 if (aresta.getRotuloVertice1().equals(vertice.getRotulo())) {
@@ -119,12 +122,12 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     }
 
     private void mostrarListaAdjacenciaAntecessores() {
-        System.out.println("Lista de Adjacência de Antecessores:");
-        
+        System.out.println("Lista de Adjacencia de Antecessores:");
+
         // Para cada vertice, encontrar os antecessores
         for (Vertice vertice : verticies) {
             System.out.print(vertice.getRotulo() + "-> ");  // Exibe o rótulo do vertice atual
-            
+
             boolean primeiro = true;
             for (Aresta aresta : arestas) {
                 if (aresta.getRotuloVertice2().equals(vertice.getRotulo())) {
@@ -141,18 +144,16 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             System.out.println();  // Avança para o próximo vertice
         }
     }
+
     @Override
     public String mostrarConectividade() {
         if (fortementeConexo()) {
-            return "Grafo e fortemente conexo"; 
-        } 
-        else if (semifortementeConexo()) {
-            return "Grafo e semifortemente conexo"; 
-        }
-        else if(simplesmenteConexo()){
+            return "Grafo e fortemente conexo";
+        } else if (semifortementeConexo()) {
+            return "Grafo e semifortemente conexo";
+        } else if (simplesmenteConexo()) {
             return "Grafo e simplesmente conexo";
-        } 
-        else {
+        } else {
             return "Grafo e desconexo";
         }
     }
@@ -167,20 +168,20 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
     }
 
     public Boolean semifortementeConexo() {
-    for (Vertice vertice : getVerticies()) {
-        if (!alcançavelDeOuParaTodos(vertice)) {
-            return false;
+        for (Vertice vertice : getVerticies()) {
+            if (!alcançavelDeOuParaTodos(vertice)) {
+                return false;
+            }
         }
+        return true;
     }
-    return true;
-}
 
     public Boolean simplesmenteConexo() {
-        Random random = new Random(); 
-        int n = random.nextInt(0, verticies.size()-1);
-        
+        Random random = new Random();
+        int n = random.nextInt(0, verticies.size() - 1);
+
         Vertice inicial = verticies.get(n);
-        
+
         Set<Vertice> visitados = new HashSet<>(); // Conjunto para evitar visitas repetidas
         Stack<Vertice> stack = new Stack<>();    // Pilha para rastrear os vertices durante a DFS
 
@@ -308,8 +309,8 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
     public static Grafo gerarGrafoAleatorio(int quantidadeVertices, Integer quantidadeArestas) {
         int maximoArestas = (quantidadeVertices * (quantidadeVertices - 1)); // Máximo de arestas possíveis
-        if(quantidadeArestas>maximoArestas){
-            System.out.println("quantidade de arestas maior que o limite permitido, Limite: "+maximoArestas+", quantidadeArestas: "+quantidadeArestas);
+        if (quantidadeArestas > maximoArestas) {
+            System.out.println("quantidade de arestas maior que o limite permitido, Limite: " + maximoArestas + ", quantidadeArestas: " + quantidadeArestas);
             return null;
         }
 
@@ -345,7 +346,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         Random random = new Random();
 
         if (quantidadeArestas <= 0) {
-            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices-1));
+            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices - 1));
             quantidadeArestas = random.nextInt(maxQuantidadeArestas);
         }
 
@@ -395,14 +396,14 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             adjListTransposta.add(new ArrayList<>());
         }
 
-        for(Aresta aresta: getArestas()){
-            adjList.get(Integer.parseInt(aresta.getRotuloVertice1())-1).add(Integer.parseInt(aresta.getRotuloVertice2())-1);
+        for (Aresta aresta : getArestas()) {
+            adjList.get(Integer.parseInt(aresta.getRotuloVertice1()) - 1).add(Integer.parseInt(aresta.getRotuloVertice2()) - 1);
         }
 
         return acharCFCs(adjList, adjListTransposta);
     }
 
-    private void fillOrder(int vertex, boolean[] visited, Stack<Integer> stack,  ArrayList<ArrayList<Integer>> adjList) {
+    private void fillOrder(int vertex, boolean[] visited, Stack<Integer> stack, ArrayList<ArrayList<Integer>> adjList) {
         visited[vertex] = true;
         for (int neighbor : adjList.get(vertex)) {
             if (!visited[neighbor]) {

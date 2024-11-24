@@ -1,7 +1,9 @@
+
 public class Vertice {
+
     private String rotulo;
     private Float peso;
-    private int id; 
+    private int id;
 
     private static int contadorID = 0;
 

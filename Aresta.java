@@ -1,13 +1,15 @@
-public class Aresta{
+
+public class Aresta {
+
     private String rotuloAresta;
     private String rotuloVertice1;
     private String rotuloVertice2;
     private Float peso;
-    private int id; 
+    private int id;
 
     private static int contadorID = 0;
 
-    Aresta(String rotuloVertice1, String rotuloVertice2, Float peso){
+    Aresta(String rotuloVertice1, String rotuloVertice2, Float peso) {
         this.rotuloVertice1 = rotuloVertice1;
         this.rotuloVertice2 = rotuloVertice2;
         this.peso = peso;
@@ -15,7 +17,7 @@ public class Aresta{
         this.rotuloAresta = ("e" + contadorID);
     }
 
-    Aresta(String rotuloVertice1, String rotuloVertice2){
+    Aresta(String rotuloVertice1, String rotuloVertice2) {
         this.rotuloVertice1 = rotuloVertice1;
         this.rotuloVertice2 = rotuloVertice2;
         this.id = contadorID++;
