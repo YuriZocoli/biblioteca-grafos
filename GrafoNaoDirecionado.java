@@ -579,6 +579,7 @@ public class GrafoNaoDirecionado implements Grafo {
         return (impar > 3);
     }
 
+    @Override
     public ArrayList<String> fleury(Boolean method) {
         ArrayList<Vertice> verticesImpares = new ArrayList<>();
         for (Vertice vertice : verticies) {
