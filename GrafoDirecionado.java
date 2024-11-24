@@ -318,7 +318,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
             System.out.println("quantidade de arestas maior que o limite permitido, Limite: " + maximoArestas + ", quantidadeArestas: " + quantidadeArestas);
             return null;
         }
-
+        
         Grafo grafo = new GrafoDirecionado();
         // Criar vertices
         for (int i = 1; i <= quantidadeVertices; i++) {
@@ -358,6 +358,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
         if (quantidadeArestas < quantidadeVertices - 1) {
             throw new IllegalArgumentException("Para garantir conectividade, o numero mínimo de arestas deve ser igual a (numero de vertices - 1).");
         }
+
 
         Grafo grafo = new GrafoDirecionado();
 
