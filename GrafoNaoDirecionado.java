@@ -30,53 +30,53 @@ public class GrafoNaoDirecionado implements Grafo {
         return verticies;
     }
     
-    public void createAresta(String rotuloVertice1, String rotuloVertice2){
-        if(contemAresta(rotuloVertice1, rotuloVertice2)){
-            System.out.println("Aresta ja existe");
-        }else{
-            arestas.add(new Aresta(rotuloVertice1, rotuloVertice2));
-            System.out.println("Aresta criada com sucesso");
-        }
-        System.out.println("");
+    public Boolean createAresta(String rotuloVertice1, String rotuloVertice2){
+            if(contemAresta(rotuloVertice1, rotuloVertice2)){
+                return false;
+            }else{
+                arestas.add(new Aresta(rotuloVertice1, rotuloVertice2));
+                return true;
+            }
     }
 
-    public void createAresta(String rotuloVertice1, String rotuloVertice2, Float peso){
+    public Boolean createAresta(String rotuloVertice1, String rotuloVertice2, Float peso){
         if(contemAresta(rotuloVertice1, rotuloVertice2)){
-            System.out.println("Aresta já existe");
+            return false;
         }else{
             arestas.add(new Aresta(rotuloVertice1, rotuloVertice2, peso));
-            System.out.println("Aresta criada com sucesso");
+            return true;
         }
     }
 
-    public void removeAresta(String rotuloVertice1, String rotuloVertice2){
+    public Boolean removeAresta(String rotuloVertice1, String rotuloVertice2){
         var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
         if(isAnyRemoved){
-            System.out.println("Aresta removida com sucesso");
+            return true;
         }else{
-            System.out.println("Aresta solicitada para remocao nao encontrada");
+            return false;
         }
     }
 
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2){
-        return arestas.stream().anyMatch(aresta -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
+        return arestas.stream().anyMatch(aresta -> (aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2)) 
+        || (aresta.getRotuloVertice1().equals(rotuloVertice2) && aresta.getRotuloVertice2().equals(rotuloVertice1)));
     }
 
-    public void createVertice(String rotuloVertice) {
+    public Boolean createVertice(String rotuloVertice) {
         if (contemVertice(rotuloVertice)) {
-            System.out.println("Vertice já existe");
+            return false;
         } else {
             verticies.add(new Vertice(rotuloVertice));
-            System.out.println("Vertice criado com sucesso");
+            return true;
         }
     }
 
-    public void createVertice(String rotuloVertice, Float peso) {
+    public Boolean createVertice(String rotuloVertice, Float peso) {
         if (contemVertice(rotuloVertice)) {
-            System.out.println("Vertice já existe");
+            return false;
         } else {
             verticies.add(new Vertice(rotuloVertice, peso));
-            System.out.println("Vertice com peso criado com sucesso");
+            return true;
         }
     }
 
@@ -84,43 +84,50 @@ public class GrafoNaoDirecionado implements Grafo {
         return verticies.stream().anyMatch(vertice -> vertice.getRotulo().equals(rotuloVertice));
     }
 
-    public void rotularVertice(String rotuloAtual, String novoRotulo) {
+    public Boolean rotularVertice(String rotuloAtual, String novoRotulo) {
         Vertice vertice = encontrarVertice(rotuloAtual);
         if (vertice != null) {
             vertice.setRotulo(novoRotulo);
-            System.out.println("Vertice rotulado");
+            arestas.forEach(aresta -> {
+                if(aresta.getRotuloVertice1().equals(rotuloAtual)){
+                    aresta.setRotuloVertice1(novoRotulo);
+                }else if(aresta.getRotuloVertice2().equals(rotuloAtual)){
+                    aresta.setRotuloVertice2(novoRotulo);
+                }
+            });
+            return true;
         } else {
-            System.out.println("Vertice nao encontrado");
+            return false;
         }
     }
 
-    public void ponderarVertice(String rotuloVertice, Float novoPeso) {
+    public Boolean ponderarVertice(String rotuloVertice, Float novoPeso) {
         Vertice vertice = encontrarVertice(rotuloVertice);
         if (vertice != null) {
             vertice.setPeso(novoPeso);
-            System.out.println("Peso do Vertice alterado");
+            return true;
         } else {
-            System.out.println("Vertice nao encontrado");
+            return true;
         }
     }
 
-    public void rotularAresta(String rotuloAresta, String novoRotulo) {
+    public Boolean rotularAresta(String rotuloAresta, String novoRotulo) {
         Aresta aresta = encontrarArestaPorRotulo(rotuloAresta);
         if (aresta != null) {
             aresta.setRotuloAresta(novoRotulo);
-            System.out.println("Aresta rotulada com sucesso");
+            return true;
         } else {
-            System.out.println("Aresta nao encontrada");
+            return false;
         }
     }
 
-    public void ponderarAresta(String rotuloAresta1, String rotuloAresta2, Float novoPeso) {
+    public Boolean ponderarAresta(String rotuloAresta1, String rotuloAresta2, Float novoPeso) {
         Aresta aresta = encontrarAresta(rotuloAresta1, rotuloAresta2);
         if (aresta != null) {
             aresta.setPeso(novoPeso);
-            System.out.println("Peso da aresta alterado com sucesso");
+            return true;
         } else {
-            System.out.println("Aresta nao encontrada");
+            return true;
         }
     }
   
@@ -199,7 +206,7 @@ public class GrafoNaoDirecionado implements Grafo {
         }
     }    
 
-    public void mostrarListaAdjacencia() {
+    public void mostrarListaAdjacencia(Boolean aux) {
         System.out.println("Lista de Adjacencia:");
     
         for (Vertice vertice : verticies) {
@@ -266,7 +273,7 @@ public class GrafoNaoDirecionado implements Grafo {
             }
         }
 
-        return visitados.size() < verticies.size() ? "Desconexo" : "Conexo";
+        return visitados.size() < verticies.size() ? "Grafo e desconexo" : "Grafo e conexo";
     }
 
     public static Grafo gerarGrafoAleatorio(int quantidadeVertices) {
@@ -358,6 +365,37 @@ public class GrafoNaoDirecionado implements Grafo {
         return pontes;
     }
 
+    public ArrayList<Vertice> encontrarVerticesArticulacao() {
+        ArrayList<Vertice> articulacoes = new ArrayList<>();
+        int[] discovery = new int[verticies.size()];
+        int[] low = new int[verticies.size()];
+        boolean[] visited = new boolean[verticies.size()];
+        boolean[] isArticulation = new boolean[verticies.size()];
+        int time = 0;
+
+        // Inicializar arrays
+        for (int i = 0; i < verticies.size(); i++) {
+            discovery[i] = -1;
+            low[i] = -1;
+        }
+
+        // Executar Tarjan para cada componente conectado
+        for (Vertice vertice : verticies) {
+            if (!visited[vertice.getId()]) {
+                tarjanDFSArticulacao(vertice, null, discovery, low, visited, isArticulation, time);
+            }
+        }
+
+        // Adicionar vértices identificados como articulação à lista
+        for (Vertice vertice : verticies) {
+            if (isArticulation[vertice.getId()]) {
+                articulacoes.add(vertice);
+            }
+        }
+
+        return articulacoes;
+    }
+
     private void tarjanDFS(Vertice u, Vertice parent, int[] discovery, int[] low, boolean[] visited, ArrayList<Aresta> pontes, int time) {
         visited[u.getId()] = true;
         discovery[u.getId()] = low[u.getId()] = time++;
@@ -394,20 +432,113 @@ public class GrafoNaoDirecionado implements Grafo {
         }
     }
 
+    private void tarjanDFSArticulacao(Vertice u, Vertice parent, int[] discovery, int[] low, boolean[] visited, boolean[] isArticulation, int time) {
+        visited[u.getId()] = true;
+        discovery[u.getId()] = low[u.getId()] = time++;
+        int children = 0;
+
+        for (Aresta aresta : arestas) {
+            Vertice v = null;
+
+            // Encontrar o vértice adjacente
+            if (aresta.getRotuloVertice1().equals(u.getRotulo())) {
+                v = encontrarVertice(aresta.getRotuloVertice2());
+            } else if (aresta.getRotuloVertice2().equals(u.getRotulo())) {
+                v = encontrarVertice(aresta.getRotuloVertice1());
+            }
+
+            if (v == null || v.equals(parent)) {
+                continue; // Ignorar a aresta de retorno para o pai
+            }
+
+            if (!visited[v.getId()]) {
+                children++;
+                tarjanDFSArticulacao(v, u, discovery, low, visited, isArticulation, time);
+
+                // Atualizar o valor de "low" do vértice atual
+                low[u.getId()] = Math.min(low[u.getId()], low[v.getId()]);
+
+                // Caso 1: O vértice raiz da DFS é de articulação se tiver mais de 1 filho
+                if (parent == null && children > 1) {
+                    isArticulation[u.getId()] = true;
+                }
+
+                // Caso 2: Vértice não raiz é de articulação se "low[v] >= discovery[u]"
+                if (parent != null && low[v.getId()] >= discovery[u.getId()]) {
+                    isArticulation[u.getId()] = true;
+                }
+            } else {
+                // Atualizar "low" para arestas de retorno
+                low[u.getId()] = Math.min(low[u.getId()], discovery[v.getId()]);
+            }
+        }
+    }
+
+    public static Grafo gerarGrafoAleatorioConexo(Integer quantidadeVertices, Integer quantidadeArestas) {
+        Random random = new Random();
+
+        if (quantidadeArestas <= 0) {
+            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices-1))/2;
+            quantidadeArestas = random.nextInt(maxQuantidadeArestas);
+        }
+
+        if (quantidadeArestas < quantidadeVertices - 1) {
+            throw new IllegalArgumentException("Para garantir conectividade, o número mínimo de arestas deve ser igual a (número de vértices - 1).");
+        }
+
+        Grafo grafo = new GrafoDirecionado();
+
+        // Passo 1: Criar vértices
+        for (int i = 1; i <= quantidadeVertices; i++) {
+            grafo.createVertice(String.valueOf(i));
+        }
+
+        // Passo 2: Garantir conectividade (árvore geradora)
+        for (int i = 2; i <= quantidadeVertices; i++) {
+            int v1 = i - 1; // Vértice anterior
+            int v2 = i;     // Vértice atual
+            grafo.createAresta(String.valueOf(v1), String.valueOf(v2));
+        }
+
+        // Passo 3: Adicionar arestas aleatórias adicionais
+        int arestasCriadas = quantidadeVertices - 1; // Já criamos n-1 arestas
+        while (arestasCriadas < quantidadeArestas) {
+            int v1 = random.nextInt(quantidadeVertices) + 1;
+            int v2 = random.nextInt(quantidadeVertices) + 1;
+
+            if (v1 != v2 && !grafo.contemAresta(String.valueOf(v1), String.valueOf(v2))) {
+                grafo.createAresta(String.valueOf(v1), String.valueOf(v2));
+                arestasCriadas++;
+            }
+        }
+
+        return grafo;
+    }
+
     protected Vertice encontrarVertice(String rotuloVertice) {
         return verticies.stream()
                        .filter(vertice -> vertice.getRotulo().equals(rotuloVertice))
                        .findFirst()
                        .orElse(null);
     }
+
+    protected Vertice encontrarVertice(Integer IDVertice) {
+        return verticies.stream()
+                       .filter(vertice -> vertice.getId() == IDVertice)
+                       .findFirst()
+                       .orElse(null);
+    }
     
-    protected Aresta encontrarAresta(String rotuloAresta1, String rotuloAresta2) {
+    protected Aresta encontrarAresta(String rotuloVertice1, String rotuloVertice2) {
         return arestas.stream()
                       .filter(aresta -> 
-                        (aresta.getRotuloVertice1().equals(rotuloAresta1) && aresta.getRotuloVertice2().equals(rotuloAresta2))
-                        || (aresta.getRotuloVertice1().equals(rotuloAresta2) && aresta.getRotuloVertice2().equals(rotuloAresta1)))
+                        (aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2))
+                        || (aresta.getRotuloVertice1().equals(rotuloVertice2) && aresta.getRotuloVertice2().equals(rotuloVertice1)))
                       .findFirst()
                       .orElse(null);
     }
 
+    public ArrayList<ArrayList<String>> mostrarKosaraju(){
+        return null;
+    }
 }

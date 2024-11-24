@@ -14,6 +14,11 @@ public class Manipulacao {
         String rot1 = scanner.next();
         System.out.print("Digite o vertice 2 da aresta: ");
         String rot2 = scanner.next();
+
+        if(!(grafo.contemVertice(rot1) && grafo.contemVertice(rot2))){
+            System.out.println("Um dos vértices não existem");
+        }
+
         Integer op;
         do {
             System.out.println("Deseja por peso?  \n 1 - Sim \n 2 - Nao");
@@ -22,10 +27,18 @@ public class Manipulacao {
                 case 1:
                     System.out.println("Digite o peso da aresta: ");
                     Float peso = scanner.nextFloat();
-                    grafo.createAresta(rot1, rot2, peso);
+                    if(grafo.createAresta(rot1, rot2, peso)){
+                        System.out.println("Aresta criada com sucesso");
+                    }else{
+                        System.out.println("Aresta já existe");
+                    }
                     break;
                 case 2:
-                    grafo.createAresta(rot1, rot2);
+                    if(grafo.createAresta(rot1, rot2)){
+                        System.out.println("Aresta criada com sucesso");
+                    }else{
+                        System.out.println("Aresta já existe");
+                    }
                     break;
                 default:
                     System.out.println("opcao invalida");
@@ -41,15 +54,23 @@ public class Manipulacao {
         int op = scanner.nextInt();
         switch (op) {
             case 2:
-                grafo.createVertice(Vert);
+                if(grafo.createVertice(Vert)){
+                    System.out.println("Vertice criado com sucesso");
+                }else{
+                    System.out.println("Vertice ja existe");
+                }
                 break;
             case 1:
                 System.out.print("Digite o peso do vertice: ");
                 Float peso = scanner.nextFloat();
-                grafo.createVertice(Vert, peso);
+                if(grafo.createVertice(Vert, peso)){
+                    System.out.println("Vertice com peso criado com sucesso");
+                }else{
+                    System.out.println("Vertice ja existe");
+                }
                 break;
             default:
-                System.out.println("Error case2");
+                System.out.println("Comando invalido");
                 break;
         }
     }
@@ -59,15 +80,23 @@ public class Manipulacao {
         String rot1 = scanner.next();
         System.out.print("Digite o rotulo 2 da aresta: ");
         String rot2 = scanner.next();
-        grafo.removeAresta(rot1, rot2);
+        if(grafo.removeAresta(rot1, rot2)){
+            System.out.println("Aresta removida com sucesso");
+        }else{
+            System.out.println("Aresta solicitada para remocao nao encontrada");
+        }
     }
 
     public void rotularAresta(Grafo grafo) {
-        System.out.print("Digite o rotulo 1 da aresta: ");
+        System.out.print("Digite o rotulo da aresta: ");
         String rot = scanner.next();
-        System.out.print("Digite o novo rotulo 2 da aresta: ");
+        System.out.print("Digite o novo rotulo da aresta: ");
         String newRot = scanner.next();
-        grafo.rotularAresta(rot, newRot);
+        if(grafo.rotularAresta(rot, newRot)){
+            System.out.println("Aresta rotulada com sucesso");
+        }else{
+            System.out.println("Aresta não encontrada");
+        }
     }
 
     public void ponderarAresta(Grafo grafo) {
@@ -77,7 +106,11 @@ public class Manipulacao {
         String rot2 = scanner.next();
         System.out.println("Digite o novo peso da aresta: ");
         Float peso = scanner.nextFloat();
-        grafo.ponderarAresta(rot1, rot2, peso);
+        if(grafo.ponderarAresta(rot1, rot2, peso)){
+            System.out.println("Peso da aresta alterado com sucesso");
+        }else{
+            System.out.println("Aresta não encontrada");
+        }
     }
 
     public void rotularVertice(Grafo grafo) {
@@ -85,7 +118,11 @@ public class Manipulacao {
         String vert = scanner.next();
         System.out.print("Digite o novo rotulo do vertice: ");
         String newVert = scanner.next();
-        grafo.rotularVertice(vert, newVert);
+        if(grafo.rotularVertice(vert, newVert)){
+            System.out.println("Vértice rotulado");
+        }else{
+            System.out.println("Vértice não encontrado");
+        }
     }
 
     public void ponderarVertice(Grafo grafo) {
@@ -93,7 +130,11 @@ public class Manipulacao {
         String vert = scanner.next();
         System.out.print("Digite o novo peso do vertice: ");
         Float newPeso = scanner.nextFloat();
-        grafo.ponderarVertice(vert, newPeso);
+        if(grafo.ponderarVertice(vert, newPeso)){
+            System.out.println("Peso do vértice alterado");
+        }else{
+            System.out.println("Vértice não encontrado");
+        }
     }
 
     public void existeAresta(Grafo grafo){
@@ -123,7 +164,6 @@ public class Manipulacao {
             System.out.println("Nao sao adjacentes");
         }
     }
-
 
     public void checagemAdjacenciaAresta(Grafo grafo) {
         System.out.println("Escolha um metodo de busca:  \n 1 - Por rotulo \n 2 - Por Vertices");
@@ -211,43 +251,155 @@ public class Manipulacao {
 
 
 
-    public void criarGrafoAleatorio(Grafo grafo) {
+    public Grafo criarGrafoAleatorio() {
         System.out.println("1 - Inserir quantidade de vertices");
         System.out.println("2 - inserir quantidade de vertices e arestas");
         Integer comando = scanner.nextInt();
-        Integer quantidadeVertices;
+        Integer quantidadeVertices, comandoInterno;
+        Grafo grafo = null;
+        do {
+            switch (comando) {
+                case 1:
+                    System.out.println("Insira a quantidade de vertices:");
+                    quantidadeVertices = scanner.nextInt();
+                    System.out.println("Deseja criar um grafo direcionado?");
+                    System.out.println("1 - Sim (criar grafo direcionado)");
+                    System.out.println("2 - Nao (criar grafo nao direcionado)");
+                    comandoInterno = scanner.nextInt();
+                    if(comandoInterno == 1){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, 0);
+                        }else{
+                            grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                        }
+                    }else if(comandoInterno == 2){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, 0);
+                        }else{
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("Insira a quantidade de vertices:");
+                    quantidadeVertices = scanner.nextInt();
+                    System.out.println("Insira a quantidade de arestas:");
+                    Integer quantidadeArestas = scanner.nextInt();
+                    System.out.println("Deseja criar um grafo direcionado?");
+                    System.out.println("1 - Sim (criar grafo direcionado)");
+                    System.out.println("2 - Nao (criar grafo nao direcionado)");
+                    comandoInterno = scanner.nextInt();
+                    if(comandoInterno == 1){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, quantidadeArestas);
+                        }else{
+                            grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                        }
+                    }else if(comandoInterno == 2){
+                        System.out.println("Deseja criar um grafo conexo?");
+                        System.out.println("1 - Sim");
+                        System.out.println("2 - Nao");
+                        comandoInterno = scanner.nextInt();
+                        if(comandoInterno == 1){
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, quantidadeArestas);
+                        }else{
+                            grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println("comando invalido");
+                    break;
+            }
+        } while (grafo == null);
+        return grafo;
+    }
+
+    public void checagemPonteArticulacao(Grafo grafo) {
+        System.out.println("1 - Checagem ponte via Tarjan");
+        System.out.println("2 - Checagem ponte via Naive");
+        System.out.println("3 - Checagem Articulacao");
+        Integer comando = scanner.nextInt();
+
         switch (comando) {
             case 1:
-                System.out.println("Insira a quantidade de vertices:");
-                quantidadeVertices = scanner.nextInt();
-                grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices);
+                var pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
+                if (pontesTarjan.isEmpty()) {
+                    System.out.println("Não há arestas pontes no grafo.");
+                } else {
+                    System.out.println("Arestas pontes:");
+                    for (Aresta ponte : pontesTarjan) {
+                        System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
+                    }
+                }
                 break;
             case 2:
-                System.out.println("Insira a quantidade de vertices:");
-                quantidadeVertices = scanner.nextInt();
-                System.out.println("Insira a quantidade de arestas:");
-                Integer quantidadeArestas = scanner.nextInt();
-                grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
+                var arestas = new ArrayList<>(grafo.getArestas());
+                ArrayList<Aresta> pontesNaive = new ArrayList<>();
+                for(Aresta aresta: arestas){
+                    grafo.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
+                    if(grafo.mostrarConectividade().equals("Grafo e desconexo")){
+                        pontesNaive.add(aresta);
+                    }
+                    grafo.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2(), aresta.getPeso());
+                }
+                if(pontesNaive.isEmpty()){
+                    System.out.println("Não há arestas pontes no grafo.");
+                }else{
+                    System.out.println("Arestas pontes:");
+                    for (Aresta ponte : pontesNaive) {
+                        System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
+                    }
+                }
+                break;
+            case 3:
+                var articulacoes = grafo.encontrarVerticesArticulacao();
+                if (articulacoes.isEmpty()) {
+                    System.out.println("Não há vértices de articulação no grafo.");
+                } else {
+                    System.out.println("Vértices de articulação:");
+                    for (Vertice vertice : articulacoes) {
+                        System.out.println(vertice.getRotulo());
+                    }
+                }
                 break;
             default:
-                System.out.println("comando invalido");
                 break;
         }
     }
 
-    public void checagemPonteArticulacao(Grafo grafo) {
-        System.out.println("1 - Encontrar pontes");
-        System.out.println("2 - Encontrar Articulacoes");
-        Integer comando = scanner.nextInt();
-        if(comando == 1){
-            ArrayList<Aresta> pontesTarjan = ((GrafoNaoDirecionado) grafo).encontrarArestasPontesTarjan();
-            if (pontesTarjan.isEmpty()) {
-                System.out.println("Nao ha arestas pontes no grafo.");
-            } else {
-                System.out.println("Arestas pontes:");
-                for (Aresta ponte : pontesTarjan) {
-                    System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
-                }
+    public void mostrarListaAdjacencia(Grafo grafo) {
+        if (grafo instanceof GrafoDirecionado){
+            System.out.println("1 - Lista por Sucessor");
+            System.out.println("2 - Lista por Antecessor");
+            Integer comando = scanner.nextInt();
+            grafo.mostrarListaAdjacencia(comando == 1 ? true : false);
+        }else {
+            grafo.mostrarListaAdjacencia(null);
+        }
+    }
+
+    public void kosaraju(Grafo grafo){
+        if(grafo.mostrarKosaraju() == null){
+            System.out.println("Funciona somente para grafos Direcionados");
+        } else {
+            var cfcs = grafo.mostrarKosaraju();
+
+            System.out.println("Componenetes Fortementes Conexos:");
+            for (ArrayList<String> componente : cfcs) {
+                System.out.println(componente);
             }
         }
     }
