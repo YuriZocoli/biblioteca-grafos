@@ -351,7 +351,7 @@ public class GrafoDirecionado extends GrafoNaoDirecionado {
 
         if (quantidadeArestas <= 0) {
             Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices-1));
-            quantidadeArestas = random.nextInt(maxQuantidadeArestas);
+            quantidadeArestas = random.nextInt((quantidadeVertices - 1),maxQuantidadeArestas);
         }
 
         if (quantidadeArestas < quantidadeVertices - 1) {
