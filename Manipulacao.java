@@ -294,21 +294,21 @@ public class Manipulacao {
     public Grafo criarGrafoAleatorio() {
         Grafo grafo = null;
         do {
-        System.out.println("1 - Inserir quantidade de vertices");
-        System.out.println("2 - inserir quantidade de vertices e arestas");
-        Integer quantidadeVertices, comandoInterno;
+            System.out.println("1 - Inserir quantidade de vertices");
+            System.out.println("2 - inserir quantidade de vertices e arestas");
+            Integer quantidadeVertices, comandoInterno;
             Integer comando = scanner.nextInt();
             switch (comando) {
                 case 1:
-                    do{
+                    do {
                         System.out.println("Insira a quantidade de vertices:");
                         quantidadeVertices = scanner.nextInt();
                         System.out.println("Deseja criar um grafo direcionado?");
                         System.out.println("1 - Sim (criar grafo direcionado)");
                         System.out.println("2 - Nao (criar grafo nao direcionado)");
                         comandoInterno = scanner.nextInt();
-                        if(comandoInterno == 1){
-                            do{
+                        if (comandoInterno == 1) {
+                            do {
                                 System.out.println("Deseja criar um grafo conexo?");
                                 System.out.println("1 - Sim");
                                 System.out.println("2 - Nao");
@@ -341,7 +341,7 @@ public class Manipulacao {
                     } while (comandoInterno != 1 && comandoInterno != 2);
                     break;
                 case 2:
-                    do{
+                    do {
                         System.out.println("Insira a quantidade de vertices:");
                         quantidadeVertices = scanner.nextInt();
                         System.out.println("Insira a quantidade de arestas:");
@@ -350,34 +350,38 @@ public class Manipulacao {
                         System.out.println("1 - Sim (criar grafo direcionado)");
                         System.out.println("2 - Nao (criar grafo nao direcionado)");
                         comandoInterno = scanner.nextInt();
-                        if(comandoInterno == 1){
-                            do{
+                        if (comandoInterno == 1) {
+                            do {
                                 System.out.println("Deseja criar um grafo conexo?");
                                 System.out.println("1 - Sim");
                                 System.out.println("2 - Nao");
                                 comandoInterno = scanner.nextInt();
-                                if(comandoInterno!=1 || comandoInterno!=2)System.out.println("Opcao invalida");
+                                if (comandoInterno != 1 && comandoInterno != 2) {
+                                    System.out.println("Opcao invalida");
+                                }
                             } while (comandoInterno != 1 && comandoInterno != 2);
-                            if(comandoInterno == 1){
+                            if (comandoInterno == 1) {
                                 grafo = GrafoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, quantidadeArestas);
-                            }else{
+                            } else {
                                 grafo = GrafoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
                             }
-                        }else if(comandoInterno == 2){
-                            do{
+                        } else if (comandoInterno == 2) {
+                            do {
                                 System.out.println("Deseja criar um grafo conexo?");
                                 System.out.println("1 - Sim");
                                 System.out.println("2 - Nao");
                                 comandoInterno = scanner.nextInt();
-                            if(comandoInterno!=1 || comandoInterno!=2)System.out.println("Opcao invalida");
+                                if (comandoInterno != 1 && comandoInterno != 2) {
+                                    System.out.println("Opcao invalida");
+                                }
                             } while (comandoInterno != 1 && comandoInterno != 2);
-                            if(comandoInterno == 1){
+                            if (comandoInterno == 1) {
                                 grafo = GrafoNaoDirecionado.gerarGrafoAleatorioConexo(quantidadeVertices, quantidadeArestas);
-                            }else{
+                            } else {
                                 grafo = GrafoNaoDirecionado.gerarGrafoAleatorio(quantidadeVertices, quantidadeArestas);
                             }
                         } else {
-                        System.out.println("Opcao invalida");
+                            System.out.println("Opcao invalida");
                         }
                     } while (comandoInterno != 1 && comandoInterno != 2);
                     break;
@@ -391,12 +395,14 @@ public class Manipulacao {
 
     public void checagemPonteArticulacao(Grafo grafo) {
         Integer comando;
-        do{
+        do {
             System.out.println("1 - Checagem ponte via Tarjan");
             System.out.println("2 - Checagem ponte via Naive");
             System.out.println("3 - Checagem Articulacao");
             comando = scanner.nextInt();
-            if(comando < 1 || comando > 3)System.out.println("Opcao invalida");
+            if (comando < 1 || comando > 3) {
+                System.out.println("Opcao invalida");
+            }
         } while (comando < 1 || comando > 3);
         switch (comando) {
             case 1:
@@ -413,7 +419,7 @@ public class Manipulacao {
             case 2:
                 ArrayList<Aresta> pontesNaive = grafo.encontrarArestasPontesNaive();
 
-                if(pontesNaive.isEmpty()){
+                if (pontesNaive.isEmpty()) {
                     System.out.println("Nao ha arestas pontes no grafo.");
                 } else {
                     System.out.println("Arestas pontes:");
@@ -462,18 +468,20 @@ public class Manipulacao {
         }
     }
 
-    public void mostrarFleury(Grafo grafo){
+    public void mostrarFleury(Grafo grafo) {
         int op;
-        do{
+        do {
             System.out.println("1 - Fleury usando Tarjan:");
             System.out.println("2 - Fleury usando Naive:");
             op = scanner.nextInt();
-            if(op!=1 && op!=2)System.out.println("Opcao invalida");
-        }while(op!=1 && op!=2);
+            if (op != 1 && op != 2) {
+                System.out.println("Opcao invalida");
+            }
+        } while (op != 1 && op != 2);
 
-        if (op==1){
+        if (op == 1) {
             Boolean method = true;
-            var caminho = grafo.fleury(method); 
+            var caminho = grafo.fleury(method);
             for (int i = 0; i < caminho.size(); i++) {
                 System.out.print(caminho.get(i));
                 System.out.print(" / ");
@@ -481,11 +489,12 @@ public class Manipulacao {
             System.out.println();
         } else {
             Boolean method = false;
-            var caminho = grafo.fleury(method); 
+            var caminho = grafo.fleury(method);
             for (int i = 0; i < caminho.size(); i++) {
                 System.out.print(caminho.get(i));
                 System.out.print(" / ");
             }
-        }System.out.println("");
+        }
+        System.out.println("");
     }
 }
