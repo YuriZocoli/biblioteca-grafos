@@ -1,3 +1,4 @@
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -374,7 +375,7 @@ public class GrafoNaoDirecionado implements Grafo {
             removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
             if (!mostrarConectividade().equals("Grafo e conexo")) {
                 pontes.add(aresta);
-            }   
+            }
             createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2(), aresta.getPeso());
         }
         return pontes;
@@ -493,7 +494,7 @@ public class GrafoNaoDirecionado implements Grafo {
         Random random = new Random();
 
         if (quantidadeArestas <= 0 || quantidadeArestas == null) {
-            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices-1))/2;
+            Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices - 1)) / 2;
             quantidadeArestas = random.nextInt((quantidadeVertices - 1), maxQuantidadeArestas);
         }
 
@@ -609,8 +610,8 @@ public class GrafoNaoDirecionado implements Grafo {
         for (Aresta a : arestas) {
             grafoAux.createAresta(a.getRotuloVertice1(), a.getRotuloVertice2());
         }
-        
-        if(method){
+
+        if (method) {
             // Começo do caminho:
             ArrayList<Aresta> pontes = grafoAux.encontrarArestasPontesTarjan();
             ArrayList<String> caminho = new ArrayList<>();
