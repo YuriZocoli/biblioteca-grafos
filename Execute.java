@@ -59,6 +59,7 @@ public class Execute {
                 System.out.println("1 - Criar Grafo vazio");
                 System.out.println("2 - Criar Grafo com N verticies");
                 System.out.println("3 - Criar Grafo simples aleatorio");
+                System.out.println("4 - Buscar Grafo de arquivo");
                 comando = scanner.nextInt();
                 operacoesGrafoVazio(comando, scanner);
             }
@@ -109,6 +110,9 @@ public class Execute {
 
             case 3:
                 grafo = manipulacao.criarGrafoAleatorio();
+                break;
+            case 4:
+                grafo = manipulacao.buscarGrafoDeArquivo();
                 break;
             default:
                 System.out.println("Comando invalido!");
