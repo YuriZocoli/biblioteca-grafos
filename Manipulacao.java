@@ -16,7 +16,7 @@ public class Manipulacao {
         System.out.print("Digite o vertice 2 da aresta: ");
         String rot2 = scanner.next();
 
-        if(!(grafo.contemVertice(rot1) && grafo.contemVertice(rot2))){
+        if (!(grafo.contemVertice(rot1) && grafo.contemVertice(rot2))) {
             System.out.println("Um ou ambos os vertices nao existem");
         }
 
@@ -30,14 +30,14 @@ public class Manipulacao {
                     Float peso = scanner.nextFloat();
                     if (grafo.createAresta(rot1, rot2, peso)) {
                         System.out.println("Aresta criada com sucesso");
-                    }else{
+                    } else {
                         System.out.println("Aresta ja existe");
                     }
                     break;
                 case 2:
                     if (grafo.createAresta(rot1, rot2)) {
                         System.out.println("Aresta criada com sucesso");
-                    }else{
+                    } else {
                         System.out.println("Aresta ja existe");
                     }
                     break;
@@ -53,21 +53,21 @@ public class Manipulacao {
         String Vert = scanner.next();
         System.out.println("Deseja por peso?  \n1 - Sim \n2 - Nao");
         int op = scanner.nextInt();
-        do{
+        do {
             switch (op) {
                 case 2:
-                    if(grafo.createVertice(Vert)){
+                    if (grafo.createVertice(Vert)) {
                         System.out.println("Vertice criado com sucesso");
-                    }else{
+                    } else {
                         System.out.println("Vertice ja existe");
                     }
                     break;
                 case 1:
                     System.out.print("Digite o peso do vertice: ");
                     Float peso = scanner.nextFloat();
-                    if(grafo.createVertice(Vert, peso)){
+                    if (grafo.createVertice(Vert, peso)) {
                         System.out.println("Vertice com peso criado com sucesso");
-                    }else{
+                    } else {
                         System.out.println("Vertice ja existe");
                     }
                     break;
@@ -75,7 +75,7 @@ public class Manipulacao {
                     System.out.println("Comando invalido");
                     break;
             }
-        }while (!(op == 1 || op == 2));
+        } while (!(op == 1 || op == 2));
     }
 
     public void removerAresta(Grafo grafo) {
@@ -99,7 +99,7 @@ public class Manipulacao {
                 case 1:
                     System.out.print("Digite o rotulo da aresta: ");
                     String rot = scanner.next();
-                    if(grafo.encontrarArestaPorRotulo(rot) == null){
+                    if (grafo.encontrarArestaPorRotulo(rot) == null) {
                         System.out.println("Nao existe este rotulo");
                         break;
                     }
@@ -113,7 +113,7 @@ public class Manipulacao {
                     System.out.print("Digite o vertice 2 da aresta: ");
                     String rot2 = scanner.next();
 
-                    if(!(grafo.contemVertice(rot1) && grafo.contemVertice(rot2))){
+                    if (!(grafo.contemVertice(rot1) && grafo.contemVertice(rot2))) {
                         System.out.println("Um ou ambos os vértices não existem");
                         break;
                     }
@@ -128,16 +128,15 @@ public class Manipulacao {
                     System.out.println("opcao invalida");
                     break;
             }
-        }while (!(op == 1 || op == 2));
-        
-        
+        } while (!(op == 1 || op == 2));
+
         System.out.print("Digite o rotulo da aresta: ");
         String rot = scanner.next();
         System.out.print("Digite o novo rotulo da aresta: ");
         String newRot = scanner.next();
         if (grafo.rotularAresta(rot, newRot)) {
             System.out.println("Aresta rotulada com sucesso");
-        }else{
+        } else {
             System.out.println("Aresta nao encontrada");
         }
     }
@@ -396,9 +395,9 @@ public class Manipulacao {
                     }
                     grafo.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2(), aresta.getPeso());
                 }
-                if(pontesNaive.isEmpty()){
+                if (pontesNaive.isEmpty()) {
                     System.out.println("Nao ha arestas pontes no grafo.");
-                }else{
+                } else {
                     System.out.println("Arestas pontes:");
                     for (Aresta ponte : pontesNaive) {
                         System.out.println(ponte.getRotuloVertice1() + " - " + ponte.getRotuloVertice2());
@@ -432,8 +431,8 @@ public class Manipulacao {
         }
     }
 
-    public void mostrarKosaraju(Grafo grafo){
-        if(grafo.kosaraju() == null){
+    public void mostrarKosaraju(Grafo grafo) {
+        if (grafo.kosaraju() == null) {
             System.out.println("Funciona somente para grafos Direcionados");
         } else {
             var cfcs = grafo.kosaraju();
@@ -442,6 +441,19 @@ public class Manipulacao {
             for (ArrayList<String> componente : cfcs) {
                 System.out.println(componente);
             }
+        }
+    }
+
+    public void mostrarFleury(Grafo grafo) {
+        if (grafo.fleury() == null) {
+            System.out.println("O grafo nao e Euleriano");
+        } else {
+            var caminho = grafo.fleury();
+            for (int i = 0; i < caminho.size(); i++) {
+                System.out.print(caminho.get(i));
+                System.out.print(" / ");
+            }
+            System.out.println();
         }
     }
 }
