@@ -491,13 +491,13 @@ public class GrafoNaoDirecionado implements Grafo {
     public static Grafo gerarGrafoAleatorioConexo(Integer quantidadeVertices, Integer quantidadeArestas) {
         Random random = new Random();
 
-        if (quantidadeArestas <= 0) {
+        if (quantidadeArestas <= 0 || quantidadeArestas == null) {
             Integer maxQuantidadeArestas = (quantidadeVertices * (quantidadeVertices-1))/2;
-            quantidadeArestas = random.nextInt(maxQuantidadeArestas);
+            quantidadeArestas = random.nextInt((quantidadeVertices - 1), maxQuantidadeArestas);
         }
 
         if (quantidadeArestas < quantidadeVertices - 1) {
-            throw new IllegalArgumentException("Para garantir conectividade, o número mínimo de arestas deve ser igual a (número de vértices - 1).");
+            throw new IllegalArgumentException("Para garantir conectividade, o numero minimo de arestas deve ser igual a (numero de vertices - 1).");
         }
 
         Grafo grafo = new GrafoDirecionado();
