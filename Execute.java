@@ -71,7 +71,7 @@ public class Execute {
         switch (comando) {
             case 1:
                 do {
-                    System.out.println("Deseja criar grafo direcionado?1 = sim | 2 = nao");
+                    System.out.println("Deseja criar grafo direcionado?\n1 - Sim \n2 - Nao");
                     op = scanner.nextInt();
                     if (op != 1 && op != 2) {
                         System.out.println("Opcao invalida");
@@ -86,7 +86,7 @@ public class Execute {
                 break;
             case 2:
                 do {
-                    System.out.println("Deseja criar grafo direcionado? 1 = sim | 2 = nao");
+                    System.out.println("Deseja criar grafo direcionado? \n1 - Sim \n2 - Nao");
                     op = scanner.nextInt();
                     if (op != 1 && op != 2) {
                         System.out.println("Opcao invalida");
