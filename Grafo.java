@@ -11,11 +11,15 @@ public interface Grafo {
 
     public Boolean createAresta(String rotuloVertice1, String rotuloVertice2, Float peso);
 
+    public void createAresta(Aresta aresta);
+
     public Boolean removeAresta(String rotuloVertice1, String rotuloVertice2);
 
     public Boolean contemAresta(String rotuloVertice1, String rotuloVertice2);
 
     public Boolean createVertice(String rotuloVertice);
+
+    public void createVertice(Vertice vertice);
 
     public Boolean createVertice(String rotuloVertice, Float peso);
 
