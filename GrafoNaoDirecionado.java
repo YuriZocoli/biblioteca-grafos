@@ -50,6 +50,10 @@ public class GrafoNaoDirecionado implements Grafo {
         }
     }
 
+    public void createAresta(Aresta aresta){
+        arestas.add(aresta);
+    }
+
     public Boolean removeAresta(String rotuloVertice1, String rotuloVertice2) {
         var isAnyRemoved = arestas.removeIf((aresta) -> aresta.getRotuloVertice1().equals(rotuloVertice1) && aresta.getRotuloVertice2().equals(rotuloVertice2));
         if (isAnyRemoved) {
@@ -71,6 +75,10 @@ public class GrafoNaoDirecionado implements Grafo {
             verticies.add(new Vertice(rotuloVertice));
             return true;
         }
+    }
+
+    public void createVertice(Vertice vertice) {
+        verticies.add(vertice);
     }
 
     public Boolean createVertice(String rotuloVertice, Float peso) {
@@ -604,20 +612,23 @@ public class GrafoNaoDirecionado implements Grafo {
 
         GrafoNaoDirecionado grafoAux = new GrafoNaoDirecionado();
         for (Vertice v : verticies) {
-            grafoAux.createVertice(v.getRotulo());
+            grafoAux.createVertice(v);
         }
         for (Aresta a : arestas) {
-            grafoAux.createAresta(a.getRotuloVertice1(), a.getRotuloVertice2());
+            grafoAux.createAresta(a);
         }
 
         if (method) {
-            // Começo do caminho:
+            // Encontrar todas as pontes no grafo auxiliar
             ArrayList<Aresta> pontes = grafoAux.encontrarArestasPontesTarjan();
+            // Começo do caminho:
             ArrayList<String> caminho = new ArrayList<>();
 
             long inicio = System.currentTimeMillis(); //medidor tempo
 
-            while (!grafoAux.getArestas().isEmpty()) {
+             while (!grafoAux.getArestas().isEmpty()) {
+                caminho.add(atual.getRotulo()); // Adicionar vértice atual ao caminho
+
                 ArrayList<Aresta> adjacentes = new ArrayList<>();
                 for (Aresta a : grafoAux.getArestas()) {
                     if (a.getRotuloVertice1().equals(atual.getRotulo()) || a.getRotuloVertice2().equals(atual.getRotulo())) {
@@ -627,39 +638,40 @@ public class GrafoNaoDirecionado implements Grafo {
 
                 Aresta escolhida = null;
                 for (Aresta aresta : adjacentes) {
-                    // Evitar pontes, a menos que não haja outra escolha
-                    grafoAux.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
-                    if (grafoAux.mostrarConectividade().equals("Conexo") || !pontes.contains(aresta)) {
-                        escolhida = aresta;
+                    if (!pontes.contains(aresta)) {
+                        escolhida = aresta; // Escolha uma aresta que não seja ponte
                         break;
                     }
-                    grafoAux.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
                 }
 
+                // Se todas as arestas adjacentes são pontes, escolha a primeira
                 if (escolhida == null) {
                     escolhida = adjacentes.get(0);
                 }
 
-                caminho.add(escolhida.getRotuloVertice1());
-
+                // Atualizar o vértice atual
                 atual = atual.getRotulo().equals(escolhida.getRotuloVertice1())
                         ? encontrarVertice(escolhida.getRotuloVertice2())
                         : encontrarVertice(escolhida.getRotuloVertice1());
 
-                grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2());
+                grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2()); // Remover a escolhida
             }
-            long fim = System.currentTimeMillis();
+
+            caminho.add(atual.getRotulo()); // Adicionar o último vértice
+            long fim = System.currentTimeMillis(); // Tempo de execução
 
             long duracao = fim - inicio; // Tempo total em milissegundos
-            System.out.println("Tempo de execução: " + duracao + " ms");
+            System.out.println("Tempo de execucao: " + duracao + " ms");
             return caminho;
         } else {
+            // Encontrar todas as pontes no grafo auxiliar
             ArrayList<Aresta> pontes = grafoAux.encontrarArestasPontesNaive();
             ArrayList<String> caminho = new ArrayList<>();
+            long inicio = System.currentTimeMillis(); // Medir tempo de execução
 
-            long inicio = System.currentTimeMillis(); //medidor tempo
+             while (!grafoAux.getArestas().isEmpty()) {
+                caminho.add(atual.getRotulo()); // Adicionar vértice atual ao caminho
 
-            while (!grafoAux.getArestas().isEmpty()) {
                 ArrayList<Aresta> adjacentes = new ArrayList<>();
                 for (Aresta a : grafoAux.getArestas()) {
                     if (a.getRotuloVertice1().equals(atual.getRotulo()) || a.getRotuloVertice2().equals(atual.getRotulo())) {
@@ -669,31 +681,30 @@ public class GrafoNaoDirecionado implements Grafo {
 
                 Aresta escolhida = null;
                 for (Aresta aresta : adjacentes) {
-                    // Evitar pontes, a menos que não haja outra escolha
-                    grafoAux.removeAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
-                    if (grafoAux.mostrarConectividade().equals("Conexo") || !pontes.contains(aresta)) {
-                        escolhida = aresta;
+                    if (!pontes.contains(aresta)) {
+                        escolhida = aresta; // Escolha uma aresta que não seja ponte
                         break;
                     }
-                    grafoAux.createAresta(aresta.getRotuloVertice1(), aresta.getRotuloVertice2());
                 }
 
+                // Se todas as arestas adjacentes são pontes, escolha a primeira
                 if (escolhida == null) {
                     escolhida = adjacentes.get(0);
                 }
 
-                caminho.add(escolhida.getRotuloVertice1());
-
+                // Atualizar o vértice atual
                 atual = atual.getRotulo().equals(escolhida.getRotuloVertice1())
                         ? encontrarVertice(escolhida.getRotuloVertice2())
                         : encontrarVertice(escolhida.getRotuloVertice1());
 
-                grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2());
+                grafoAux.removeAresta(escolhida.getRotuloVertice1(), escolhida.getRotuloVertice2()); // Remover a escolhida
             }
-            long fim = System.currentTimeMillis();
+
+            caminho.add(atual.getRotulo()); // Adicionar o último vértice
+            long fim = System.currentTimeMillis(); // Tempo de execução
 
             long duracao = fim - inicio; // Tempo total em milissegundos
-            System.out.println("Tempo de execução: " + duracao + " ms");
+            System.out.println("Tempo de execucao: " + duracao + " ms");
             return caminho;
         }
     }

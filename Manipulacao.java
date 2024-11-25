@@ -482,6 +482,10 @@ public class Manipulacao {
         if (op == 1) {
             Boolean method = true;
             var caminho = grafo.fleury(method);
+            if(caminho == null){
+                System.out.println("Grafo nao e Eureliano"); 
+                return;
+            }
             for (int i = 0; i < caminho.size(); i++) {
                 System.out.print(caminho.get(i));
                 System.out.print(" / ");
@@ -490,6 +494,10 @@ public class Manipulacao {
         } else {
             Boolean method = false;
             var caminho = grafo.fleury(method);
+            if(caminho == null){
+                System.out.println("Grafo nao e Eureliano"); 
+                return;
+            }
             for (int i = 0; i < caminho.size(); i++) {
                 System.out.print(caminho.get(i));
                 System.out.print(" / ");
