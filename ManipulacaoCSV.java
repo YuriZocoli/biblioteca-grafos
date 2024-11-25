@@ -69,7 +69,7 @@ public class ManipulacaoCSV {
         return grafo;
     }
 
-    public void salvarGrafoEmArquivo(Grafo grafo, String arquivoNome) {
+    public static void salvarGrafoEmArquivo(Grafo grafo, String arquivoNome) {
         // Nome do arquivo CSV
         String fileName = arquivoNome+".csv";
 

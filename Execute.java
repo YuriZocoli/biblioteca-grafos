@@ -47,9 +47,10 @@ public class Execute {
                         System.out.println("15 - Checagem de quantidade de componentes fortemente conexos");
                         System.out.println("16 - Checagem de ponte e articulacao");
                         System.out.println("17 - Mostrar caminho minimo com Fleury");
+                        System.out.println("18 - Salvar grafo em arquivo");
                         System.out.println("0 - Voltar");
                         comando = scanner.nextInt();
-                    } while (comando < 0 || comando > 17);
+                    } while (comando < 0 || comando > 18);
                     operacoesManipulacao(comando, scanner);
                     if (comando == 0) {
                         comando = -1;
@@ -191,6 +192,9 @@ public class Execute {
                 break;
             case 17:
                 manipulacao.mostrarFleury(grafo);
+                break;
+            case 18:
+                manipulacao.salvarGrafoEmArquivo(grafo);
                 break;
             default:
                 System.out.println("Error opManipulacao");

@@ -532,4 +532,12 @@ public class Manipulacao {
 
         return ManipulacaoCSV.buscarGrafo(arquivos[comando-1], tipoGrafo);
     }
+
+    public void salvarGrafoEmArquivo(Grafo grafo) {
+        System.out.println("Escreva o nome do arquivo a ser criado:");
+        scanner.nextLine();
+        String nomeArquivo = scanner.nextLine();
+        nomeArquivo = nomeArquivo.replaceAll(" ", "_");
+        ManipulacaoCSV.salvarGrafoEmArquivo(grafo, nomeArquivo);
+    }
 }
