@@ -271,7 +271,7 @@ public class Manipulacao {
     }
 
     public void grafoVazio(Grafo grafo) {
-        if (grafo == null) {
+        if (grafo.getVerticies().size() == 0) {
             System.out.println("Grafo Vazio");
         } else {
             System.out.println("Grafo nao e vazio");
